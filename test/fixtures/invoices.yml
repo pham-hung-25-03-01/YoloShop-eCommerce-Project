@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  invoice_id: 
+  order_id: 
+  admin_id: 
+  coupon_id: MyString
+  payment_id: 
+  bank_code: MyString
+  bank_transaction_no: MyString
+  transaction_no: MyString
+  total_money: 
+  total_money_payment: 
+  updated_by: 
+  is_deleted: false
+  deleted_at: 2022-10-21 14:32:16
+  deleted_by: 
+
+two:
+  invoice_id: 
+  order_id: 
+  admin_id: 
+  coupon_id: MyString
+  payment_id: 
+  bank_code: MyString
+  bank_transaction_no: MyString
+  transaction_no: MyString
+  total_money: 
+  total_money_payment: 
+  updated_by: 
+  is_deleted: false
+  deleted_at: 2022-10-21 14:32:16
+  deleted_by: 

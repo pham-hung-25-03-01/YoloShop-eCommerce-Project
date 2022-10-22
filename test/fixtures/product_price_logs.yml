@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  product_price_log_id: 
+  admin_id: 
+  product_id: 
+  import_price: 
+  sell_price: 
+  updated_by: 
+  is_deleted: false
+  deleted_at: 2022-10-21 13:22:40
+  deleted_by: 
+
+two:
+  product_price_log_id: 
+  admin_id: 
+  product_id: 
+  import_price: 
+  sell_price: 
+  updated_by: 
+  is_deleted: false
+  deleted_at: 2022-10-21 13:22:40
+  deleted_by: 

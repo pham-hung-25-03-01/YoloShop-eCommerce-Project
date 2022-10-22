@@ -1,0 +1,31 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  order_id: 
+  user_id: 
+  ship_date: 2022-10-21 14:12:29
+  apartment_number: MyText
+  street: MyText
+  ward: MyText
+  district: MyText
+  province: MyText
+  status: 1
+  updated_by: 
+  is_deleted: false
+  deleted_at: 2022-10-21 14:12:29
+  deleted_by: 
+
+two:
+  order_id: 
+  user_id: 
+  ship_date: 2022-10-21 14:12:29
+  apartment_number: MyText
+  street: MyText
+  ward: MyText
+  district: MyText
+  province: MyText
+  status: 1
+  updated_by: 
+  is_deleted: false
+  deleted_at: 2022-10-21 14:12:29
+  deleted_by: 

@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  inventory_quantity_log_id: 
+  inventory_id: 
+  admin_id: 
+  quantity_of_import: 1
+  quantity_of_export: 1
+  updated_by: 
+  is_deleted: false
+  deleted_at: 2022-10-21 14:07:19
+  deleted_by: 
+
+two:
+  inventory_quantity_log_id: 
+  inventory_id: 
+  admin_id: 
+  quantity_of_import: 1
+  quantity_of_export: 1
+  updated_by: 
+  is_deleted: false
+  deleted_at: 2022-10-21 14:07:19
+  deleted_by: 

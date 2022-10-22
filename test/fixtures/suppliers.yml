@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  supplier_id: 
+  supplier_name: MyText
+  contract_date: 2022-10-21 12:48:19
+  phone_number: MyString
+  email: MyText
+  address: MyText
+  is_cooperated: false
+  created_by: 
+  updated_by: 
+  is_deleted: false
+  deleted_at: 2022-10-21 12:48:19
+  deleted_by: 
+
+two:
+  supplier_id: 
+  supplier_name: MyText
+  contract_date: 2022-10-21 12:48:19
+  phone_number: MyString
+  email: MyText
+  address: MyText
+  is_cooperated: false
+  created_by: 
+  updated_by: 
+  is_deleted: false
+  deleted_at: 2022-10-21 12:48:19
+  deleted_by: 

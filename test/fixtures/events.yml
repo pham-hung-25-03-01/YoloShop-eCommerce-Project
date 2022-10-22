@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  event_id: 
+  event_name: MyText
+  created_by: 
+  updated_by: 
+  is_deleted: false
+  deleted_at: 2022-10-21 13:45:37
+  deleted_by: 
+
+two:
+  event_id: 
+  event_name: MyText
+  created_by: 
+  updated_by: 
+  is_deleted: false
+  deleted_at: 2022-10-21 13:45:37
+  deleted_by: 

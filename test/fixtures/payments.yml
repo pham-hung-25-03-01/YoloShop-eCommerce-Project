@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  payment_id: 
+  payment_name: MyText
+  created_by: 
+  updated_by: 
+  is_deleted: false
+  deleted_at: 2022-10-21 14:34:58
+  deleted_by: 
+
+two:
+  payment_id: 
+  payment_name: MyText
+  created_by: 
+  updated_by: 
+  is_deleted: false
+  deleted_at: 2022-10-21 14:34:58
+  deleted_by: 

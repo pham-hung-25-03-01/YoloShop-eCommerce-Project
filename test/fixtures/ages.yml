@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  age_id: 
+  age_name: MyText
+  created_by: 
+  updated_by: 
+  is_deleted: false
+  deleted_at: 2022-10-21 11:40:29
+  deleted_by: 
+
+two:
+  age_id: 
+  age_name: MyText
+  created_by: 
+  updated_by: 
+  is_deleted: false
+  deleted_at: 2022-10-21 11:40:29
+  deleted_by: 

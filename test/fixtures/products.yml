@@ -1,0 +1,55 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  product_id: 
+  event_id: 
+  supplier_id: 
+  product_group_id: 
+  category_id: 
+  product_image_id: 
+  age_id: 
+  meta_title: MyText
+  product_name: MyText
+  origin: MyText
+  description: MyText
+  gender: false
+  warranty: 1
+  import_price: 
+  sell_price: 
+  product_discount: 1.5
+  shipping: 1
+  score_rating: 1.5
+  number_of_rates: 1
+  is_available: false
+  created_by: 
+  updated_by: 
+  is_deleted: false
+  deleted_at: 2022-10-21 13:06:41
+  deleted_by: 
+
+two:
+  product_id: 
+  event_id: 
+  supplier_id: 
+  product_group_id: 
+  category_id: 
+  product_image_id: 
+  age_id: 
+  meta_title: MyText
+  product_name: MyText
+  origin: MyText
+  description: MyText
+  gender: false
+  warranty: 1
+  import_price: 
+  sell_price: 
+  product_discount: 1.5
+  shipping: 1
+  score_rating: 1.5
+  number_of_rates: 1
+  is_available: false
+  created_by: 
+  updated_by: 
+  is_deleted: false
+  deleted_at: 2022-10-21 13:06:41
+  deleted_by: 
