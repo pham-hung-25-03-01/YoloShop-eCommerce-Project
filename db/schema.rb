@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_21_094309) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_21_082737) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -27,12 +27,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_094309) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.boolean "is_actived", default: true, null: false
+    t.boolean "status", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "created_by", null: false
     t.uuid "updated_by", null: false
-    t.boolean "is_deleted", default: false, null: false
+    t.boolean "is_actived", default: true, null: false
     t.datetime "deleted_at"
     t.uuid "deleted_by"
     t.index ["email"], name: "index_admins_on_email", unique: true
@@ -45,7 +45,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_094309) do
     t.datetime "updated_at", null: false
     t.uuid "created_by", null: false
     t.uuid "updated_by", null: false
-    t.boolean "is_deleted", default: false, null: false
+    t.boolean "is_actived", default: true, null: false
     t.datetime "deleted_at"
     t.uuid "deleted_by"
   end
@@ -63,7 +63,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_094309) do
     t.datetime "updated_at", null: false
     t.uuid "created_by", null: false
     t.uuid "updated_by", null: false
-    t.boolean "is_deleted", default: false, null: false
+    t.boolean "is_actived", default: true, null: false
     t.datetime "deleted_at"
     t.uuid "deleted_by"
   end
@@ -75,7 +75,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_094309) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "updated_by", null: false
-    t.boolean "is_deleted", default: false, null: false
+    t.boolean "is_actived", default: true, null: false
     t.datetime "deleted_at"
     t.uuid "deleted_by"
   end
@@ -89,7 +89,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_094309) do
     t.datetime "updated_at", null: false
     t.uuid "created_by", null: false
     t.uuid "updated_by", null: false
-    t.boolean "is_deleted", default: false, null: false
+    t.boolean "is_actived", default: true, null: false
     t.datetime "deleted_at"
     t.uuid "deleted_by"
   end
@@ -100,7 +100,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_094309) do
     t.datetime "updated_at", null: false
     t.uuid "created_by", null: false
     t.uuid "updated_by", null: false
-    t.boolean "is_deleted", default: false, null: false
+    t.boolean "is_actived", default: true, null: false
     t.datetime "deleted_at"
     t.uuid "deleted_by"
   end
@@ -108,13 +108,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_094309) do
   create_table "inventories", primary_key: "inventory_id", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "product_id", null: false
     t.string "size", null: false
-    t.string "color", null: false
+    t.text "color_url", null: false
     t.integer "quantity_of_inventory", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "created_by", null: false
     t.uuid "updated_by", null: false
-    t.boolean "is_deleted", default: false, null: false
+    t.boolean "is_actived", default: true, null: false
     t.datetime "deleted_at"
     t.uuid "deleted_by"
   end
@@ -127,7 +127,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_094309) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "updated_by", null: false
-    t.boolean "is_deleted", default: false, null: false
+    t.boolean "is_actived", default: true, null: false
     t.datetime "deleted_at"
     t.uuid "deleted_by"
   end
@@ -135,17 +135,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_094309) do
   create_table "invoices", primary_key: "invoice_id", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "order_id", null: false
     t.uuid "admin_id", null: false
-    t.string "coupon_id"
     t.uuid "payment_id", null: false
     t.string "bank_code"
     t.string "bank_transaction_no"
     t.string "transaction_no"
     t.money "total_money", scale: 2, null: false
+    t.money "total_money_discount", scale: 2, null: false
     t.money "total_money_payment", scale: 2, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "updated_by", null: false
-    t.boolean "is_deleted", default: false, null: false
+    t.boolean "is_actived", default: true, null: false
     t.datetime "deleted_at"
     t.uuid "deleted_by"
   end
@@ -160,13 +160,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_094309) do
     t.datetime "updated_at", null: false
     t.uuid "created_by", null: false
     t.uuid "updated_by", null: false
-    t.boolean "is_deleted", default: false, null: false
+    t.boolean "is_actived", default: true, null: false
     t.datetime "deleted_at"
     t.uuid "deleted_by"
   end
 
   create_table "orders", primary_key: "order_id", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
+    t.string "coupon_id"
     t.datetime "ship_date"
     t.text "apartment_number", null: false
     t.text "street", null: false
@@ -177,7 +178,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_094309) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "updated_by", null: false
-    t.boolean "is_deleted", default: false, null: false
+    t.boolean "is_actived", default: true, null: false
     t.datetime "deleted_at"
     t.uuid "deleted_by"
   end
@@ -188,7 +189,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_094309) do
     t.datetime "updated_at", null: false
     t.uuid "created_by", null: false
     t.uuid "updated_by", null: false
-    t.boolean "is_deleted", default: false, null: false
+    t.boolean "is_actived", default: true, null: false
     t.datetime "deleted_at"
     t.uuid "deleted_by"
   end
@@ -199,7 +200,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_094309) do
     t.datetime "updated_at", null: false
     t.uuid "created_by", null: false
     t.uuid "updated_by", null: false
-    t.boolean "is_deleted", default: false, null: false
+    t.boolean "is_actived", default: true, null: false
     t.datetime "deleted_at"
     t.uuid "deleted_by"
   end
@@ -210,7 +211,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_094309) do
     t.datetime "updated_at", null: false
     t.uuid "created_by", null: false
     t.uuid "updated_by", null: false
-    t.boolean "is_deleted", default: false, null: false
+    t.boolean "is_actived", default: true, null: false
     t.datetime "deleted_at"
     t.uuid "deleted_by"
   end
@@ -230,7 +231,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_094309) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "updated_by", null: false
-    t.boolean "is_deleted", default: false, null: false
+    t.boolean "is_actived", default: true, null: false
     t.datetime "deleted_at"
     t.uuid "deleted_by"
   end
@@ -258,7 +259,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_094309) do
     t.datetime "updated_at", null: false
     t.uuid "created_by", null: false
     t.uuid "updated_by", null: false
-    t.boolean "is_deleted", default: false, null: false
+    t.boolean "is_actived", default: true, null: false
     t.datetime "deleted_at"
     t.uuid "deleted_by"
   end
@@ -278,7 +279,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_094309) do
     t.uuid "role_id", null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.uuid "created_by", null: false
-    t.boolean "is_deleted", default: false, null: false
+    t.boolean "is_actived", default: true, null: false
     t.datetime "deleted_at"
     t.uuid "deleted_by"
   end
@@ -290,7 +291,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_094309) do
     t.datetime "updated_at", null: false
     t.uuid "created_by", null: false
     t.uuid "updated_by", null: false
-    t.boolean "is_deleted", default: false, null: false
+    t.boolean "is_actived", default: true, null: false
     t.datetime "deleted_at"
     t.uuid "deleted_by"
   end
@@ -306,7 +307,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_094309) do
     t.datetime "updated_at", null: false
     t.uuid "created_by", null: false
     t.uuid "updated_by", null: false
-    t.boolean "is_deleted", default: false, null: false
+    t.boolean "is_actived", default: true, null: false
     t.datetime "deleted_at"
     t.uuid "deleted_by"
   end
@@ -329,14 +330,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_094309) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.boolean "is_actived", default: true, null: false
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.boolean "status", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "created_by", null: false
     t.uuid "updated_by", null: false
-    t.boolean "is_deleted", default: false, null: false
+    t.boolean "is_actived", default: true, null: false
     t.datetime "deleted_at"
     t.uuid "deleted_by"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -350,11 +354,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_094309) do
   add_foreign_key "inventory_quantity_logs", "admins", primary_key: "admin_id", name: "inventory_quantity_logs_admin_id_fkey"
   add_foreign_key "inventory_quantity_logs", "inventories", primary_key: "inventory_id", name: "inventory_quantity_logs_inventory_id_fkey"
   add_foreign_key "invoices", "admins", primary_key: "admin_id", name: "invoices_admin_id_fkey"
-  add_foreign_key "invoices", "coupons", primary_key: "coupon_id", name: "invoices_coupon_id_fkey"
   add_foreign_key "invoices", "orders", primary_key: "order_id", name: "invoices_order_id_fkey"
   add_foreign_key "invoices", "payments", primary_key: "payment_id", name: "invoices_payment_id_fkey"
   add_foreign_key "order_details", "inventories", primary_key: "inventory_id", name: "order_details_inventory_id_fkey"
   add_foreign_key "order_details", "orders", primary_key: "order_id", name: "order_details_order_id_fkey"
+  add_foreign_key "orders", "coupons", primary_key: "coupon_id", name: "orders_coupon_id_fkey"
   add_foreign_key "orders", "users", primary_key: "user_id", name: "orders_user_id_fkey"
   add_foreign_key "product_images", "products", primary_key: "product_id", name: "product_images_product_id_fkey"
   add_foreign_key "product_price_logs", "admins", primary_key: "admin_id", name: "product_price_logs_admin_id_fkey"

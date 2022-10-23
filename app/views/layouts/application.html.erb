@@ -1,8 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>YoloshopEcommerce</title>
+    <title>Yolo Shop - eCommerce</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= favicon_link_tag asset_path('YoloShop-eCommerce-logo.ico') %>
+
+    <!-- Start CSS -->
+    <%= stylesheet_link_tag 'bootstrap.min', 'data-turbo-track': 'reload' %>
+    <%= stylesheet_link_tag 'templatemo.min', 'data-turbo-track': 'reload' %>
+    <%= stylesheet_link_tag 'custom', 'data-turbo-track': 'reload' %>
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <%= stylesheet_link_tag 'fontawesome.min', 'data-turbo-track': 'reload' %>
+    <!-- End CSS -->
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -11,6 +24,19 @@
   </head>
 
   <body>
+    <%= render partial: 'layouts/partials/top_nav' %>
+    <%= render partial: 'layouts/partials/header' %>
+
     <%= yield %>
+
+    <%= render partial: 'layouts/partials/footer' %>
+
+    <!-- Start Script -->
+    <%= javascript_include_tag 'jquery-1.11.0.min', 'data-turbolinks-track': true %>
+    <%= javascript_include_tag 'jquery-migrate-1.2.1.min', 'data-turbolinks-track': true %>
+    <%= javascript_include_tag 'bootstrap.bundle.min', 'data-turbolinks-track': true %>
+    <%= javascript_include_tag 'templatemo.min', 'data-turbolinks-track': true %>
+    <%= javascript_include_tag 'custom', 'data-turbolinks-track': true %>
+    <!-- End Script -->
   </body>
 </html>
