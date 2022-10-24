@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-light shadow">
     <div class="container d-flex justify-content-between align-items-center">
 
-        <%= link_to "Yolo Shop", { controller: 'home', action: 'index' }, class: 'navbar-brand text-success logo h1 align-self-center' %>
+        <%= link_to "Yolo Shop", home_index_path, class: 'navbar-brand text-success logo h1 align-self-center' %>
 
         <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -12,16 +12,16 @@
             <div class="flex-fill">
                 <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
                     <li class="nav-item">
-                        <%= link_to 'Home', { controller: 'home', action: 'index' }, class: 'nav-link' %>
+                        <%= link_to 'Home', home_index_path, class: 'nav-link' %>
                     </li>
                     <li class="nav-item">
-                        <%= link_to 'About', { controller: 'about', action: 'index' }, class: 'nav-link' %>
+                        <%= link_to 'About', about_index_path, class: 'nav-link' %>
                     </li>
                     <li class="nav-item">
-                        <%= link_to 'Shop', { controller: 'shop', action: 'index' }, class: 'nav-link' %>
+                        <%= link_to 'Shop', shop_index_path, class: 'nav-link' %>
                     </li>
                     <li class="nav-item">
-                        <%= link_to 'Contact', { controller: 'contact', action: 'index' }, class: 'nav-link' %>
+                        <%= link_to 'Contact', contact_index_path, class: 'nav-link' %>
                     </li>
                 </ul>
             </div>

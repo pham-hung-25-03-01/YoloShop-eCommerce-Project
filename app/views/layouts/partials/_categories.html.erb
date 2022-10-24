@@ -1,0 +1,29 @@
+<!-- Start Categories -->
+<section class="container py-5">
+    <div class="row text-center pt-3">
+        <div class="col-lg-6 m-auto">
+            <h1 class="h1">Categories</h1>
+            <p>
+                Our products are diverse in age and customers.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-4 p-5 mt-3">
+            <%= link_to image_tag('men-sport.jpeg', class: 'rounded-circle img-fluid border'), home_index_path %>
+            <h5 class="text-center mt-3 mb-3">Men</h5>
+            <p class="text-center"><%= link_to 'Go Shop', home_index_path , class: 'btn btn-success' %></p>
+        </div>
+        <div class="col-12 col-md-4 p-5 mt-3">
+            <%= link_to image_tag('women-sport.jpeg', class: 'rounded-circle img-fluid border'), home_index_path %>
+            <h2 class="h5 text-center mt-3 mb-3">Women</h2>
+            <p class="text-center"><%= link_to 'Go Shop', home_index_path , class: 'btn btn-success' %></p>
+        </div>
+        <div class="col-12 col-md-4 p-5 mt-3">
+            <%= link_to image_tag('kid-sport.jpeg', class: 'rounded-circle img-fluid border'), home_index_path %>
+            <h2 class="h5 text-center mt-3 mb-3">Kid</h2>
+            <p class="text-center"><%= link_to 'Go Shop', home_index_path , class: 'btn btn-success' %></p>
+        </div>
+    </div>
+</section>
+<!-- End Categories -->

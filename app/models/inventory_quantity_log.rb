@@ -1,6 +1,4 @@
 class InventoryQuantityLog < ApplicationRecord
-  self.primary_key = :inventory_quantity_log_id
-
   belongs_to :inventory
   belongs_to :admin
 

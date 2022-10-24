@@ -1,6 +1,4 @@
 class Age < ApplicationRecord
-  self.primary_key = :age_id
-
   has_many :products
 
   validates_associated :products

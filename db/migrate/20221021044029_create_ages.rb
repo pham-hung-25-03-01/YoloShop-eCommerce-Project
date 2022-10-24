@@ -1,7 +1,6 @@
 class CreateAges < ActiveRecord::Migration[7.0]
   def change
-    create_table :ages, id: false, primary_key: :age_id do |t|
-      t.uuid :age_id, primary_key: true, null: false, default: 'gen_random_uuid()'
+    create_table :ages, id: :uuid, default: 'gen_random_uuid()' do |t|
       t.text :age_name, null: false, unique: true
 
       t.timestamps

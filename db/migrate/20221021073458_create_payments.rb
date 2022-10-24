@@ -1,7 +1,6 @@
 class CreatePayments < ActiveRecord::Migration[7.0]
   def change
-    create_table :payments, id: false, primary_key: :payment_id do |t|
-      t.uuid :payment_id, primary_key: true, null: false, default: 'gen_random_uuid()'
+    create_table :payments, id: :uuid, default: 'gen_random_uuid()' do |t|
       t.text :payment_name, null: false, unique: true
 
       t.timestamps

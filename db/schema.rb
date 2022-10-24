@@ -15,7 +15,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_082737) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "admins", primary_key: "admin_id", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "admins", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "role_id", null: false
     t.text "first_name"
     t.text "last_name"
@@ -39,7 +39,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_082737) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
-  create_table "ages", primary_key: "age_id", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "ages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "age_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -50,14 +50,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_082737) do
     t.uuid "deleted_by"
   end
 
-  create_table "banners", primary_key: "banner_id", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "banners", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "event_id", null: false
     t.uuid "admin_id", null: false
     t.text "banner_url", null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
   end
 
-  create_table "categories", primary_key: "category_id", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "category_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -68,7 +68,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_082737) do
     t.uuid "deleted_by"
   end
 
-  create_table "comments", primary_key: "comment_id", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "comments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "product_id", null: false
     t.uuid "user_id", null: false
     t.text "content", null: false
@@ -80,7 +80,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_082737) do
     t.uuid "deleted_by"
   end
 
-  create_table "coupons", primary_key: "coupon_id", id: :string, force: :cascade do |t|
+  create_table "coupons", id: :string, force: :cascade do |t|
     t.datetime "start_date", default: -> { "now()" }, null: false
     t.datetime "end_date", null: false
     t.float "coupon_discount", default: 0.0, null: false
@@ -94,7 +94,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_082737) do
     t.uuid "deleted_by"
   end
 
-  create_table "events", primary_key: "event_id", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "event_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -105,7 +105,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_082737) do
     t.uuid "deleted_by"
   end
 
-  create_table "inventories", primary_key: "inventory_id", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "inventories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "product_id", null: false
     t.string "size", null: false
     t.text "color_url", null: false
@@ -119,7 +119,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_082737) do
     t.uuid "deleted_by"
   end
 
-  create_table "inventory_quantity_logs", primary_key: "inventory_quantity_log_id", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "inventory_quantity_logs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "inventory_id", null: false
     t.uuid "admin_id", null: false
     t.integer "quantity_of_import", default: 0, null: false
@@ -132,7 +132,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_082737) do
     t.uuid "deleted_by"
   end
 
-  create_table "invoices", primary_key: "invoice_id", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "invoices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "order_id", null: false
     t.uuid "admin_id", null: false
     t.uuid "payment_id", null: false
@@ -165,7 +165,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_082737) do
     t.uuid "deleted_by"
   end
 
-  create_table "orders", primary_key: "order_id", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "orders", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
     t.string "coupon_id"
     t.datetime "ship_date"
@@ -183,7 +183,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_082737) do
     t.uuid "deleted_by"
   end
 
-  create_table "payments", primary_key: "payment_id", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "payment_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -194,7 +194,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_082737) do
     t.uuid "deleted_by"
   end
 
-  create_table "permissions", primary_key: "permission_id", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "permissions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "permission_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -205,7 +205,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_082737) do
     t.uuid "deleted_by"
   end
 
-  create_table "product_groups", primary_key: "product_group_id", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "product_groups", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "product_group_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -216,14 +216,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_082737) do
     t.uuid "deleted_by"
   end
 
-  create_table "product_images", primary_key: "product_image_id", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "product_images", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "product_id", null: false
     t.text "image_url", null: false
+    t.boolean "is_default", default: false, null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.uuid "created_by", null: false
   end
 
-  create_table "product_price_logs", primary_key: "product_price_log_id", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "product_price_logs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "admin_id", null: false
     t.uuid "product_id", null: false
     t.money "import_price", scale: 2, default: "0.0", null: false
@@ -236,7 +237,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_082737) do
     t.uuid "deleted_by"
   end
 
-  create_table "products", primary_key: "product_id", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "products", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "event_id"
     t.uuid "supplier_id", null: false
     t.uuid "product_group_id", null: false
@@ -284,7 +285,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_082737) do
     t.uuid "deleted_by"
   end
 
-  create_table "roles", primary_key: "role_id", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "roles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "role_name", null: false
     t.text "description"
     t.datetime "created_at", null: false
@@ -296,7 +297,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_082737) do
     t.uuid "deleted_by"
   end
 
-  create_table "suppliers", primary_key: "supplier_id", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "suppliers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "supplier_name", null: false
     t.datetime "contract_date", default: -> { "now()" }, null: false
     t.string "phone_number"
@@ -312,7 +313,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_082737) do
     t.uuid "deleted_by"
   end
 
-  create_table "users", primary_key: "user_id", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "first_name"
     t.text "last_name"
     t.text "avatar_url"
@@ -345,31 +346,31 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_082737) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "admins", "roles", primary_key: "role_id", name: "admins_role_id_fkey"
-  add_foreign_key "banners", "admins", primary_key: "admin_id", name: "banners_admin_id_fkey"
-  add_foreign_key "banners", "events", primary_key: "event_id", name: "banners_event_id_fkey"
-  add_foreign_key "comments", "products", primary_key: "product_id", name: "comments_product_id_fkey"
-  add_foreign_key "comments", "users", primary_key: "user_id", name: "comments_user_id_fkey"
-  add_foreign_key "inventories", "products", primary_key: "product_id", name: "inventories_product_id_fkey"
-  add_foreign_key "inventory_quantity_logs", "admins", primary_key: "admin_id", name: "inventory_quantity_logs_admin_id_fkey"
-  add_foreign_key "inventory_quantity_logs", "inventories", primary_key: "inventory_id", name: "inventory_quantity_logs_inventory_id_fkey"
-  add_foreign_key "invoices", "admins", primary_key: "admin_id", name: "invoices_admin_id_fkey"
-  add_foreign_key "invoices", "orders", primary_key: "order_id", name: "invoices_order_id_fkey"
-  add_foreign_key "invoices", "payments", primary_key: "payment_id", name: "invoices_payment_id_fkey"
-  add_foreign_key "order_details", "inventories", primary_key: "inventory_id", name: "order_details_inventory_id_fkey"
-  add_foreign_key "order_details", "orders", primary_key: "order_id", name: "order_details_order_id_fkey"
-  add_foreign_key "orders", "coupons", primary_key: "coupon_id", name: "orders_coupon_id_fkey"
-  add_foreign_key "orders", "users", primary_key: "user_id", name: "orders_user_id_fkey"
-  add_foreign_key "product_images", "products", primary_key: "product_id", name: "product_images_product_id_fkey"
-  add_foreign_key "product_price_logs", "admins", primary_key: "admin_id", name: "product_price_logs_admin_id_fkey"
-  add_foreign_key "product_price_logs", "products", primary_key: "product_id", name: "product_price_logs_product_id_fkey"
-  add_foreign_key "products", "ages", primary_key: "age_id", name: "products_age_id_fkey"
-  add_foreign_key "products", "categories", primary_key: "category_id", name: "products_category_id_fkey"
-  add_foreign_key "products", "events", primary_key: "event_id", name: "products_event_id_fkey"
-  add_foreign_key "products", "product_groups", primary_key: "product_group_id", name: "products_product_group_id_fkey"
-  add_foreign_key "products", "suppliers", primary_key: "supplier_id", name: "products_supplier_id_fkey"
-  add_foreign_key "reviews", "products", primary_key: "product_id", name: "reviews_product_id_fkey"
-  add_foreign_key "reviews", "users", primary_key: "user_id", name: "reviews_user_id_fkey"
-  add_foreign_key "role_details", "permissions", primary_key: "permission_id", name: "role_details_permission_id_fkey"
-  add_foreign_key "role_details", "roles", primary_key: "role_id", name: "role_details_role_id_fkey"
+  add_foreign_key "admins", "roles", name: "admins_role_id_fkey"
+  add_foreign_key "banners", "admins", name: "banners_admin_id_fkey"
+  add_foreign_key "banners", "events", name: "banners_event_id_fkey"
+  add_foreign_key "comments", "products", name: "comments_product_id_fkey"
+  add_foreign_key "comments", "users", name: "comments_user_id_fkey"
+  add_foreign_key "inventories", "products", name: "inventories_product_id_fkey"
+  add_foreign_key "inventory_quantity_logs", "admins", name: "inventory_quantity_logs_admin_id_fkey"
+  add_foreign_key "inventory_quantity_logs", "inventories", name: "inventory_quantity_logs_inventory_id_fkey"
+  add_foreign_key "invoices", "admins", name: "invoices_admin_id_fkey"
+  add_foreign_key "invoices", "orders", name: "invoices_order_id_fkey"
+  add_foreign_key "invoices", "payments", name: "invoices_payment_id_fkey"
+  add_foreign_key "order_details", "inventories", name: "order_details_inventory_id_fkey"
+  add_foreign_key "order_details", "orders", name: "order_details_order_id_fkey"
+  add_foreign_key "orders", "coupons", name: "orders_coupon_id_fkey"
+  add_foreign_key "orders", "users", name: "orders_user_id_fkey"
+  add_foreign_key "product_images", "products", name: "product_images_product_id_fkey"
+  add_foreign_key "product_price_logs", "admins", name: "product_price_logs_admin_id_fkey"
+  add_foreign_key "product_price_logs", "products", name: "product_price_logs_product_id_fkey"
+  add_foreign_key "products", "ages", name: "products_age_id_fkey"
+  add_foreign_key "products", "categories", name: "products_category_id_fkey"
+  add_foreign_key "products", "events", name: "products_event_id_fkey"
+  add_foreign_key "products", "product_groups", name: "products_product_group_id_fkey"
+  add_foreign_key "products", "suppliers", name: "products_supplier_id_fkey"
+  add_foreign_key "reviews", "products", name: "reviews_product_id_fkey"
+  add_foreign_key "reviews", "users", name: "reviews_user_id_fkey"
+  add_foreign_key "role_details", "permissions", name: "role_details_permission_id_fkey"
+  add_foreign_key "role_details", "roles", name: "role_details_role_id_fkey"
 end

@@ -1,7 +1,6 @@
 class CreateOrders < ActiveRecord::Migration[7.0]
   def change
-    create_table :orders, id: false, primary_key: :order_id do |t|
-      t.uuid :order_id, primary_key: true, null: false, default: 'gen_random_uuid()'
+    create_table :orders, id: :uuid, default: 'gen_random_uuid()' do |t|
       t.uuid :user_id, null: false
       t.string :coupon_id
       t.datetime :ship_date

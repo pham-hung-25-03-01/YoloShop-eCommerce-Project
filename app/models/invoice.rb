@@ -1,6 +1,4 @@
 class Invoice < ApplicationRecord
-  self.primary_key = :invoice_id
-
   belongs_to :order
   belongs_to :admin
   belongs_to :payment

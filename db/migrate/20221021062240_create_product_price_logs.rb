@@ -1,7 +1,6 @@
 class CreateProductPriceLogs < ActiveRecord::Migration[7.0]
   def change
-    create_table :product_price_logs, id: false, primary_key: :product_price_log_id do |t|
-      t.uuid :product_price_log_id, primary_key: true, null: false, default: 'gen_random_uuid()'
+    create_table :product_price_logs, id: :uuid, default: 'gen_random_uuid()' do |t|
       t.uuid :admin_id, null: false
       t.uuid :product_id, null: false
       t.money :import_price, null: false, default: 0

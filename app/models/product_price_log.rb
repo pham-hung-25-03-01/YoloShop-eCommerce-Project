@@ -1,6 +1,4 @@
 class ProductPriceLog < ApplicationRecord
-  self.primary_key = :product_price_log_id
-
   belongs_to :admin
   belongs_to :product
 

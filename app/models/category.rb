@@ -1,6 +1,4 @@
 class Category < ApplicationRecord
-  self.primary_key = :category_id
-
   has_many :products
   
   validates_associated :products

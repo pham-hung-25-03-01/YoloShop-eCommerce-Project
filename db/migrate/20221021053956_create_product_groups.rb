@@ -1,7 +1,6 @@
 class CreateProductGroups < ActiveRecord::Migration[7.0]
   def change
-    create_table :product_groups, id: false, primary_key: :product_group_id do |t|
-      t.uuid :product_group_id, primary_key: true, null: false, default: 'gen_random_uuid()'
+    create_table :product_groups, id: :uuid, default: 'gen_random_uuid()' do |t|
       t.text :product_group_name, null: false, unique: true
 
       t.timestamps

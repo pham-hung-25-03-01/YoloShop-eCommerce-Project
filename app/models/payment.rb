@@ -1,6 +1,4 @@
 class Payment < ApplicationRecord
-  self.primary_key = :payment_id
-
   has_many :invoices
 
   validates_associated :invoices

@@ -1,7 +1,6 @@
 class CreatePermissions < ActiveRecord::Migration[7.0]
   def change
-    create_table :permissions, id: false, primary_key: :permission_id do |t|
-      t.uuid :permission_id, primary_key: true, null: false, default: 'gen_random_uuid()'
+    create_table :permissions, id: :uuid, default: 'gen_random_uuid()' do |t|
       t.text :permission_name, null: false, unique: true
 
       t.timestamps

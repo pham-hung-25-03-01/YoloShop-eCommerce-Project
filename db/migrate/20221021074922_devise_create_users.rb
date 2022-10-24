@@ -2,8 +2,7 @@
 
 class DeviseCreateUsers < ActiveRecord::Migration[7.0]
   def change
-    create_table :users, id: false, primary_key: :user_id do |t|
-      t.uuid :user_id, primary_key: true, null: false, default: 'gen_random_uuid()'
+    create_table :users, id: :uuid, default: 'gen_random_uuid()' do |t|
       t.text :first_name
       t.text :last_name
       t.text :avatar_url

@@ -2,8 +2,7 @@
 
 class DeviseCreateAdmins < ActiveRecord::Migration[7.0]
   def change
-    create_table :admins, id: false, primary_key: :admin_id do |t|
-      t.uuid :admin_id, primary_key: true, null: false, default: 'gen_random_uuid()'
+    create_table :admins, id: :uuid, default: 'gen_random_uuid()' do |t|
       t.uuid :role_id, null: false
       t.text :first_name
       t.text :last_name

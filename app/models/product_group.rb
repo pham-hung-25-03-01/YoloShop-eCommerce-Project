@@ -1,6 +1,4 @@
 class ProductGroup < ApplicationRecord
-  self.primary_key = :product_group_id
-
   has_many :products
 
   validates_associated :products

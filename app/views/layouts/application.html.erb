@@ -24,6 +24,7 @@
   </head>
 
   <body>
+    <%= render partial: 'layouts/partials/preloader' %>
     <%= render partial: 'layouts/partials/top_nav' %>
     <%= render partial: 'layouts/partials/header' %>
 
@@ -32,11 +33,11 @@
     <%= render partial: 'layouts/partials/footer' %>
 
     <!-- Start Script -->
-    <%= javascript_include_tag 'jquery-1.11.0.min', 'data-turbolinks-track': true %>
-    <%= javascript_include_tag 'jquery-migrate-1.2.1.min', 'data-turbolinks-track': true %>
-    <%= javascript_include_tag 'bootstrap.bundle.min', 'data-turbolinks-track': true %>
-    <%= javascript_include_tag 'templatemo.min', 'data-turbolinks-track': true %>
-    <%= javascript_include_tag 'custom', 'data-turbolinks-track': true %>
+    <%= javascript_include_tag 'jquery-1.11.0.min', 'data-turbolinks-track': 'load' %>
+    <%= javascript_include_tag 'jquery-migrate-1.2.1.min', 'data-turbolinks-track': 'load' %>
+    <%= javascript_include_tag 'bootstrap.bundle.min', 'data-turbolinks-track': 'load' %>
+    <%= javascript_include_tag 'templatemo.min', 'data-turbolinks-track': 'load' %>
+    <%= javascript_include_tag 'custom', 'data-turbolinks-track': 'load' %>
     <!-- End Script -->
   </body>
 </html>

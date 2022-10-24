@@ -1,6 +1,4 @@
 class Supplier < ApplicationRecord
-  self.primary_key = :supplier_id
-
   has_many :products
 
   validates_associated :products

@@ -1,7 +1,6 @@
 class CreateInventories < ActiveRecord::Migration[7.0]
   def change
-    create_table :inventories, id: false, primary_key: :inventory_id do |t|
-      t.uuid :inventory_id, primary_key: true, null: false, default: 'gen_random_uuid()'
+    create_table :inventories, id: :uuid, default: 'gen_random_uuid()' do |t|
       t.uuid :product_id, null: false
       t.string :size, null: false
       t.text :color_url, null: false, unique: true

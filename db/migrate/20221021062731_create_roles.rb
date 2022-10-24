@@ -1,7 +1,6 @@
 class CreateRoles < ActiveRecord::Migration[7.0]
   def change
-    create_table :roles, id: false, primary_key: :role_id do |t|
-      t.uuid :role_id, primary_key: true, null: false, default: 'gen_random_uuid()'
+    create_table :roles, id: :uuid, default: 'gen_random_uuid()' do |t|
       t.text :role_name, null: false, unique: true
       t.text :description
 

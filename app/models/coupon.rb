@@ -1,6 +1,4 @@
 class Coupon < ApplicationRecord
-  self.primary_key = :coupon_id
-
   has_many :orders
 
   validates_associated :orders

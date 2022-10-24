@@ -1,6 +1,4 @@
 class Banner < ApplicationRecord
-  self.primary_key = :banner_id
-
   belongs_to :admin
   belongs_to :event
 

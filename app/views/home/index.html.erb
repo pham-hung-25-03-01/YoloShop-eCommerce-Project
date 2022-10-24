@@ -1,1 +1,17 @@
-<%= render partial: 'layouts/partials/banner' %>
+<%= render partial: 'layouts/partials/banners' %>
+<%= render partial: 'layouts/partials/categories' %>
+<!-- Start Featured Product -->
+<section class="bg-light">
+    <div class="container py-5">
+        <div class="row text-center py-3">
+            <div class="col-lg-6 m-auto">
+                <h1 class="h1">Featured Product</h1>
+                <p>
+                    Reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                    Excepteur sint occaecat cupidatat non proident.
+                </p>
+            </div>
+        </div>
+    <%= render partial: 'layouts/partials/advertising_products' %>
+    </div>
+</section>

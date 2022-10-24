@@ -37,11 +37,11 @@
             <div class="col-md-4 pt-5">
                 <h2 class="h2 text-light border-bottom pb-3 border-light">Further Info</h2>
                 <ul class="list-unstyled text-light footer-link-list">
-                    <li><%= link_to 'Home', { controller: 'home', action: 'index' }, class: 'text-decoration-none' %></li>
-                    <li><%= link_to 'About Us', { controller: 'about', action: 'index' }, class: 'text-decoration-none' %></li>
+                    <li><%= link_to 'Home', home_index_path, class: 'text-decoration-none' %></li>
+                    <li><%= link_to 'About Us', about_index_path, class: 'text-decoration-none' %></li>
                     <li><%= link_to 'Shop Locations', 'https://www.google.com/maps/place/K%C3%BD+t%C3%BAc+x%C3%A1+Khu+B+%C4%90%E1%BA%A1i+h%E1%BB%8Dc+Qu%E1%BB%91c+gia+TP.HCM/@10.8820431,106.7803902,17z/data=!3m1!4b1!4m5!3m4!1s0x3174d89aad780e49:0x54542761d4c22175!8m2!3d10.8820431!4d106.7825789?hl=vi-VN', class: 'text-decoration-none', target: '_blank' %></li>
                     <li><%= link_to 'FAQs', '#', class: 'text-decoration-none' %></li>
-                    <li><%= link_to 'Contact', { controller: 'contact', action: 'index' }, class: 'text-decoration-none' %></li>
+                    <li><%= link_to 'Contact', contact_index_path, class: 'text-decoration-none' %></li>
                 </ul>
             </div>
 

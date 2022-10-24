@@ -9,4 +9,11 @@ Rails.application.routes.draw do
   resources :about
   resources :shop
   resources :contact
+  resources :products do
+    resources :comments
+    resources :product_images
+    resources :product_price_logs
+    resources :reviews
+    resources :inventories
+  end
 end

@@ -1,6 +1,4 @@
 class Inventory < ApplicationRecord
-  self.primary_key = :inventory_id
-
   has_many :inventory_quantity_logs
   has_many :order_details
   belongs_to :product

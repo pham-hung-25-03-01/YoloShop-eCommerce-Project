@@ -1,7 +1,6 @@
 class CreateCategories < ActiveRecord::Migration[7.0]
   def change
-    create_table :categories, id: false, primary_key: :category_id do |t|
-      t.uuid :category_id, primary_key: true, null: false, default: 'gen_random_uuid()'
+    create_table :categories, id: :uuid, default: 'gen_random_uuid()' do |t|
       t.text :category_name, null: false, unique: true
 
       t.timestamps

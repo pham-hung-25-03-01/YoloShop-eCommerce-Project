@@ -1,7 +1,6 @@
 class CreateComments < ActiveRecord::Migration[7.0]
   def change
-    create_table :comments, id: false, primary_key: :comment_id do |t|
-      t.uuid :comment_id, primary_key: true, null: false, default: 'gen_random_uuid()'
+    create_table :comments, id: :uuid, default: 'gen_random_uuid()' do |t|
       t.uuid :product_id, null: false
       t.uuid :user_id, null: false
       t.text :content, null: false

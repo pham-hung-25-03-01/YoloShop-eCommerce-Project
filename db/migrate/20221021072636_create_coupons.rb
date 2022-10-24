@@ -1,7 +1,6 @@
 class CreateCoupons < ActiveRecord::Migration[7.0]
   def change
-    create_table :coupons, id: false, primary_key: :coupon_id do |t|
-      t.string :coupon_id, primary_key: true, null: false
+    create_table :coupons, id: :string do |t|
       t.datetime :start_date, null: false, default: -> { 'now()' }
       t.datetime :end_date, null: false
       t.float :coupon_discount, null: false, default: 0

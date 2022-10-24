@@ -1,7 +1,6 @@
 class CreateInventoryQuantityLogs < ActiveRecord::Migration[7.0]
   def change
-    create_table :inventory_quantity_logs, id: false, primary_key: :inventory_quantity_log_id do |t|
-      t.uuid :inventory_quantity_log_id, primary_key: true, null: false, default: 'gen_random_uuid()'
+    create_table :inventory_quantity_logs, id: :uuid, default: 'gen_random_uuid()' do |t|
       t.uuid :inventory_id, null: false
       t.uuid :admin_id, null: false
       t.integer :quantity_of_import, null: false, default: 0

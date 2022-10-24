@@ -1,7 +1,6 @@
 class CreateEvents < ActiveRecord::Migration[7.0]
   def change
-    create_table :events, id: false, primary_key: :event_id do |t|
-      t.uuid :event_id, primary_key: true, null: false, default: 'gen_random_uuid()'
+    create_table :events, id: :uuid, default: 'gen_random_uuid()' do |t|
       t.text :event_name, null: false, unique: true
 
       t.timestamps

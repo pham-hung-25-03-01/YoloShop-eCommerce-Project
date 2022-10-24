@@ -1,6 +1,4 @@
 class Order < ApplicationRecord
-  self.primary_key = :order_id
-
   has_many :order_details
   belongs_to :user
   belongs_to :coupon

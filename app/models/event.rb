@@ -1,6 +1,4 @@
 class Event < ApplicationRecord
-  self.primary_key = :event_id
-
   has_one :banners
   has_many :products
 

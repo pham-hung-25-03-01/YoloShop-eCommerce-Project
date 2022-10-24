@@ -1,7 +1,6 @@
 class CreateSuppliers < ActiveRecord::Migration[7.0]
   def change
-    create_table :suppliers, id: false, primary_key: :supplier_id do |t|
-      t.uuid :supplier_id, primary_key: true, null: false, default: 'gen_random_uuid()'
+    create_table :suppliers, id: :uuid, default: 'gen_random_uuid()' do |t|
       t.text :supplier_name, null: false, unique: true
       t.datetime :contract_date, null: false, default: -> { 'now()' }
       t.string :phone_number
