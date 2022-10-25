@@ -1,0 +1,33 @@
+<!-- Start Advertising Product -->
+<div class="col-12 col-md-4 mb-4">
+    <div class="card h-100">
+        <%= link_to image_tag( product.product_images.find_by(is_default: true).image_url, class: 'card-img-top', alt: product.product_name), home_index_path %>
+        <div class="card-body">
+            <ul class="list-unstyled d-flex justify-content-between">
+                <li>
+                    <% product.score_rating.to_i.times do %>
+                        <i class="text-warning fa fa-star"></i>              
+                    <% end %>            
+                    <% if product.score_rating - product.score_rating.to_i > 0.5 %>
+                        <i class="text-warning fa fa-star-half"></i>    
+                    <% end %>
+                    <% (5- product.score_rating.to_i).times do %>
+                        <i class="text-muted fa fa-star"></i>   
+                    <% end %>
+                </li>
+                <li class="text-muted text-right">
+                    $<%= product.sell_price * (1 - product.product_discount / 100) %>                 
+                    <% unless product.product_discount == 0 %>
+                        &nbsp;&nbsp;&nbsp;<s>$<%= product.sell_price %></s>
+                    <% end %>           
+                </li>
+            </ul>
+            <%= link_to product.product_name, home_index_path, class: 'h2 text-decoration-none text-dark' %>
+            <p class="card-text">
+                <%= product.description %>
+            </p>
+            <p class="text-muted">Comments (<%= product.comments.count %>)</p>
+        </div>
+    </div>
+</div>
+<!-- End Advertising Product -->

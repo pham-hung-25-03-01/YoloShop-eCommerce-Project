@@ -58,6 +58,9 @@ gem 'omniauth-google-oauth2'
 # Use Figaro to support create environment variables
 gem 'figaro'
 
+# Use composite_primary_keys to support set composite keys
+gem 'composite_primary_keys', '~> 14.0.4'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri mingw x64_mingw]

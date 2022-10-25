@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :home
   resources :about
   resources :shop
+  resources :coupons
   resources :contact
   resources :products do
     resources :comments
