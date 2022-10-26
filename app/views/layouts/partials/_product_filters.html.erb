@@ -1,48 +1,53 @@
 <ul class="list-unstyled templatemo-accordion">
     <li class="pb-3">
-        <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
+        <a name="item" id="categories" class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
             Categories
             <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
         </a>
         <ul class="collapse show list-unstyled pl-3">
+            <li><a name="item" id="categories-all" class="text-decoration-none cursor-pointer" onclick="filter_products('categories', 'all' )">All</a></li>
             <% categories.each do |category| %>
-                <li><%= link_to category.category_name, '#', class: 'text-decoration-none', onclick: "filter_products('categories', '#{category.category_name}' )" %></li>              
+                <li><a name="item" id="categories-<%= category.id %>" class="text-decoration-none cursor-pointer" onclick="filter_products('categories', '<%= category.id %>' )"><%= category.category_name %></a></li>       
             <% end %>           
         </ul>
     </li>
     <li class="pb-3">
-        <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
+        <a name="item" id="ages" class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
             Ages
             <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
         </a>
         <ul class="collapse show list-unstyled pl-3">
+            <li><a name="item" id="ages-all" class="text-decoration-none cursor-pointer" onclick="filter_products('ages', 'all' )">All</a></li>
             <% ages.each do |age| %>
-                <li><%= link_to age.age_name, '#', class: 'text-decoration-none' %></li>              
+                <li><a name="item" id="ages-<%= age.id %>" class="text-decoration-none cursor-pointer" onclick="filter_products('ages', '<%= age.id %>' )"><%= age.age_name %></a></li>              
             <% end %>           
         </ul>
     </li>
     <li class="pb-3">
-        <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
+        <a name="item" id="gender" class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
             Gender
             <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
         </a>
         <ul class="collapse show list-unstyled pl-3">
-            <li><a class="text-decoration-none" href="#">Men</a></li>
-            <li><a class="text-decoration-none" href="#">Women</a></li>
+            <li><a name="item" id="gender-all" class="text-decoration-none cursor-pointer" onclick="filter_products('gender', 'all' )">All</a></li>
+            <li><a name="item" id="gender-true" class="text-decoration-none cursor-pointer" onclick="filter_products('gender', 'true' )">Men's</li>
+            <li><a name="item" id="gender-false" class="text-decoration-none cursor-pointer" onclick="filter_products('gender', 'false' )">Women's</a></li>
         </ul>
     </li>
     <li class="pb-3">
-        <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">Sale</a>
+        <a name="item" id="sale" class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#" onclick="filter_products('sale', null )" >Sale</a>
     </li>
     <li class="pb-3">
-        <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
+        <a name="item" id="product_groups" class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
             Product groups
             <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
         </a>
         <ul id="collapseThree" class="collapse list-unstyled pl-3">
+        <li><a name="item" id="product_groups-all" class="text-decoration-none cursor-pointer" onclick="filter_products('product_groups', 'all' )">All</a></li>
             <% product_groups.each do |product_group| %>
-                <li><%= link_to product_group.product_group_name, '#', class: 'text-decoration-none' %></li>              
+                <li><a name="item" id="product_groups-<%= product_group.id %>" class="text-decoration-none cursor-pointer" onclick="filter_products('product_groups', '<%= product_group.id %>' )"><%= product_group.product_group_name %></a></li>          
             <% end %>  
         </ul>
     </li>
 </ul>
+<%= javascript_include_tag 'ajax_products', 'data-turbolinks-track': 'load' %>

@@ -1,6 +1,6 @@
 class ShopController < ApplicationController
   def index
-    @products = Product.where(is_actived: true).order(product_name: :ASC)
+    @products = Product.where(is_actived: true).order(product_name: :ASC).limit(3)
     get_product_filters
   end
   private

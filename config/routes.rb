@@ -11,6 +11,10 @@ Rails.application.routes.draw do
   resources :coupons
   resources :contact
   resources :products do
+    collection do
+      get 'filter'
+      get 'show_more'
+    end
     resources :comments
     resources :product_images
     resources :product_price_logs

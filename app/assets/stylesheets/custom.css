@@ -1,6 +1,10 @@
 /*
 Custom Css
 */
+.cursor-pointer {
+  cursor: pointer;
+}
+
 #page-loading {
     position: fixed;
     top: 0;
