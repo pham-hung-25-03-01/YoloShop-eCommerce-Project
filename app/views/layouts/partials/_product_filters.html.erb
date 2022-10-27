@@ -4,8 +4,7 @@
             Categories
             <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
         </a>
-        <ul class="collapse show list-unstyled pl-3">
-            <li><a name="item" id="categories-all" class="text-decoration-none cursor-pointer" onclick="filter_products('categories', 'all' )">All</a></li>
+        <ul id="categories-options" name="options" class="collapse show list-unstyled pl-3">
             <% categories.each do |category| %>
                 <li><a name="item" id="categories-<%= category.id %>" class="text-decoration-none cursor-pointer" onclick="filter_products('categories', '<%= category.id %>' )"><%= category.category_name %></a></li>       
             <% end %>           
@@ -16,8 +15,7 @@
             Ages
             <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
         </a>
-        <ul class="collapse show list-unstyled pl-3">
-            <li><a name="item" id="ages-all" class="text-decoration-none cursor-pointer" onclick="filter_products('ages', 'all' )">All</a></li>
+        <ul id="ages-options" name="options" class="collapse show list-unstyled pl-3">
             <% ages.each do |age| %>
                 <li><a name="item" id="ages-<%= age.id %>" class="text-decoration-none cursor-pointer" onclick="filter_products('ages', '<%= age.id %>' )"><%= age.age_name %></a></li>              
             <% end %>           
@@ -28,8 +26,7 @@
             Gender
             <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
         </a>
-        <ul class="collapse show list-unstyled pl-3">
-            <li><a name="item" id="gender-all" class="text-decoration-none cursor-pointer" onclick="filter_products('gender', 'all' )">All</a></li>
+        <ul id="gender-options" name="options" class="collapse show list-unstyled pl-3">
             <li><a name="item" id="gender-true" class="text-decoration-none cursor-pointer" onclick="filter_products('gender', 'true' )">Men's</li>
             <li><a name="item" id="gender-false" class="text-decoration-none cursor-pointer" onclick="filter_products('gender', 'false' )">Women's</a></li>
         </ul>
@@ -42,12 +39,10 @@
             Product groups
             <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
         </a>
-        <ul id="collapseThree" class="collapse list-unstyled pl-3">
-        <li><a name="item" id="product_groups-all" class="text-decoration-none cursor-pointer" onclick="filter_products('product_groups', 'all' )">All</a></li>
+        <ul id="product_groups-options" name="options" class="collapse list-unstyled pl-3">
             <% product_groups.each do |product_group| %>
                 <li><a name="item" id="product_groups-<%= product_group.id %>" class="text-decoration-none cursor-pointer" onclick="filter_products('product_groups', '<%= product_group.id %>' )"><%= product_group.product_group_name %></a></li>          
             <% end %>  
         </ul>
     </li>
 </ul>
-<%= javascript_include_tag 'ajax_products', 'data-turbolinks-track': 'load' %>

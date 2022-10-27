@@ -7,11 +7,17 @@
         </div>
         <div class="col-lg-9">
             <%= render partial: 'layouts/partials/menu_control' %>
+            <div id="no-products" class="row invisible">
+                <div class="col text-center pt-3">
+                    <p>There are currently no products you are looking for.</p>
+                </div>
+            </div>
             <div class="row" id="products">
                 <%= render partial: 'layouts/partials/product', collection: @products, as: :product %>
             </div>
-            <%= render partial: 'layouts/partials/show_more' %>
+            <%= render partial: 'layouts/partials/show_more', locals: {is_show_more: @is_show_more} %>
         </div>
     </div>
 </div>
 <!-- End Content -->
+<%= javascript_include_tag 'ajax_products', 'data-turbolinks-track': 'load' %>

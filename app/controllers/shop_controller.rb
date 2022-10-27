@@ -1,7 +1,18 @@
 class ShopController < ApplicationController
+  DEFAULT_PER_PAGE = ENV['DEFAULT_PER_PAGE'].to_i
   def index
-    @products = Product.where(is_actived: true).order(product_name: :ASC).limit(3)
-    get_product_filters
+    begin
+      session[:off_set] = DEFAULT_PER_PAGE
+      all_products = Product.where(is_actived: true).order(product_name: :ASC)
+      @products = all_products.limit(DEFAULT_PER_PAGE)
+      count_products = all_products.count
+      get_product_filters
+      @is_show_more = true
+      @is_show_more = false if DEFAULT_PER_PAGE >= count_products
+    rescue StandardError => e
+      p e.message
+      p e.backtrace
+    end
   end
   private
   def get_product_filters
