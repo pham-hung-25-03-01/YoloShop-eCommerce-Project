@@ -13,12 +13,16 @@ Rails.application.routes.draw do
   resources :products do
     collection do
       get 'filter'
-      get 'show_more'
+      get 'show-more', to: 'products/show_more'
+      get 'info-product', to: 'products/info_product'
     end
     resources :comments
     resources :product_images
     resources :product_price_logs
     resources :reviews
     resources :inventories
+  end
+  resources :suppliers do
+    resources :products
   end
 end

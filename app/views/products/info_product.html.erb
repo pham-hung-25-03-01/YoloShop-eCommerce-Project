@@ -1,0 +1,209 @@
+<!-- Open Content -->
+<section class="bg-light">
+    <div class="container pb-5">
+        <div class="row">
+            <div class="col-lg-5 mt-5">
+                <div class="card mb-3">
+                    <%= image_tag @product.product_images.find_by(is_default: true).image_url, class: 'card-img img-fluid', alt: @product.product_name, id: 'product-detail' %>
+                </div>
+                <div class="row pt-5">
+                    <!--Start Controls-->
+                    <div class="col-1 align-self-center">
+                        <a href="#multi-item-example" role="button" data-bs-slide="prev">
+                            <i class="text-dark fas fa-chevron-left"></i>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </div>
+                    <!--End Controls-->
+                    <!--Start Carousel Wrapper-->
+                    <div id="multi-item-example" class="col-10 carousel slide carousel-multi-item" data-bs-ride="carousel">
+                        <!--Start Slides-->
+                        <div class="carousel-inner product-links-wap" role="listbox">
+                            <% offset = 3 %>
+                            <!--First slide-->
+                            <div class="carousel-item active">
+                                <div class="row">
+                                    <% @product.product_images.where(is_default: false).limit(3).each do |product_image| %>
+                                        <div class="col-4">
+                                            <a href="#">
+                                                <%= image_tag product_image.image_url, class: 'card-img img-fluid', alt: @product.product_name %>
+                                            </a>
+                                        </div>                                   
+                                    <% end %>                                   
+                                </div>
+                            </div>
+                            <!--/.First slide-->
+                            <% while @product.product_images.where(is_default: false).count - offset > 0 do %>
+                                <div class="carousel-item">
+                                    <div class="row">
+                                        <% @product.product_images.where(is_default: false).offset(offset).limit(3).each do |product_image| %>
+                                            <div class="col-4">
+                                                <a href="#">
+                                                    <%= image_tag product_image.image_url, class: 'card-img img-fluid', alt: @product.product_name %>
+                                                </a>
+                                            </div>                                   
+                                        <% end %>
+                                        <% offset += 3 %>                               
+                                    </div>
+                                </div>
+                            <% end %>
+                        </div>
+                        <!--End Slides-->
+                    </div>
+                    <!--End Carousel Wrapper-->
+                    <!--Start Controls-->
+                    <div class="col-1 align-self-center">
+                        <a href="#multi-item-example" role="button" data-bs-slide="next">
+                            <i class="text-dark fas fa-chevron-right"></i>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                    <!--End Controls-->
+                </div>
+            </div>
+            <!-- col end -->
+            <div class="col-lg-7 mt-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="h2 font-weight-400"><%= @product.product_name %></h1>
+                        <p class="h3">$<%= @product.sell_price * (1 - @product.product_discount / 100) %>                 
+                            <% unless @product.product_discount == 0 %>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<s>$<%= @product.sell_price %></s>
+                            <% end %>
+                        </p>
+                        <p>
+                            <% @product.score_rating.to_i.times do %>
+                                <i class="text-warning fa fa-star"></i>              
+                            <% end %>            
+                            <% if @product.score_rating - @product.score_rating.to_i > 0.5 %>
+                                <i class="text-warning fa fa-star-half"></i>    
+                            <% end %>
+                            <% (5- @product.score_rating.to_i).times do %>
+                                <i class="text-muted fa fa-star"></i>   
+                            <% end %>
+                            <span class="list-inline-item text-dark">Rating <%= number_with_precision(@product.score_rating, precision: 1) %> (<%= @product.number_of_rates %> rates) | <%= @product.comments.count %> Comments</span>
+                        </p>
+                        <h5 class="font-weight-400">Description:</h5>
+                        <p><%= @product.description %></p>
+                        <div class="row">
+                            <div class="col-6">
+                                <ul class="list-inline margin-bottom-0-rem">
+                                    <li class="list-inline-item">
+                                        <h5 class="font-weight-400">Brand:</h5>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <p class="text-secondary"><strong><%= @supplier.supplier_name %></strong></p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-6">
+                                <ul class="list-inline margin-bottom-0-rem">
+                                    <li class="list-inline-item">
+                                        <h5 class="font-weight-400">Category:</h5>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <p class="text-secondary"><strong><%= @category.category_name %></strong></p>
+                                    </li>
+                                </ul>                            
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <ul class="list-inline margin-bottom-0-rem">
+                                    <li class="list-inline-item">
+                                        <h5 class="font-weight-400">Origin:</h5>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <p class="text-secondary"><strong><%= @product.origin %></strong></p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-6">
+                                <ul class="list-inline margin-bottom-0-rem">
+                                    <li class="list-inline-item">
+                                        <h5 class="font-weight-400">Age:</h5>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <p class="text-secondary"><strong><%= @age.age_name %></strong></p>
+                                    </li>
+                                </ul>                           
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <ul class="list-inline margin-bottom-0-rem">
+                                    <li class="list-inline-item">
+                                        <h5 class="font-weight-400">Warranty:</h5>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <p class="text-secondary"><strong><%= @product.warranty > 0 ? @product.warranty.to_s + ' months' : 'No warranty' %></strong></p>
+                                    </li>
+                                </ul>                            
+                            </div>
+                            <div class="col-6">
+                                <ul class="list-inline margin-bottom-0-rem">
+                                    <li class="list-inline-item">
+                                        <h5 class="font-weight-400">Gender:</h5>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <p class="text-secondary"><strong><%= @product.gender ? 'Male' : 'Female' %></strong></p>
+                                    </li>
+                                </ul>                           
+                            </div>
+                        </div>
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <h5 class="font-weight-400">Available:</h5>
+                            </li>
+                            <li class="list-inline-item">
+                                <p class="text-secondary"><strong><%= @product.is_available ? 'Stocking' : 'Out of stock' %></strong></p>
+                            </li>
+                        </ul>
+
+                        <form action="" method="GET">
+                            <input type="hidden" name="product-title" value="Activewear">
+                            <div class="row">
+                                <div class="col-auto">
+                                    <ul class="list-inline pb-3">
+                                        <li class="list-inline-item">Color:
+                                            <input type="hidden" name="product-size" id="product-size" value="">
+                                        </li>
+                                        <% @product.inventories.where('quantity_of_inventory > 0').each do |item| %>
+                                            <li class="list-inline-item"><a class="cursor-pointer"><%= image_tag item.color_url, class: 'item-img img-fluid', alt: @product.product_name %></a></li>
+                                        <% end %>                                      
+                                    </ul>
+                                    <ul class="list-inline pb-3">
+                                        <li class="list-inline-item">Size:&nbsp;&nbsp;
+                                            <input type="hidden" name="product-size" id="product-size" value="">
+                                        </li>
+                                        <% @product.inventories.where('quantity_of_inventory > 0').order(size: :ASC).each do |item| %>
+                                            <li class="list-inline-item"><span class="btn btn-success btn-size"><%= item.size %></span></li>
+                                        <% end %>                                      
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <ul class="list-inline pb-3">
+                                    <li class="list-inline-item text-right">
+                                        Quantity:
+                                        <input type="hidden" name="product-quanity" id="product-quanity" value="1">
+                                    </li>
+                                    <li class="list-inline-item"><span class="btn btn-success" id="btn-minus">-</span></li>
+                                    <li class="list-inline-item"><span class="badge bg-secondary" id="var-value">1</span></li>
+                                    <li class="list-inline-item"><span class="btn btn-success" id="btn-plus">+</span></li>
+                                </ul>
+                            </div>
+                            <div class="row pb-3">
+                                <div class="mx-auto col-6 d-grid">
+                                    <button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">Add To Cart</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Close Content -->

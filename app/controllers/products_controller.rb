@@ -39,6 +39,13 @@ class ProductsController < ApplicationController
     render json: { html: render_to_string(partial: 'layouts/partials/product', collection: @products, as: :product), is_show_more: is_show_more}
   end
 
+  def info_product
+    @product = Product.find(params[:id])
+    @supplier = Supplier.find(@product.supplier_id)
+    @category = Category.find(@product.category_id)
+    @age = Age.find(@product.age_id)
+  end
+
   private
   def do_filter(type_filter, id, option, search_keyword)
     search_keyword.strip!

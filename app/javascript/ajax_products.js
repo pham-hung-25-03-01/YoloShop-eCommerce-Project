@@ -56,7 +56,7 @@ function ajax_filter_products(type_filter, id, search_keyword){
 function show_more(){
     current_search_keyword = $('#search-keyword').val().trim();
     $.ajax({
-        url: '/products/show_more',
+        url: '/products/show-more',
         type: 'get',
         data: {
             current_type_filter: current_type_filter,
