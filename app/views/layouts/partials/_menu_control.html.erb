@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
         <ul class="list-inline shop-top-menu pb-3 pt-1">
             <li class="list-inline-item">
                 <a name="item" id="all" class="h3 text-dark text-decoration-none mr-3 cursor-pointer text-success" onclick="filter_products('all', 'all' )">All</a>
@@ -12,13 +12,21 @@
             </li>
         </ul>
     </div>
-    <div class="col-md-6 pb-4">
+    <div class="col-md-4 pb-4">
         <div class="d-flex">
             <select id="option-filter" class="form-control" onchange="change_option_filter()">
                 <option value="name">A to Z</option>
                 <option value="newest">Newest</option>
                 <option value="price">Price ↑</option>
             </select>
+        </div>
+    </div>
+    <div class="col-md-4 pb-4">
+        <div class="input-group">
+            <input type="text" class="form-control font-size-1-rem" id="search-keyword" placeholder="Search ...">
+            <a class="input-group-text bg-success text-light text-decoration-none cursor-pointer" onclick="search_keyword_filter()">
+                <i class="fa fa-fw fa-search text-white"></i>
+            </a>
         </div>
     </div>
 </div>

@@ -3,17 +3,19 @@ current_id = 'all'
 current_option = 'name'
 function filter_products(type_filter, id){
     if(id != current_id){
-        ajax_filter_products(type_filter, id);
+        search_keyword = $('#search-keyword').val().trim();
+        ajax_filter_products(type_filter, id, search_keyword);
     }
 }
-function ajax_filter_products(type_filter, id){
+function ajax_filter_products(type_filter, id, search_keyword){
     $.ajax({
         url: '/products/filter',
         type: 'get',
         data: {
             type_filter: type_filter,
             id: id,
-            option: current_option
+            option: current_option,
+            search_keyword: search_keyword
         },
         dataType: 'json',
         success: function(data){
@@ -52,13 +54,15 @@ function ajax_filter_products(type_filter, id){
     });
 }
 function show_more(){
+    current_search_keyword = $('#search-keyword').val().trim();
     $.ajax({
         url: '/products/show_more',
         type: 'get',
         data: {
             current_type_filter: current_type_filter,
             current_id: current_id,
-            current_option: current_option
+            current_option: current_option,
+            current_search_keyword: current_search_keyword
         },
         dataType: 'json',
         success: function(data){
@@ -81,5 +85,10 @@ function show_more(){
 function change_option_filter(){
     option_filter = document.getElementById('option-filter');
     current_option = option_filter.options[option_filter.selectedIndex].value;
-    ajax_filter_products(current_type_filter, current_id);
+    current_search_keyword = $('#search-keyword').val().trim();
+    ajax_filter_products(current_type_filter, current_id, current_search_keyword);
+}
+function search_keyword_filter(){
+    current_search_keyword = $('#search-keyword').val().trim();
+    ajax_filter_products(current_type_filter, current_id, current_search_keyword);
 }
