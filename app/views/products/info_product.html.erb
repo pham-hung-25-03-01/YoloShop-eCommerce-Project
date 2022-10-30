@@ -81,7 +81,10 @@
                             <% (5- @product.score_rating.to_i).times do %>
                                 <i class="text-muted fa fa-star"></i>   
                             <% end %>
-                            <span class="list-inline-item text-dark">Rating <%= number_with_precision(@product.score_rating, precision: 1) %> (<%= @product.number_of_rates %> rates) | <%= @product.comments.count %> Comments</span>
+                            <span class="list-inline-item text-dark">Rating <%= number_with_precision(@product.score_rating, precision: 1) %> (<%= @product.number_of_rates %> rates) | <%= @product.comments.count %> Comments | Your rating </span>
+                            <% 5.times do %>
+                                <a class="cursor-pointer"><i class="text-muted fa fa-star"></i></a>      
+                            <% end %>
                         </p>
                         <h5 class="font-weight-400">Description:</h5>
                         <p><%= @product.description %></p>
@@ -160,42 +163,48 @@
                             </li>
                         </ul>
 
-                        <form action="" method="GET">
+                        <div>
                             <input type="hidden" name="product-title" value="Activewear">
                             <div class="row">
                                 <div class="col-auto">
                                     <ul class="list-inline pb-3">
                                         <li class="list-inline-item">Color:
-                                            <input type="hidden" name="product-size" id="product-size" value="">
+                                            <input type="hidden" name="color" id="color" value="">
                                         </li>
                                         <% @product.inventories.where('quantity_of_inventory > 0').each do |item| %>
-                                            <li class="list-inline-item"><a class="cursor-pointer"><%= image_tag item.color_url, class: 'item-img img-fluid', alt: @product.product_name %></a></li>
+                                            <li class="list-inline-item"><a name="color-image-item" class="cursor-pointer d-block" onclick="active_color_image_item(this, '<%= @product.id %>')"><%= image_tag item.color_url, class: 'item-img img-fluid', alt: @product.product_name %></a></li>
                                         <% end %>                                      
                                     </ul>
                                     <ul class="list-inline pb-3">
                                         <li class="list-inline-item">Size:&nbsp;&nbsp;
-                                            <input type="hidden" name="product-size" id="product-size" value="">
+                                            <input type="hidden" name="size" id="size" value="">
                                         </li>
                                         <% @product.inventories.where('quantity_of_inventory > 0').order(size: :ASC).each do |item| %>
-                                            <li class="list-inline-item"><span class="btn btn-success btn-size"><%= item.size %></span></li>
+                                            <li class="list-inline-item"><a name="size-item" class="btn btn-success btn-size" onclick="active_size_item(this, '<%= @product.id %>')"><span><%= item.size %></a></span></li>
                                         <% end %>                                      
                                     </ul>
                                 </div>
                             </div>
-                            <div class="row">
-                                <ul class="list-inline pb-3">
+                            <div id="quantity" class="row" hidden>
+                                <ul class="list-inline pb-3 col-5">
                                     <li class="list-inline-item text-right">
                                         Quantity:
-                                        <input type="hidden" name="product-quanity" id="product-quanity" value="1">
+                                        <input type="hidden" name="product-quanity" id="product-quantity" value="1">
                                     </li>
                                     <li class="list-inline-item"><span class="btn btn-success" id="btn-minus">-</span></li>
                                     <li class="list-inline-item"><span class="badge bg-secondary" id="var-value">1</span></li>
-                                    <li class="list-inline-item"><span class="btn btn-success" id="btn-plus">+</span></li>
+                                    <li class="list-inline-item"><span class="btn btn-success" id="btn-plus">+</span></li>                  
                                 </ul>
+                                <div class="col-7">
+                                    <li class="list-inline-item">In stock: <span id="quantity-in-stock">0</span> products.</li>
+                                </div>
                             </div>
                             <div class="row pb-3">
                                 <div class="mx-auto col-6 d-grid">
-                                    <button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">Add To Cart</button>
+                                    <button class="btn btn-success btn-lg" id="favorite">Favorite</button>
+                                </div>
+                                <div class="mx-auto col-6 d-grid">
+                                    <button class="btn btn-success btn-lg" id="add-to-cart" disabled>Add To Cart</button>
                                 </div>
                             </div>
                         </form>
@@ -206,4 +215,15 @@
         </div>
     </div>
 </section>
+<section class="bg-white">
+    <div class="container py-3">
+        <div class="row py-3">
+            <h1 class="h2 font-weight-400"><%= @product.comments.count %> comments</h1>
+        </div>
+        <div class="row">
+            <%= render partial: 'layouts/partials/comment' %>
+        </div>
+    </div>
+</section>
 <!-- Close Content -->
+<%= javascript_include_tag 'ajax_single_product', 'data-turbolinks-track': 'load' %>

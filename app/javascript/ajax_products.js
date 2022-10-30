@@ -1,8 +1,8 @@
-current_type_filter = 'all'
-current_id = 'all'
-current_option = 'name'
+type_filter_current = 'all'
+id_current = 'all'
+option_current = 'name'
 function filter_products(type_filter, id){
-    if(id != current_id){
+    if(id != id_current){
         search_keyword = $('#search-keyword').val().trim();
         ajax_filter_products(type_filter, id, search_keyword);
     }
@@ -14,7 +14,7 @@ function ajax_filter_products(type_filter, id, search_keyword){
         data: {
             type_filter: type_filter,
             id: id,
-            option: current_option,
+            option: option_current,
             search_keyword: search_keyword
         },
         dataType: 'json',
@@ -48,21 +48,21 @@ function ajax_filter_products(type_filter, id, search_keyword){
             else{
                 $('#no-products').removeClass('invisible').addClass('visible');
             }
-            current_type_filter = type_filter;
-            current_id = id;
+            type_filter_current = type_filter;
+            id_current = id;
         }        
     });
 }
 function show_more(){
-    current_search_keyword = $('#search-keyword').val().trim();
+    search_keyword_current = $('#search-keyword').val().trim();
     $.ajax({
         url: '/products/show-more',
         type: 'get',
         data: {
-            current_type_filter: current_type_filter,
-            current_id: current_id,
-            current_option: current_option,
-            current_search_keyword: current_search_keyword
+            type_filter_current: type_filter_current,
+            id_current: id_current,
+            option_current: option_current,
+            search_keyword_current: search_keyword_current
         },
         dataType: 'json',
         success: function(data){
@@ -84,11 +84,11 @@ function show_more(){
 }
 function change_option_filter(){
     option_filter = document.getElementById('option-filter');
-    current_option = option_filter.options[option_filter.selectedIndex].value;
-    current_search_keyword = $('#search-keyword').val().trim();
-    ajax_filter_products(current_type_filter, current_id, current_search_keyword);
+    option_current = option_filter.options[option_filter.selectedIndex].value;
+    search_keyword_current = $('#search-keyword').val().trim();
+    ajax_filter_products(type_filter_current, id_current, search_keyword_current);
 }
 function search_keyword_filter(){
-    current_search_keyword = $('#search-keyword').val().trim();
-    ajax_filter_products(current_type_filter, current_id, current_search_keyword);
+    search_keyword_current = $('#search-keyword').val().trim();
+    ajax_filter_products(type_filter_current, id_current, search_keyword_current);
 }

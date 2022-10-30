@@ -4,14 +4,14 @@
             <%= image_tag product.product_images.find_by(is_default: true).image_url, class: 'card-img rounded-0 img-fluid', alt: product.product_name %>
             <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                 <ul class="list-unstyled">
-                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
+                    <li><a class="btn btn-success text-white" href="/products/info-product/<%= product.meta_title %>"><i class="far fa-heart"></i></a></li>
+                    <li><a class="btn btn-success text-white mt-2" href="/products/info-product/<%= product.meta_title %>"><i class="far fa-eye"></i></a></li>
                     <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
                 </ul>
             </div>
         </div>
         <div class="card-body">
-            <%= link_to product.product_name, info_product_products_path({id: product.id}), class: 'h3 text-decoration-none' %>
+            <%= link_to product.product_name, {controller: 'products', action: 'info_product', meta_title: product.meta_title}, class: 'h3 text-decoration-none' %>
             <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
                 <li><%= product.origin %></li>
                 <li class="pt-2">

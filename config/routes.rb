@@ -10,11 +10,16 @@ Rails.application.routes.draw do
   resources :shop
   resources :coupons
   resources :contact
-  resources :products do
+  resources :products, only: :info_product, param: :meta_title do
+    collection do
+      get 'info-product/:meta_title', to: 'products#info_product'
+    end
+  end
+  resources :products, except: :info_product do
     collection do
       get 'filter'
       get 'show-more', to: 'products/show_more'
-      get 'info-product', to: 'products/info_product'
+      get 'get-quantity-in-stock', to: 'products/get_quantity_in_stock'
     end
     resources :comments
     resources :product_images

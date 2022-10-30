@@ -109,3 +109,13 @@ Custom Css
   height: 50px;
   width: 50px;
 }
+.avatar-comment-img {
+  height: 70px;
+  width: 70px;
+}
+.separated-comment {
+  border-bottom: 2px solid #56ae6c;
+}
+.active-item-img {
+  border: 2px solid #56ae6c;
+}

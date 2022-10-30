@@ -33,25 +33,16 @@ $(document).ready(function() {
       var val = $("#var-value").html();
       val = (val=='1')?val:val-1;
       $("#var-value").html(val);
-      $("#product-quanity").val(val);
+      $("#product-quantity").val(val);
       return false;
     });
     $('#btn-plus').click(function(){
       var val = $("#var-value").html();
-      val++;
+      var max_quantity = $("#product-quantity").attr('max');
+      val = (val == max_quantity.toString()) ? val : parseInt(val)+1;
       $("#var-value").html(val);
-      $("#product-quanity").val(val);
+      $("#product-quantity").val(val);
       return false;
     });
-    $('.btn-size').click(function(){
-      var this_val = $(this).html();
-      $("#product-size").val(this_val);
-      $(".btn-size").removeClass('btn-secondary');
-      $(".btn-size").addClass('btn-success');
-      $(this).removeClass('btn-success');
-      $(this).addClass('btn-secondary');
-      return false;
-    });
-    // End roduct detail
-
+    // End product detail
 });

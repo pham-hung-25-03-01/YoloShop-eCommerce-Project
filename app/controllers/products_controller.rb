@@ -23,12 +23,12 @@ class ProductsController < ApplicationController
   def show_more
     begin
       @@off_set = session[:off_set]
-      current_type_filter = params[:current_type_filter]
-      current_id = params[:current_id]
-      current_option = params[:current_option]
-      current_search_keyword = params[:current_search_keyword]
+      type_filter_current = params[:type_filter_current]
+      id_current = params[:id_current]
+      option_current = params[:option_current]
+      search_keyword_current = params[:search_keyword_current]
       is_show_more = true
-      all_products, count_products = do_filter current_type_filter, current_id, current_option, current_search_keyword
+      all_products, count_products = do_filter type_filter_current, id_current, option_current, search_keyword_current
       @products = all_products.offset(session[:off_set]).limit(DEFAULT_PER_PAGE)
       session[:off_set] += DEFAULT_PER_PAGE
       is_show_more = false if session[:off_set] >= count_products
@@ -40,10 +40,25 @@ class ProductsController < ApplicationController
   end
 
   def info_product
-    @product = Product.find(params[:id])
-    @supplier = Supplier.find(@product.supplier_id)
-    @category = Category.find(@product.category_id)
-    @age = Age.find(@product.age_id)
+    begin
+      @product = Product.find_by(meta_title: params[:meta_title])
+      @supplier = Supplier.find(@product.supplier_id)
+      @category = Category.find(@product.category_id)
+      @age = Age.find(@product.age_id)
+    rescue StandardError => e
+      p e.message
+      p e.backtrace
+    end
+  end
+
+  def get_quantity_in_stock
+    begin
+      @inventory = Inventory.find_by(product_id: params[:product_id], color_url: params[:color], size: params[:size])
+    rescue StandardError => e
+      p e.message
+      p e.backtrace
+    end
+    render json: @inventory
   end
 
   private
