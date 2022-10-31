@@ -201,7 +201,12 @@
                             </div>
                             <div class="row pb-3">
                                 <div class="mx-auto col-6 d-grid">
-                                    <a class="btn btn-success btn-lg" id="btn-favorite" onclick="single_product_favorite('<%= @product.id %>')">Favorite</a>
+                                
+                                <% if user_signed_in? && !@product.reviews.find_by(user_id: current_user.id).nil? %>
+                                    <a class="btn btn-lg <%= @product.reviews.find_by(user_id: current_user.id).is_favored ? 'btn-secondary' : 'btn-success' %>" id="btn-favorite" onclick="single_product_favorite('<%= @product.id %>')"><%= @product.reviews.find_by(user_id: current_user.id).is_favored ? 'Unfavored' : 'Favorite' %></a>
+                                <% else %>
+                                    <a class="btn btn-lg btn-success" id="btn-favorite" onclick="single_product_favorite('<%= @product.id %>')">Favorite</a>
+                                <% end %>                                                             
                                 </div>
                                 <div class="mx-auto col-6 d-grid">
                                     <button class="btn btn-success btn-lg" id="add-to-cart" disabled>Add To Cart</button>

@@ -7,12 +7,13 @@
             <div class="row pt-2">
                 <label>
                     <strong><%= (comment.user.first_name + ' ' + comment.user.last_name).strip %></strong>&nbsp;&nbsp;&nbsp;
-                    <% user_score_rating = reviews.find_by(user_id: comment.user_id).user_score_rating %>
-                    <% unless user_score_rating.nil? %>
-                        <% user_score_rating.to_i.times do %>
+                    <% review = reviews.find_by(user_id: comment.user_id) %>
+                    <% unless review.nil? %>
+                        <% user_score_rating = review.user_score_rating.to_i %>
+                        <% user_score_rating.times do %>
                             <i class="text-warning fa fa-star"></i>              
                         <% end %>            
-                        <% (5- user_score_rating).to_i.times do %>
+                        <% (5- user_score_rating).times do %>
                             <i class="text-muted fa fa-star"></i>   
                         <% end %>
                     <% end %>                
