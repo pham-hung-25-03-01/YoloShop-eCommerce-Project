@@ -29,3 +29,22 @@ function ajax_get_quantity_in_stock(product_id){
         }
     });
 }
+function show_more(product_id){
+    $.ajax({
+        url: '/comments/show-more',
+        type: 'get',
+        data: {
+            product_id: product_id
+        },
+        dataType: 'json',
+        success: function(data){
+            $('#comments').append(data.html);
+            if(data.is_show_more){
+                $('#show-more').removeClass('invisible').addClass('visible');
+            }
+            else{
+                $('#show-more').removeClass('visible').addClass('invisible');
+            }
+        }
+    });
+}

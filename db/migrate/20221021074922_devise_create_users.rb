@@ -6,19 +6,20 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       t.text :first_name
       t.text :last_name
       t.text :avatar_url
-      t.boolean :gender, null: false
-      t.datetime :birthday, null: false
-      t.string :phone_number, null: false
-      t.text :apartment_number, null: false
-      t.text :street, null: false
-      t.text :ward, null: false
-      t.text :district, null: false
-      t.text :province, null: false
+      t.boolean :gender
+      t.datetime :birthday
+      t.string :phone_number
+      t.text :apartment_number
+      t.text :street
+      t.text :ward
+      t.text :district
+      t.text :province
       t.string :provider
 
       ## Database authenticatable
       t.string :email, null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
+      t.string :uid
 
       ## Recoverable
       t.string   :reset_password_token
@@ -47,7 +48,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
 
       t.boolean :status, null: false, default: true
       t.timestamps null: false
-      t.uuid :updated_by, null: false
+      t.uuid :updated_by
       t.boolean :is_actived, null: false, default: true
       t.datetime :deleted_at
       t.uuid :deleted_by

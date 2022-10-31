@@ -201,7 +201,7 @@
                             </div>
                             <div class="row pb-3">
                                 <div class="mx-auto col-6 d-grid">
-                                    <button class="btn btn-success btn-lg" id="favorite">Favorite</button>
+                                    <a class="btn btn-success btn-lg" id="btn-favorite" onclick="single_product_favorite('<%= @product.id %>')">Favorite</a>
                                 </div>
                                 <div class="mx-auto col-6 d-grid">
                                     <button class="btn btn-success btn-lg" id="add-to-cart" disabled>Add To Cart</button>
@@ -220,10 +220,14 @@
         <div class="row py-3">
             <h1 class="h2 font-weight-400"><%= @product.comments.count %> comments</h1>
         </div>
-        <div class="row">
-            <%= render partial: 'layouts/partials/comment' %>
+        <div id="comments" class="row">
+            <%= render partial: 'layouts/partials/comment', collection: @comments, as: :comment, locals: { reviews: @reviews } %>
+        </div>
+        <div class="text-center">
+            <a id="show-more" class="btn btn-success <%= @is_show_more ? 'visible' : 'invisible' %>" onclick="show_more('<%= @product.id %>')">Show more</a>
         </div>
     </div>
 </section>
 <!-- Close Content -->
 <%= javascript_include_tag 'ajax_single_product', 'data-turbolinks-track': 'load' %>
+<%= javascript_include_tag 'ajax_reviews', 'data-turbolinks-track': 'load' %>

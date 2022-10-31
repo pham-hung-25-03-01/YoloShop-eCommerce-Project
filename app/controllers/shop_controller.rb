@@ -2,7 +2,7 @@ class ShopController < ApplicationController
   DEFAULT_PER_PAGE = ENV['DEFAULT_PER_PAGE'].to_i
   def index
     begin
-      session[:off_set] = DEFAULT_PER_PAGE
+      session[:product_offset] = DEFAULT_PER_PAGE
       session[:prev_type_filter] = 'all'
       all_products = Product.where(is_actived: true).order(product_name: :ASC)
       @products = all_products.limit(DEFAULT_PER_PAGE)

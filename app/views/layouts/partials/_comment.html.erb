@@ -1,76 +1,29 @@
 <div class="d-block separated-comment pb-3 mb-3">
     <div class="row pb-2">
         <div class="col-1">
-            <%= image_tag 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSh2jaao5hmJFgC3vELALP6eWrTUtbBKCme5YLnLv9GNw&s', class: 'rounded-circle img-fluid border avatar-comment-img' %>
+            <%= image_tag comment.user.avatar_url, class: 'rounded-circle img-fluid border avatar-comment-img' %>
         </div>
         <div class="col-11">
             <div class="row pt-2">
                 <label>
-                    <strong>Pham Van Hung</strong>&nbsp;&nbsp;&nbsp;
-                    <i class="text-warning fa fa-star"></i>
-                    <i class="text-warning fa fa-star"></i>
-                    <i class="text-warning fa fa-star"></i>
-                    <i class="text-warning fa fa-star"></i>
-                    <i class="text-warning fa fa-star"></i>
+                    <strong><%= (comment.user.first_name + ' ' + comment.user.last_name).strip %></strong>&nbsp;&nbsp;&nbsp;
+                    <% user_score_rating = reviews.find_by(user_id: comment.user_id).user_score_rating %>
+                    <% unless user_score_rating.nil? %>
+                        <% user_score_rating.to_i.times do %>
+                            <i class="text-warning fa fa-star"></i>              
+                        <% end %>            
+                        <% (5- user_score_rating).to_i.times do %>
+                            <i class="text-muted fa fa-star"></i>   
+                        <% end %>
+                    <% end %>                
                 </label>
             </div>
             <div class="row">
-                <label>Created at: <span>22/10/2022 10:00:00 PM</span></label>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <label>The Nike Air Max 90 LTR returns with an even better feel for you. Cushioning is softer and more flexible, the Max Air unit is tuned for growing feet and the shape gives your toes more wiggle room. With a design and look that are still the same, it brings a '90s fave to a new generation.</label>
-    </div>
-</div>
-<div class="d-block separated-comment pb-3">
-    <div class="row pb-2">
-        <div class="col-1">
-            <%= image_tag 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSh2jaao5hmJFgC3vELALP6eWrTUtbBKCme5YLnLv9GNw&s', class: 'rounded-circle img-fluid border avatar-comment-img' %>
-        </div>
-        <div class="col-11">
-            <div class="row pt-2">
-                <label>
-                    <strong>Pham Van Hung</strong>&nbsp;&nbsp;&nbsp;
-                    <i class="text-warning fa fa-star"></i>
-                    <i class="text-warning fa fa-star"></i>
-                    <i class="text-warning fa fa-star"></i>
-                    <i class="text-warning fa fa-star"></i>
-                    <i class="text-warning fa fa-star"></i>
-                </label>
+                <label><%= comment.created_at.strftime('%d-%m-%Y %I:%M:%S %p') %></label>
             </div>
             <div class="row">
-                <label>Created at: <span>22/10/2022 10:00:00 PM</span></label>
+                <label><%= comment.content %></label>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <label>The Nike Air Max 90 LTR returns with an even better feel for you. Cushioning is softer and more flexible, the Max Air unit is tuned for growing feet and the shape gives your toes more wiggle room. With a design and look that are still the same, it brings a '90s fave to a new generation.</label>
     </div>
 </div>
-<div class="d-block separated-comment pb-3">
-    <div class="row pb-2">
-        <div class="col-1">
-            <%= image_tag 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSh2jaao5hmJFgC3vELALP6eWrTUtbBKCme5YLnLv9GNw&s', class: 'rounded-circle img-fluid border avatar-comment-img' %>
-        </div>
-        <div class="col-11">
-            <div class="row pt-2">
-                <label>
-                    <strong>Pham Van Hung</strong>&nbsp;&nbsp;&nbsp;
-                    <i class="text-warning fa fa-star"></i>
-                    <i class="text-warning fa fa-star"></i>
-                    <i class="text-warning fa fa-star"></i>
-                    <i class="text-warning fa fa-star"></i>
-                    <i class="text-warning fa fa-star"></i>
-                </label>
-            </div>
-            <div class="row">
-                <label>Created at: <span>22/10/2022 10:00:00 PM</span></label>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <label>The Nike Air Max 90 LTR returns with an even better feel for you. Cushioning is softer and more flexible, the Max Air unit is tuned for growing feet and the shape gives your toes more wiggle room. With a design and look that are still the same, it brings a '90s fave to a new generation.</label>
-    </div>
-</div>
-

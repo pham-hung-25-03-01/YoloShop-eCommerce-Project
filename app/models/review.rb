@@ -4,6 +4,6 @@ class Review < ApplicationRecord
   belongs_to :product
   belongs_to :user
 
-  validates :user_score_rating, numericality: { greater_than: 0 }
-  validates :is_favored, presence: true
+  #validates :user_score_rating, numericality: { greater_than: 0 }
+  #validates :is_favored, presence: true
 end

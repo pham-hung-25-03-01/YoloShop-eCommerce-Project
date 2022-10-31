@@ -38,3 +38,6 @@ function get_quantity_in_stock(product_id){
         ajax_get_quantity_in_stock(product_id);
     }
 }
+function open_login_register(){
+    $('#sign-in').modal('show');
+}

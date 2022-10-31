@@ -14,6 +14,10 @@ DB_PASSWORD: 'postgres'
 DB_HOST: 'localhost'
 DB_PORT: '5432'
 
-DEFAULT_PER_SECTION: 4
-DEFAULT_PER_PAGE: 3
+DEFAULT_PER_SECTION: '4'
+DEFAULT_PER_PAGE: '3'
+DEFAULT_PER_COMMENT: '1'
+
+google_client_id: '203746157920-nlavgc2dg1hssq6hm9ib6161mqqobskq.apps.googleusercontent.com'
+google_client_secret: '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'
 

@@ -4,14 +4,14 @@
             <%= image_tag product.product_images.find_by(is_default: true).image_url, class: 'card-img rounded-0 img-fluid', alt: product.product_name %>
             <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                 <ul class="list-unstyled">
-                    <li><a class="btn btn-success text-white" href="/products/info-product/<%= product.meta_title %>"><i class="far fa-heart"></i></a></li>
-                    <li><a class="btn btn-success text-white mt-2" href="/products/info-product/<%= product.meta_title %>"><i class="far fa-eye"></i></a></li>
+                    <li><a id="btn-favorite-<%= product.id %>" class="btn text-white <%= product.reviews.find_by(user_id: current_user.id).is_favored ? 'btn-secondary' : 'btn-success' %>" onclick="products_favorite('<%= product.id %>')"><i class="far fa-heart"></i></a></li>
+                    <li><a class="btn btn-success text-white mt-2" href="/products/<%= product.meta_title %>"><i class="far fa-eye"></i></a></li>
                     <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
                 </ul>
             </div>
         </div>
         <div class="card-body">
-            <%= link_to product.product_name, {controller: 'products', action: 'info_product', meta_title: product.meta_title}, class: 'h3 text-decoration-none' %>
+            <%= link_to product.product_name, {controller: 'products', action: 'show', meta_title: product.meta_title}, class: 'h3 text-decoration-none' %>
             <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
                 <li><%= product.origin %></li>
                 <li class="pt-2">

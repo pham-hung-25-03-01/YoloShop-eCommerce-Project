@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_21_082737) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_31_071630) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -317,14 +317,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_082737) do
     t.text "first_name"
     t.text "last_name"
     t.text "avatar_url"
-    t.boolean "gender", null: false
-    t.datetime "birthday", null: false
-    t.string "phone_number", null: false
-    t.text "apartment_number", null: false
-    t.text "street", null: false
-    t.text "ward", null: false
-    t.text "district", null: false
-    t.text "province", null: false
+    t.boolean "gender"
+    t.datetime "birthday"
+    t.string "phone_number"
+    t.text "apartment_number"
+    t.text "street"
+    t.text "ward"
+    t.text "district"
+    t.text "province"
     t.string "provider"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -337,10 +337,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_082737) do
     t.boolean "status", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "updated_by", null: false
+    t.uuid "updated_by"
     t.boolean "is_actived", default: true, null: false
     t.datetime "deleted_at"
     t.uuid "deleted_by"
+    t.string "uid"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
