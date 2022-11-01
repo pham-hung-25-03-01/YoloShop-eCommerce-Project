@@ -72,18 +72,22 @@
                             <% end %>
                         </p>
                         <p>
+                            <% index = 0 %>
                             <% @product.score_rating.to_i.times do %>
-                                <i class="text-warning fa fa-star"></i>              
+                                <i id="product-star-rate-<%= index %>" class="text-warning fa fa-star"></i>
+                                <% index += 1 %>            
                             <% end %>            
                             <% if @product.score_rating - @product.score_rating.to_i > 0.5 %>
-                                <i class="text-warning fa fa-star-half"></i>    
+                                <i id="product-star-rate-<%= index %>" class="text-warning fa fa-star-half"></i> 
+                                <% index += 1 %>        
                             <% end %>
                             <% (5- @product.score_rating.to_i).times do %>
-                                <i class="text-muted fa fa-star"></i>   
+                                <i id="product-star-rate-<%= index %>" class="text-muted fa fa-star"></i>   
+                                <% index += 1 %>
                             <% end %>
-                            <span class="list-inline-item text-dark">Rating <%= number_with_precision(@product.score_rating, precision: 1) %> (<%= @product.number_of_rates %> rates) | <%= @product.comments.count %> Comments | Your rating </span>
-                            <% 5.times do %>
-                                <a class="cursor-pointer"><i class="text-muted fa fa-star"></i></a>      
+                            <span id="rate" class="list-inline-item text-dark">Rating <%= number_with_precision(@product.score_rating, precision: 1) %> (<%= @product.number_of_rates %> rates) | <%= @product.comments.count %> Comments | Your rating </span>
+                            <% 5.times do |i| %>
+                                <a id="star-rate-<%= i %>" class="cursor-pointer" onclick="rating('<%= @product.id %>', '<%= i + 1 %>')"><i class="text-muted fa fa-star"></i></a>      
                             <% end %>
                         </p>
                         <h5 class="font-weight-400">Description:</h5>

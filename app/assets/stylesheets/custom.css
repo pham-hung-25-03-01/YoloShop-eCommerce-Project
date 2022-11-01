@@ -137,3 +137,6 @@ Custom Css
   color: white !important;
   background-color: #3b5998;
 }
+.dropdown-toggle::after {
+  display:none;
+}

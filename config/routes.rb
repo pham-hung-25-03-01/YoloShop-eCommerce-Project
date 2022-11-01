@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   resources :reviews do
     collection do
       post 'favorite'
+      post 'rating'
     end
   end
   resources :suppliers do

@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+    protect_from_forgery with: :exception
     before_action :count_favorite
     def count_favorite
         unless current_user.nil?
@@ -8,4 +9,3 @@ class ApplicationController < ActionController::Base
         end
     end
 end
-    

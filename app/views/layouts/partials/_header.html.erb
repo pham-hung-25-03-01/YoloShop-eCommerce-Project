@@ -40,8 +40,6 @@
                 <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
                     <i class="fa fa-fw fa-search text-dark mr-2"></i>
                 </a>
-            </div>
-            <div class="navbar align-self-center d-flex">
                 <a class="nav-icon position-relative text-decoration-none" href="#">
                     <i class="fa fa-fw fa-heart text-dark mr-1"></i>
                     <span id="favorite" class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"><%= session[:count_favorite] %></span>
@@ -51,22 +49,23 @@
                     <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">0</span>
                 </a>
                 <% if user_signed_in? %>
-                    <a class="nav-icon position-relative text-decoration-none cursor-pointer">
-                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
-                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
-                        <%= current_user.last_name %>
-                    </a>
-                    <a class="nav-icon position-relative text-decoration-none cursor-pointer" href="<%= destroy_user_session_path %>">
-                        <i class="fa fa-fw fa-sign-out-alt text-dark mr-3"></i>
-                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
-                    </a>               
+                    <div class="dropdown">
+                        <a class="nav-icon position-relative text-decoration-none cursor-pointer dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-fw fa-user text-dark mr-3"></i>
+                            <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" href="#">Personal infomation</a></li>
+                            <li><a class="dropdown-item" href="<%= destroy_user_session_path %>">Sign out</a></li>
+                        </ul>
+                    </div>          
                 <% else %>
                     <a class="nav-icon position-relative text-decoration-none cursor-pointer" onclick="open_login_register()">
                         <i class="fa fa-fw fa-user text-dark mr-3"></i>
                         <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
                     </a>
                 <% end %>
-            </div>            
+            </div>           
         </div>
 
     </div>
