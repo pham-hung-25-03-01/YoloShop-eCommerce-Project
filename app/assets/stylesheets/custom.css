@@ -140,3 +140,8 @@ Custom Css
 .dropdown-toggle::after {
   display:none;
 }
+.dropdown-item:focus{
+  background: none !important ;
+  box-shadow:none !important;
+  border: none !important; 
+}

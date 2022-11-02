@@ -13,11 +13,11 @@ class ProductsController < ApplicationController
       @products = all_products.limit(session[:product_offset])
       session[:prev_type_filter] = type_filter
       is_show_more = false if session[:product_offset] >= count_products
+      render json: { html: render_to_string(partial: 'layouts/partials/product', collection: @products, as: :product), is_show_more: is_show_more }
     rescue StandardError => e
       p e.message
       p e.backtrace
     end
-    render json: { html: render_to_string(partial: 'layouts/partials/product', collection: @products, as: :product), is_show_more: is_show_more }
   end
 
   def show_more
@@ -32,11 +32,11 @@ class ProductsController < ApplicationController
       @products = all_products.offset(session[:product_offset]).limit(DEFAULT_PER_PAGE)
       session[:product_offset] += DEFAULT_PER_PAGE
       is_show_more = false if session[:product_offset] >= count_products
+      render json: { html: render_to_string(partial: 'layouts/partials/product', collection: @products, as: :product), is_show_more: is_show_more}
     rescue StandardError => e
       p e.message
       p e.backtrace
     end
-    render json: { html: render_to_string(partial: 'layouts/partials/product', collection: @products, as: :product), is_show_more: is_show_more}
   end
 
   def show
@@ -59,11 +59,11 @@ class ProductsController < ApplicationController
   def get_quantity_in_stock
     begin
       @inventory = Inventory.find_by(product_id: params[:product_id], color_url: params[:color], size: params[:size])
+      render json: @inventory
     rescue StandardError => e
       p e.message
       p e.backtrace
     end
-    render json: @inventory
   end
 
   private

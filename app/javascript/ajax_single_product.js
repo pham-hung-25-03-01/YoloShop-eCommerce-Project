@@ -40,10 +40,10 @@ function show_more(product_id){
         success: function(data){
             $('#comments').append(data.html);
             if(data.is_show_more){
-                $('#show-more').removeClass('invisible').addClass('visible');
+                $('#show-more').show();
             }
             else{
-                $('#show-more').removeClass('visible').addClass('invisible');
+                $('#show-more').hide();
             }
         }
     });

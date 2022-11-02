@@ -10,11 +10,11 @@
                     <% review = reviews.find_by(user_id: comment.user_id) %>
                     <% unless review.nil? %>
                         <% user_score_rating = review.user_score_rating.to_i %>
-                        <% user_score_rating.times do %>
-                            <i class="text-warning fa fa-star"></i>              
+                        <% user_score_rating.times do |i| %>
+                            <i id="star-rate-<%= comment.user.id %>-<%= i %>" class="text-warning fa fa-star"></i>              
                         <% end %>            
-                        <% (5- user_score_rating).times do %>
-                            <i class="text-muted fa fa-star"></i>   
+                        <% (5- user_score_rating).times do |i| %>
+                            <i id="star-rate-<%= comment.user.id %>-<%= i + user_score_rating %>" class="text-muted fa fa-star"></i>   
                         <% end %>
                     <% end %>                
                 </label>

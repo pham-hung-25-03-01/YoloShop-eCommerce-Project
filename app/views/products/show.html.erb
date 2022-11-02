@@ -85,10 +85,18 @@
                                 <i id="product-star-rate-<%= index %>" class="text-muted fa fa-star"></i>   
                                 <% index += 1 %>
                             <% end %>
-                            <span id="rate" class="list-inline-item text-dark">Rating <%= number_with_precision(@product.score_rating, precision: 1) %> (<%= @product.number_of_rates %> rates) | <%= @product.comments.count %> Comments | Your rating </span>
-                            <% 5.times do |i| %>
-                                <a id="star-rate-<%= i %>" class="cursor-pointer" onclick="rating('<%= @product.id %>', '<%= i + 1 %>')"><i class="text-muted fa fa-star"></i></a>      
-                            <% end %>
+                            <span id="rate" class="list-inline-item text-dark mx-0">Rating <%= number_with_precision(@product.score_rating, precision: 1) %> (<%= @product.number_of_rates %> rates) | <%= @product.comments.count %> Comments</span>
+                            
+                            <% if user_signed_in? %>
+                                | Your rating                             
+                                <% user_score_rating = @reviews.find_by(user_id: current_user.id, product_id: @product.id).user_score_rating.to_i %>
+                                <% user_score_rating.times do |i| %>
+                                    <a class="cursor-pointer" onclick="rating('<%= @product.id %>', '<%= i + 1 %>')"><i id="star-rate-<%= i %>" class="text-warning fa fa-star"></i></a>      
+                                <% end %>
+                                <% (5- user_score_rating).times do |i| %>
+                                    <a class="cursor-pointer" onclick="rating('<%= @product.id %>', '<%= i + 1 + user_score_rating %>')"><i id="star-rate-<%= i + user_score_rating %>" class="text-muted fa fa-star"></i></a>      
+                                <% end %>
+                            <% end %>                       
                         </p>
                         <h5 class="font-weight-400">Description:</h5>
                         <p><%= @product.description %></p>
@@ -232,9 +240,22 @@
         <div id="comments" class="row">
             <%= render partial: 'layouts/partials/comment', collection: @comments, as: :comment, locals: { reviews: @reviews } %>
         </div>
-        <div class="text-center">
-            <a id="show-more" class="btn btn-success <%= @is_show_more ? 'visible' : 'invisible' %>" onclick="show_more('<%= @product.id %>')">Show more</a>
-        </div>
+        <% if @is_show_more %>
+            <div class="text-center">
+                <a id="show-more" class="btn btn-success" onclick="show_more('<%= @product.id %>')">Show more</a>
+            </div>
+        <% end %>
+        
+        <% if user_signed_in? %>
+            <div class="input-group my-4">
+                <input type="text" class="form-control" placeholder="Write your comment...">
+                <a class="btn btn-success">Send</a>
+            </div>
+        <% else %>
+            <div class="text-center my-4">
+                <a class="btn btn-success" onclick="open_sign_in()">Sign in to write your comment</a>
+            </div>
+        <% end %>
     </div>
 </section>
 <!-- Close Content -->

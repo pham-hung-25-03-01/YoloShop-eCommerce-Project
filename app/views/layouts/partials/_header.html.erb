@@ -51,7 +51,7 @@
                 <% if user_signed_in? %>
                     <div class="dropdown">
                         <a class="nav-icon position-relative text-decoration-none cursor-pointer dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-fw fa-user text-dark mr-3"></i>
+                            <i class="fa fa-fw fa-user text-success mr-3"></i>
                             <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -60,7 +60,7 @@
                         </ul>
                     </div>          
                 <% else %>
-                    <a class="nav-icon position-relative text-decoration-none cursor-pointer" onclick="open_login_register()">
+                    <a class="nav-icon position-relative text-decoration-none cursor-pointer" onclick="open_sign_in()">
                         <i class="fa fa-fw fa-user text-dark mr-3"></i>
                         <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
                     </a>
