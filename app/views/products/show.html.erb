@@ -237,23 +237,22 @@
         <div class="row py-3">
             <h1 class="h2 font-weight-400"><%= @product.comments.count %> comments</h1>
         </div>
-        <div id="comments" class="row">
+        <% if user_signed_in? %>
+            <div class="input-group mb-4 separated-comment pb-3">
+                <input id="input-comment" type="text" class="form-control" placeholder="Write your comment...">
+                <a class="btn btn-success" onclick="post_comment('<%= @product.id %>')">Post</a>
+            </div>
+        <% else %>  
+            <div class="text-center my-4">
+                <a class="btn btn-success" onclick="open_sign_in()">Sign in to write your comment</a>
+            </div>
+        <% end %>
+        <div id="comments">
             <%= render partial: 'layouts/partials/comment', collection: @comments, as: :comment, locals: { reviews: @reviews } %>
         </div>
         <% if @is_show_more %>
             <div class="text-center">
                 <a id="show-more" class="btn btn-success" onclick="show_more('<%= @product.id %>')">Show more</a>
-            </div>
-        <% end %>
-        
-        <% if user_signed_in? %>
-            <div class="input-group my-4">
-                <input type="text" class="form-control" placeholder="Write your comment...">
-                <a class="btn btn-success">Send</a>
-            </div>
-        <% else %>
-            <div class="text-center my-4">
-                <a class="btn btn-success" onclick="open_sign_in()">Sign in to write your comment</a>
             </div>
         <% end %>
     </div>

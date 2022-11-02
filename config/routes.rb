@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   resources :comments do
     collection do
       get 'show-more', to: 'comments/show_more'
+      post 'post'
     end
   end
   resources :reviews do

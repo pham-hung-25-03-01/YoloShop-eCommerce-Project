@@ -48,3 +48,23 @@ function show_more(product_id){
         }
     });
 }
+function post_comment(product_id){
+    content = $('#input-comment').val();
+    $.ajax({
+        url: '/comments/post',
+        type: 'post',
+        data: {
+            product_id: product_id,
+            content: content
+        },
+        success: function(data){
+            if(data.is_signed_in){
+                $('#comments').prepend(data.html);
+                $('#input-comment').val('');
+            }
+            else{
+                $('#sign-in').modal('show');
+            }
+        }        
+    });
+}

@@ -81,14 +81,14 @@ function rating(product_id, score_rating){
                 $('#rate').html('Rating '+ product_score_rating +' ('+ data.number_of_rates +' rates) | 0 Comments');
                 for(let i=0; i<5; i++){
                     $('#star-rate-'+ i).removeClass('text-muted text-warning');
-                    $('#star-rate-'+ data.user_id +'-'+ i).removeClass('text-muted text-warning');
+                    $("i[name='star-rate-"+ data.user_id +"-"+ i+"']").removeClass('text-muted text-warning');
                     if(i+1 <= score_rating){
                         $('#star-rate-'+ i).addClass('text-warning');
-                        $('#star-rate-'+ data.user_id +'-'+ i).addClass('text-warning');
+                        $("i[name='star-rate-"+ data.user_id +"-"+ i+"']").addClass('text-warning');
                     }
                     else{
                         $('#star-rate-'+ i).addClass('text-muted');
-                        $('#star-rate-'+ data.user_id +'-'+ i).addClass('text-muted');
+                        $("i[name='star-rate-"+ data.user_id +"-"+ i+"']").addClass('text-muted');
                     }
                 }
             }
