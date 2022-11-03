@@ -59,7 +59,8 @@ class ProductsController < ApplicationController
   def get_quantity_in_stock
     begin
       @inventory = Inventory.find_by(product_id: params[:product_id], color_url: params[:color], size: params[:size])
-      render json: @inventory
+
+      render json: { quantity_of_inventory: @inventory.nil? ? 0 : @inventory.quantity_of_inventory }
     rescue StandardError => e
       p e.message
       p e.backtrace

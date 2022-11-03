@@ -1,0 +1,14 @@
+<div class="row px-3">
+    <div class="col-md-3">
+        <img class="item-cart-img" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item1.jpg" alt="item1" />
+    </div>
+    <div class="col-md-9">
+        <span class="text-dark d-block font-size-1-1-rem"><%= item.inventory.product.product_name %></span>
+        <span class="text-success font-size-0-9-rem">$<%= item.inventory.product.sell_price * (1 - item.inventory.product.product_discount / 100) %>                 
+            <% unless item.inventory.product.product_discount == 0 %>
+                &nbsp;&nbsp;&nbsp;<s class="text-muted">$<%= item.inventory.product.sell_price %></s>
+            <% end %>
+        </span>
+        <span id="cart-item-quantity-<%= item.inventory_id %>" class="text-muted mx-3 font-size-0-9-rem">Quantity: <%= item.quantity %></span>
+    </div>
+</div>

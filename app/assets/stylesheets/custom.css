@@ -145,3 +145,27 @@ Custom Css
   box-shadow:none !important;
   border: none !important; 
 }
+.font-size-0-9-rem {
+  font-size: 0.9rem !important;
+}
+.font-size-1-1-rem {
+  font-size: 1.1rem !important;
+}
+.list-right {
+  left: auto !important;
+  right: 10px !important;
+}
+.shopping-cart {
+  width: 400px;
+}
+.item-cart-img {
+  float: left;
+  margin-right: 12px;
+}
+.shopping-cart-header {
+  border-bottom: 1px solid #E8E8E8;
+  padding-bottom: 15px;
+}
+.shopping-cart-items {  
+  list-style-type: none;
+}

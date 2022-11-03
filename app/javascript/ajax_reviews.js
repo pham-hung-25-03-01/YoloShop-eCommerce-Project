@@ -3,7 +3,9 @@ function products_favorite(product_id){
         url: '/reviews/favorite',
         type: 'post',
         data: {
-            product_id: product_id
+            review: {
+                product_id: product_id
+            }
         },
         success: function(data){
             if(data.is_signed_in){
@@ -28,7 +30,9 @@ function single_product_favorite(product_id){
         url: '/reviews/favorite',
         type: 'post',
         data: {
-            product_id: product_id        
+            review: {
+                product_id: product_id
+            }     
         },
         success: function(data){
             if(data.is_signed_in){
@@ -50,13 +54,15 @@ function single_product_favorite(product_id){
         }        
     });
 }
-function rating(product_id, score_rating){
+function rating(product_id, user_score_rating){
     $.ajax({
         url: '/reviews/rating',
         type: 'post',
         data: {
-            product_id: product_id,
-            score_rating: score_rating       
+            review: {
+                product_id: product_id,
+                user_score_rating: user_score_rating
+            }     
         },
         success: function(data){
             if(data.is_signed_in){
@@ -82,7 +88,7 @@ function rating(product_id, score_rating){
                 for(let i=0; i<5; i++){
                     $('#star-rate-'+ i).removeClass('text-muted text-warning');
                     $("i[name='star-rate-"+ data.user_id +"-"+ i+"']").removeClass('text-muted text-warning');
-                    if(i+1 <= score_rating){
+                    if(i+1 <= user_score_rating){
                         $('#star-rate-'+ i).addClass('text-warning');
                         $("i[name='star-rate-"+ data.user_id +"-"+ i+"']").addClass('text-warning');
                     }

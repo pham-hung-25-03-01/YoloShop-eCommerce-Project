@@ -52,5 +52,9 @@ class AddForeignKeyRefForAllTables < ActiveRecord::Migration[7.0]
     execute 'ALTER TABLE invoices ADD FOREIGN KEY (order_id) REFERENCES orders (id);'
     execute 'ALTER TABLE invoices ADD FOREIGN KEY (admin_id) REFERENCES admins (id);'
     execute 'ALTER TABLE invoices ADD FOREIGN KEY (payment_id) REFERENCES payments (id);'
+    
+    # carts table
+    execute 'ALTER TABLE carts ADD FOREIGN KEY (user_id) REFERENCES users (id);'
+    execute 'ALTER TABLE carts ADD FOREIGN KEY (inventory_id) REFERENCES inventories (id);'
   end
 end

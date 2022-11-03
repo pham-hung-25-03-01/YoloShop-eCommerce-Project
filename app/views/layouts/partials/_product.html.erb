@@ -5,14 +5,12 @@
             <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                 <ul class="list-unstyled">
                 
-                <% if user_signed_in? && !product.reviews.find_by(user_id: current_user.id).nil? %>
-                    <li><a id="btn-favorite-<%= product.id %>" class="btn text-white <%= product.reviews.find_by(user_id: current_user.id).is_favored ? 'btn-secondary' : 'btn-success' %>" onclick="products_favorite('<%= product.id %>')"><i class="far fa-heart"></i></a></li>                    
-                <% else %>
-                    <li><a id="btn-favorite-<%= product.id %>" class="btn text-white btn-success" onclick="products_favorite('<%= product.id %>')"><i class="far fa-heart"></i></a></li>
-                <% end %>
-            
+                    <% if user_signed_in? && !product.reviews.find_by(user_id: current_user.id).nil? %>
+                        <li><a id="btn-favorite-<%= product.id %>" class="btn text-white <%= product.reviews.find_by(user_id: current_user.id).is_favored ? 'btn-secondary' : 'btn-success' %>" onclick="products_favorite('<%= product.id %>')"><i class="far fa-heart"></i></a></li>                    
+                    <% else %>
+                        <li><a id="btn-favorite-<%= product.id %>" class="btn text-white btn-success" onclick="products_favorite('<%= product.id %>')"><i class="far fa-heart"></i></a></li>
+                    <% end %>            
                     <li><a class="btn btn-success text-white mt-2" href="/products/<%= product.meta_title %>"><i class="far fa-eye"></i></a></li>
-                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
                 </ul>
             </div>
         </div>

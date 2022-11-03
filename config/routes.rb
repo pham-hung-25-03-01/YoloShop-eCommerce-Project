@@ -51,4 +51,9 @@ Rails.application.routes.draw do
   resources :suppliers do
     resources :products
   end
+  resources :cart do
+    collection do
+      post 'add-to-cart', to: 'cart/add_to_cart'
+    end
+  end
 end

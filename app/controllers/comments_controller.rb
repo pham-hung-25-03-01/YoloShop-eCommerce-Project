@@ -17,13 +17,21 @@ class CommentsController < ApplicationController
     end
   end
   def post
-    if user_signed_in?
-      comment = Comment.create!(product_id: params[:product_id], user_id: current_user.id, content: params[:content], updated_by: current_user.id, is_actived: true)
-      reviews = Review.where(product_id: params[:product_id])
-      session[:comment_offset] += 1
-      render json: { html: render_to_string(partial: 'layouts/partials/comment', locals: { comment: comment, reviews: reviews }), is_signed_in: true }
-    else
-      render json: { is_signed_in: false }
+    begin
+      if user_signed_in?
+        comment = Comment.create!(comment_params.merge(user_id: current_user.id, updated_by: current_user.id, is_actived: true))
+        reviews = Review.where(product_id: params[:product_id])
+        session[:comment_offset] += 1
+        render json: { html: render_to_string(partial: 'layouts/partials/comment', locals: { comment: comment, reviews: reviews }), is_signed_in: true }
+      else
+        render json: { is_signed_in: false }
+      end
+    rescue StandardError => e
+      p e.message
+      p e.backtrace
     end
+  end
+  def comment_params
+    params.require(:comment).permit(:product_id, :content)
   end
 end

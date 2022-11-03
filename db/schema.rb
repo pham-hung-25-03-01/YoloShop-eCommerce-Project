@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_02_031849) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_03_095847) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -55,6 +55,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_02_031849) do
     t.uuid "admin_id", null: false
     t.text "banner_url", null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
+  end
+
+  create_table "carts", primary_key: ["user_id", "inventory_id"], force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.uuid "inventory_id", null: false
+    t.integer "quantity", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "updated_by", null: false
   end
 
   create_table "categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -350,6 +359,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_02_031849) do
   add_foreign_key "admins", "roles", name: "admins_role_id_fkey"
   add_foreign_key "banners", "admins", name: "banners_admin_id_fkey"
   add_foreign_key "banners", "events", name: "banners_event_id_fkey"
+  add_foreign_key "carts", "inventories", name: "carts_inventory_id_fkey"
+  add_foreign_key "carts", "users", name: "carts_user_id_fkey"
   add_foreign_key "comments", "products", name: "comments_product_id_fkey"
   add_foreign_key "comments", "users", name: "comments_user_id_fkey"
   add_foreign_key "inventories", "products", name: "inventories_product_id_fkey"

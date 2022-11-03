@@ -14,7 +14,7 @@ function ajax_get_quantity_in_stock(product_id){
         success: function(inventory) {
             $('#var-value').html(1);
             $('#product-quantity').val(1);
-            if(inventory == null){
+            if(inventory.quantity_of_inventory == 0){
                 $('#quantity').attr('hidden', true);
                 $('#add-to-cart').attr('disabled', true);
                 $('#product-quantity').attr('max', 0);
@@ -54,13 +54,56 @@ function post_comment(product_id){
         url: '/comments/post',
         type: 'post',
         data: {
-            product_id: product_id,
-            content: content
+            comment: {
+                product_id: product_id,
+                content: content
+            }
         },
         success: function(data){
             if(data.is_signed_in){
                 $('#comments').prepend(data.html);
                 $('#input-comment').val('');
+            }
+            else{
+                $('#sign-in').modal('show');
+            }
+        }        
+    });
+}
+function add_to_cart(product_id){
+    size = $('#size').val();
+    color = $('#color').val();
+    quantity = $('#product-quantity').val();
+    $.ajax({
+        url: '/cart/add-to-cart',
+        type: 'post',
+        data: {
+            product: {
+                product_id: product_id,
+                size: size,
+                color: color,
+                quantity: quantity
+            }
+        },
+        success: function(data){
+            if(data.is_signed_in){
+                if(data.is_error){
+                    alert('Quantity invalid');
+                }
+                else{
+                    if(data.is_available){
+                        if(data.is_exist){
+                            $('#cart-item-quantity-'+data.inventory_id).html('Quantity: '+data.quantity);
+                            $('#count-cart').html(data.count_cart);
+                        }
+                        else{
+                            $('#cart').append(data.html);
+                        }          
+                    }
+                    else{
+                        alert('Product is not available');
+                    }
+                }
             }
             else{
                 $('#sign-in').modal('show');

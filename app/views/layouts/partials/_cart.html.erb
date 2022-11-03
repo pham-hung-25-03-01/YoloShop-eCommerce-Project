@@ -1,0 +1,22 @@
+<div class="shopping-cart dropdown-menu list-right" aria-labelledby="dropdownMenuCart">
+    <div class="px-3 row">
+        <div class="col-md-7"><i class="fa fa-fw fa-cart-arrow-down text-dark"></i></div>
+        <div class="col-md-5 pb-2">
+            <span class="text-muted">Total:</span>
+            <span class="text-success">$2,229.97</span>
+        </div>
+        <hr class="text-success" />
+    </div>
+
+    <div class="shopping-cart-items" id="cart">
+        <%= render partial: 'layouts/partials/cart_item', collection: @carts, as: :item %>
+    </div>
+
+    <div class="px-2">
+        <hr class="text-success my-0 mb-2" />
+        <div class="text-center">
+            <a href="#" class="btn btn-success text-white">Checkout</a>
+        </div>
+    </div>
+    
+</div> <!--end shopping-cart -->

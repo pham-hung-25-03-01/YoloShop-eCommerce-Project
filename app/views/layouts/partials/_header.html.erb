@@ -44,11 +44,14 @@
                     <i class="fa fa-fw fa-heart text-dark mr-1"></i>
                     <span id="favorite" class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"><%= session[:count_favorite] %></span>
                 </a>
-                <a class="nav-icon position-relative text-decoration-none" href="#">
-                    <i class="fa fa-fw fa-cart-arrow-down text-dark mr-3"></i>
-                    <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">0</span>
-                </a>
                 <% if user_signed_in? %>
+                    <div class="dropdown">
+                        <a class="nav-icon position-relative text-decoration-none cursor-pointer" role="button" id="dropdownMenuCart" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-fw fa-cart-arrow-down text-dark mr-3"></i>
+                            <span id="count-cart" class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"><%= session[:count_cart] %></span>
+                        </a>
+                        <%= render partial: 'layouts/partials/cart' %>
+                    </div>
                     <div class="dropdown">
                         <a class="nav-icon position-relative text-decoration-none cursor-pointer dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa fa-fw fa-user text-success mr-3"></i>
@@ -60,6 +63,10 @@
                         </ul>
                     </div>          
                 <% else %>
+                    <a class="nav-icon position-relative text-decoration-none cursor-pointer" onclick="open_sign_in()">
+                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-3"></i>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+                    </a>
                     <a class="nav-icon position-relative text-decoration-none cursor-pointer" onclick="open_sign_in()">
                         <i class="fa fa-fw fa-user text-dark mr-3"></i>
                         <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
