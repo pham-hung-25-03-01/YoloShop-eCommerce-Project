@@ -159,6 +159,8 @@ Custom Css
   width: 400px;
 }
 .item-cart-img {
+  width: 70px;
+  height: 70px;
   float: left;
   margin-right: 12px;
 }

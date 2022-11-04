@@ -94,11 +94,13 @@ function add_to_cart(product_id){
                     if(data.is_available){
                         if(data.is_exist){
                             $('#cart-item-quantity-'+data.inventory_id).html('Quantity: '+data.quantity);
-                            $('#count-cart').html(data.count_cart);
                         }
                         else{
                             $('#cart').append(data.html);
-                        }          
+                        }
+                        $('#count-cart').html(data.count_cart);    
+                        $('#total-cart').html('$'+data.total); 
+                        $('#check-out-content').html('<hr class="text-success my-0 mb-2"/><div class="text-center"><a href="#" class="btn btn-success text-white">Checkout</a></div>')
                     }
                     else{
                         alert('Product is not available');

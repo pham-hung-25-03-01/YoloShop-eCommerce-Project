@@ -54,6 +54,7 @@ Rails.application.routes.draw do
   resources :cart do
     collection do
       post 'add-to-cart', to: 'cart/add_to_cart'
+      post 'remove-from-cart', to: 'cart/remove_from_cart'
     end
   end
 end

@@ -1,14 +1,17 @@
-<div class="row px-3">
+<div id="cart-item-<%= item.inventory_id %>" class="row px-3">
     <div class="col-md-3">
-        <img class="item-cart-img" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item1.jpg" alt="item1" />
+        <img class="item-cart-img mb-2" src="<%= item.inventory.color_url %>" alt="<%= item.inventory.product.product_name %>" />
     </div>
-    <div class="col-md-9">
-        <span class="text-dark d-block font-size-1-1-rem"><%= item.inventory.product.product_name %></span>
+    <div class="col-md-7">
+        <span class="text-dark d-block font-size-1-1-rem"><%= item.inventory.product.product_name %> size <%= item.inventory.size %></span>
         <span class="text-success font-size-0-9-rem">$<%= item.inventory.product.sell_price * (1 - item.inventory.product.product_discount / 100) %>                 
             <% unless item.inventory.product.product_discount == 0 %>
                 &nbsp;&nbsp;&nbsp;<s class="text-muted">$<%= item.inventory.product.sell_price %></s>
             <% end %>
         </span>
         <span id="cart-item-quantity-<%= item.inventory_id %>" class="text-muted mx-3 font-size-0-9-rem">Quantity: <%= item.quantity %></span>
+    </div>
+    <div class="col-md-2">
+        <a class="btn btn-danger" onclick="remove_from_cart('<%= item.inventory.product_id %>', '<%= item.inventory.size %>', '<%= item.inventory.color_url %>')"><i class="fa faw fa-trash-alt text-white"></i></a>
     </div>
 </div>

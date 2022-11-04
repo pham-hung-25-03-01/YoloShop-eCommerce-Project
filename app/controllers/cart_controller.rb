@@ -1,27 +1,48 @@
 class CartController < ApplicationController
     skip_before_action :verify_authenticity_token
     def add_to_cart
+        begin
+            if user_signed_in?
+                inventory = Inventory.find_by(product_id: params[:product][:product_id], size: params[:product][:size], color_url: params[:product][:color], is_actived: true)
+                quantity = params[:product][:quantity].to_i
+                if quantity > 0 && !inventory.nil?
+                    return render json: { is_signed_in: true, is_available: false, is_error: false } if inventory.quantity_of_inventory < quantity
+                    cart = Cart.find_by(inventory_id: inventory.id)
+                    if cart.nil?
+                        cart = Cart.create!(user_id: current_user.id, inventory_id: inventory.id, quantity: quantity, updated_by: current_user.id)
+                        count_cart = Cart.where(user_id: current_user.id).count
+                        total = Inventory.joins(:product).joins(:carts).where(carts: {user_id: current_user.id}).pluck(Arel.sql('SUM(products.sell_price * (1 - products.product_discount / 100) * carts.quantity ) as total')).first || 0
+                        render json: { total: total, html: render_to_string(partial: 'layouts/partials/cart_item', locals: { item: cart }), count_cart: count_cart, is_signed_in: true, is_available: true, is_error: false, is_exist: false }
+                    else
+                        cart.quantity += quantity
+                        cart.save
+                        total = Inventory.joins(:product).joins(:carts).where(carts: {user_id: current_user.id}).pluck(Arel.sql('SUM(products.sell_price * (1 - products.product_discount / 100) * carts.quantity ) as total')).first || 0
+                        render json: { total: total, inventory_id: cart.inventory_id, quantity: cart.quantity, is_signed_in: true, is_available: true, is_error: false, is_exist: true }
+                    end
+                    
+                else
+                    render json: { is_signed_in: true, is_error: true }
+                end
+            else
+                render json: { is_signed_in: false }
+            end
+        rescue StandardError => e
+            p e.message
+            p e.backtrace
+        end
+    end
+    def remove_from_cart
         if user_signed_in?
             inventory = Inventory.find_by(product_id: params[:product][:product_id], size: params[:product][:size], color_url: params[:product][:color], is_actived: true)
-            quantity = params[:product][:quantity].to_i
-            if quantity > 0
-                return render json: { is_signed_in: true, is_available: false, is_error: false } if inventory.quantity_of_inventory < quantity
-                cart = Cart.find_by(inventory_id: inventory.id)
-                if cart.nil?
-                    cart = Cart.create!(user_id: current_user.id, inventory_id: inventory.id, quantity: quantity, updated_by: current_user.id)
-                    count_cart = Cart.where(user_id: current_user.id).count
-                    render json: { html: render_to_string(partial: 'layouts/partials/cart_item', locals: { item: cart }), count_cart: count_cart, is_signed_in: true, is_available: true, is_error: false, is_exist: false }
-                else
-                    cart.quantity += quantity
-                    cart.save
-                    render json: { inventory_id: cart.inventory_id, quantity: cart.quantity, is_signed_in: true, is_available: true, is_error: false, is_exist: true }
-                end
-                
-            else
-                render json: { is_signed_in: true, is_error: true }
-            end
+            cart = Cart.find_by(inventory_id: inventory.id)
+            return render json: {is_signed_in: true, is_error: true} if cart.nil?
+            cart.destroy
+            count_cart = Cart.where(user_id: current_user.id).count
+            is_cart_empty = count_cart == 0 ? true : false
+            total = Inventory.joins(:product).joins(:carts).where(carts: {user_id: current_user.id}).pluck(Arel.sql('SUM(products.sell_price * (1 - products.product_discount / 100) * carts.quantity ) as total')).first || 0
+            render json: {is_cart_empty: is_cart_empty, total: total, count_cart: count_cart, is_signed_in: true, is_error: false, inventory_id: inventory.id}
         else
-            render json: { is_signed_in: false }
+            render json: {is_signed_in: false}
         end
     end
 end

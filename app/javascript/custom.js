@@ -44,3 +44,46 @@ function open_sign_in(){
 function open_shopping_cart(){
     $(".shopping-cart").fadeToggle( "fast");
 }
+function remove_from_cart(product_id, size, color){
+    $.ajax({
+        url: '/cart/remove-from-cart',
+        type: 'post',
+        data: {
+            product: {
+                product_id: product_id,
+                size: size,
+                color: color
+            }
+        },
+        success: function(data){
+            if(data.is_signed_in){
+                if(data.is_error){
+                    alert('Product invalid');
+                }
+                else{
+                    $('#count-cart').html(data.count_cart);    
+                    $('#cart-item-'+data.inventory_id).remove();
+                    $('#total-cart').html('$'+data.total);
+                    if(data.is_cart_empty){
+                        $('#check-out-content').html('<label class="text-center w-100">Cart is empty</label>');
+                    }
+                    else{
+                        $('#check-out-content').html('<hr class="text-success my-0 mb-2"/><div class="text-center"><a href="#" class="btn btn-success text-white">Checkout</a></div>')
+                    }
+                }
+            }
+            else{
+                $('#sign-in').modal('show');
+            }
+        }        
+    });
+}
+$('#dropdownMenuLink').click(function(){
+    $('#dropdownMenuLink-menu').toggleClass('show');
+});
+$('#dropdownMenuCart').click(function(){
+    $('#dropdownMenuCart-menu').toggleClass('show');
+});
+$('.dropdown-menu').on('click', function(e) {
+    e.stopPropagation();
+});

@@ -50,14 +50,14 @@
                             <i class="fa fa-fw fa-cart-arrow-down text-dark mr-3"></i>
                             <span id="count-cart" class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"><%= session[:count_cart] %></span>
                         </a>
-                        <%= render partial: 'layouts/partials/cart' %>
+                        <%= render partial: 'layouts/partials/cart', locals: {is_cart_empty: @is_cart_empty} %>
                     </div>
                     <div class="dropdown">
                         <a class="nav-icon position-relative text-decoration-none cursor-pointer dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa fa-fw fa-user text-success mr-3"></i>
                             <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <ul id="dropdownMenuLink-menu" class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             <li><a class="dropdown-item" href="#">Personal infomation</a></li>
                             <li><a class="dropdown-item" href="<%= destroy_user_session_path %>">Sign out</a></li>
                         </ul>
