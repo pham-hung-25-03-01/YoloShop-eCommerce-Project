@@ -20,7 +20,7 @@ class CommentsController < ApplicationController
     begin
       if user_signed_in?
         comment = Comment.create!(comment_params.merge(user_id: current_user.id, updated_by: current_user.id, is_actived: true))
-        reviews = Review.where(product_id: params[:product_id])
+        reviews = Review.where(product_id: params[:comment][:product_id])
         session[:comment_offset] += 1
         render json: { html: render_to_string(partial: 'layouts/partials/comment', locals: { comment: comment, reviews: reviews }), is_signed_in: true }
       else

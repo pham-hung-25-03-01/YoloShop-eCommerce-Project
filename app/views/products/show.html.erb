@@ -215,9 +215,9 @@
                                 <div class="mx-auto col-6 d-grid">
                                 
                                 <% if user_signed_in? && !@product.reviews.find_by(user_id: current_user.id).nil? %>
-                                    <button class="btn btn-lg <%= @product.reviews.find_by(user_id: current_user.id).is_favored ? 'btn-secondary' : 'btn-success' %>" id="btn-favorite" onclick="single_product_favorite('<%= @product.id %>')"><%= @product.reviews.find_by(user_id: current_user.id).is_favored ? 'Unfavored' : 'Favorite' %></button>
+                                    <button class="btn btn-lg <%= @product.reviews.find_by(user_id: current_user.id).is_favored ? 'btn-secondary' : 'btn-success' %>" id="btn-favorite" onclick="products_favorite('<%= @product.id %>')"><%= @product.reviews.find_by(user_id: current_user.id).is_favored ? 'Unfavored' : 'Favorite' %></button>
                                 <% else %>
-                                    <button class="btn btn-success btn-lg" id="btn-favorite" onclick="single_product_favorite('<%= @product.id %>')">Favorite</button>
+                                    <button class="btn btn-success btn-lg" id="btn-favorite" onclick="products_favorite('<%= @product.id %>')">Favorite</button>
                                 <% end %>                                                             
                                 </div>
                                 <div class="mx-auto col-6 d-grid">

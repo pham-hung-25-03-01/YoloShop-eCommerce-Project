@@ -171,3 +171,12 @@ Custom Css
 .shopping-cart-items {  
   list-style-type: none;
 }
+.w-60-px {
+  width: 60px!important;
+}
+.border-0 {
+  border: 0;
+}
+.border-0:focus {
+  outline: none;
+}

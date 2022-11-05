@@ -1,5 +1,5 @@
-<div id="dropdownMenuCart-menu" class="shopping-cart dropdown-menu list-right" aria-labelledby="dropdownMenuCart">
-    <div class="px-3 row">
+<div id="dropdownMenuCart-menu" class="shopping-cart dropdown-menu list-right">
+    <div class="px-3 row" onclick="open_dropdown(event)">
         <div class="col-md-7"><i class="fa fa-fw fa-cart-arrow-down text-dark"></i></div>
         <div class="col-md-5 pb-2">
             <span class="text-muted">Total:</span>
@@ -11,13 +11,13 @@
     <div class="shopping-cart-items" id="cart">
         <%= render partial: 'layouts/partials/cart_item', collection: @carts, as: :item %>
     </div>
-     <div id="check-out-content" class="px-2">
+     <div id="check-out-content" class="px-2" onclick="open_dropdown_without_preventDefault(event)">
         <% if is_cart_empty %>
             <label class="text-center w-100">Cart is empty</label>
         <% else %>
             <hr class="text-success my-0 mb-2" />
             <div class="text-center">
-                <a href="#" class="btn btn-success text-white">Checkout</a>
+                <a type="button" href="<%= checkout_index_path %>" class="btn btn-success text-white">Checkout</a>
             </div>
         <% end %>   
     </div>

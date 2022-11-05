@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'checkout/index'
   devise_for :admins
   #devise_for :users
   devise_for :users, controllers: {
@@ -57,4 +58,5 @@ Rails.application.routes.draw do
       post 'remove-from-cart', to: 'cart/remove_from_cart'
     end
   end
+  resources :checkout
 end

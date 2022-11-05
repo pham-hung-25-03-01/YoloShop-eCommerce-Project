@@ -12,8 +12,7 @@ class ReviewsController < ApplicationController
           review.save
         end
         count_favorite = Review.where(user_id: current_user.id, is_favored: true).count
-        session[:count_favorite] = count_favorite
-        render json: { review: review, count_favorite: count_favorite, is_signed_in: true }
+        render json: { html: render_to_string(partial: 'layouts/partials/favorite_item', locals: { item: review }), review: review, count_favorite: count_favorite, is_signed_in: true }
       else
         render json: { is_signed_in: false }
       end

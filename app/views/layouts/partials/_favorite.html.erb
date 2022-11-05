@@ -1,0 +1,9 @@
+<div id="dropdownMenuFavorite-menu" class="shopping-cart dropdown-menu list-right">
+    <div class="shopping-cart" id="favorite"> 
+    <% if session[:count_favorite] == 0 %>
+        <label class="text-center w-100">You haven't favored any products yet</label>
+    <% else %>
+        <%= render partial: 'layouts/partials/favorite_item', collection: @user_reviews, as: :item %>
+    <% end %>      
+    </div>
+</div>

@@ -100,7 +100,7 @@ function add_to_cart(product_id){
                         }
                         $('#count-cart').html(data.count_cart);    
                         $('#total-cart').html('$'+data.total); 
-                        $('#check-out-content').html('<hr class="text-success my-0 mb-2"/><div class="text-center"><a href="#" class="btn btn-success text-white">Checkout</a></div>')
+                        $('#check-out-content').html('<hr class="text-success my-0 mb-2"/><div class="text-center"><a type="button" href="/checkout/index" class="btn btn-success text-white">Checkout</a></div>')
                     }
                     else{
                         alert('Product is not available');
