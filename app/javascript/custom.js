@@ -65,12 +65,14 @@ function remove_from_cart(product_id, size, color){
                     $('#cart-item-'+data.inventory_id).remove();
                     $('#total-cart').html('$'+data.total);
                     $('#checkout-item-'+data.inventory_id).remove();
+                    $('#checkout-cart-total').html('$'+data.total);
                     if(data.is_cart_empty){
                         $('#check-out-content').html('<label class="text-center w-100">Cart is empty</label>');
                         $('#checkout-table').html('<label class="text-center w-100">Your cart is empty.</label>');
+                        $('#proceed-to-checkout').remove();
                     }
                     else{
-                        $('#check-out-content').html('<hr class="text-success my-0 mb-2"/><div class="text-center"><a type="button" href="/checkout/index" class="btn btn-success text-white">Checkout</a></div>')
+                        $('#check-out-content').html('<hr class="text-success my-0 mb-2"/><div class="text-center"><a type="button" href="/checkout" class="btn btn-success text-white">Checkout</a></div>')
                     }
                 }
             }

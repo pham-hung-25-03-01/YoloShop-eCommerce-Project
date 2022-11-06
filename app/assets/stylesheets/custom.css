@@ -180,3 +180,12 @@ Custom Css
 .border-0:focus {
   outline: none;
 }
+.tr-text-center {
+  padding: 20px 0.5rem!important;
+}
+.tr-border-transparent {
+  border: transparent!important;
+}
+.w-0 {
+  width: 0!important;
+}

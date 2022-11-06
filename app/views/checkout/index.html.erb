@@ -8,42 +8,9 @@
                 </p>
             </div>
         </div>
-        <div class="shadow-sm p-4 bg-white">
-            <h2 class="h2"><i class="fa fa-faw fa-cart-arrow-down"></i>&nbsp;&nbsp;&nbsp;Your cart</h2>
-            <div id="checkout-table">
-                <% if @carts.count == 0 %>
-                    <label class="text-center w-100">Your cart is empty.</label>
-                <% else %>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Produc name</th>
-                                <th scope="col">Size</th>
-                                <th scope="col">Color</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Total</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>                
-                            <% @carts.each_with_index do |item, index| %>
-                                <tr id="checkout-item-<%= item.inventory_id %>">
-                                    <th scope="row"><%= index + 1 %></th>
-                                    <td><%= item.inventory.product.product_name %></td>
-                                    <td><%= item.inventory.size %></td>
-                                    <td><%= image_tag item.inventory.color_url, class: 'item-img' %></td>
-                                    <td>$<%= item.inventory.product.sell_price * (1 - item.inventory.product.product_discount/100) %></td>
-                                    <td><input class="w-60-px border-0" type="number"  min="1" max="<%= @inventories.find(item.inventory_id).quantity_of_inventory %>" value="<%= item.quantity %>"></td>
-                                    <td>$<%= item.inventory.product.sell_price * (1 - item.inventory.product.product_discount/100) * item.quantity %></td>
-                                    <td><a class="btn btn-danger" onclick="remove_from_cart('<%= item.inventory.product_id %>', '<%= item.inventory.size %>', '<%= item.inventory.color_url %>')"><i class="fa fa-faw fa-trash-alt"></i></a></td>
-                                </tr> 
-                            <% end %>          
-                        </tbody>
-                    </table>
-                <% end %>  
-            </div>
+        <div id="checkout-information">
+            <%= render partial: 'layouts/partials/update_cart', locals: { carts: @carts, inventories: @inventories } %>
         </div>
     </div>
 </section>
+<%= javascript_include_tag 'ajax_checkout', 'data-turbolinks-track': 'load' %>

@@ -56,7 +56,13 @@ Rails.application.routes.draw do
     collection do
       post 'add-to-cart', to: 'cart/add_to_cart'
       post 'remove-from-cart', to: 'cart/remove_from_cart'
+      post 'update-quantity', to: 'cart/update_quantity'
     end
   end
-  resources :checkout
+  resources :checkout do
+    collection do
+      get 'proceed-to-checkout', to: 'checkout/proceed_to_checkout'
+      get 'back-to-cart', to: 'checkout/back_to_cart'
+    end
+  end
 end
