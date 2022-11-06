@@ -1,27 +1,27 @@
 <div class="shadow-sm p-4 bg-white pb-3">
     <h2 class="h2"><i class="fa fa-faw fa-cart-arrow-down"></i>&nbsp;&nbsp;&nbsp;Your cart</h2>
     <hr class="text-success">
-    <div id="checkout-table">
+    <div id="checkout-table" class="table-responsive">
         <% if carts.count == 0 %>
             <label class="text-center w-100">Your cart is empty.</label>
         <% else %>
-            <table class="table">
-                <thead>
+            <table class="table table-borderless table-hover">
+                <thead class="table-border">
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Produc name</th>
-                        <th scope="col">Size</th>
-                        <th scope="col">Color</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Total</th>
-                        <th scope="col" class="w-0"></th>
+                        <td scope="col">#</td>
+                        <td scope="col">Produc name</td>
+                        <td scope="col">Size</td>
+                        <td scope="col">Color</td>
+                        <td scope="col">Price</td>
+                        <td scope="col">Quantity</td>
+                        <td scope="col">Total</td>
+                        <td scope="col" class="w-0"></td>
                     </tr>
                 </thead>
-                <tbody>                
+                <tbody class="table-border">                
                     <% carts.each_with_index do |item, index| %>
                         <tr id="checkout-item-<%= item.inventory_id %>">
-                            <th class="tr-text-center" scope="row"><%= index + 1 %></th>
+                            <td class="tr-text-center" scope="row"><%= index + 1 %></td>
                             <td class="tr-text-center"><%= link_to item.inventory.product.product_name, "/products/#{item.inventory.product.meta_title}", class: 'text-decoration-none text-success' %></td>
                             <td class="tr-text-center"><%= item.inventory.size %></td>
                             <td><%= image_tag item.inventory.color_url, class: 'item-img' %></td>

@@ -1,6 +1,68 @@
 <div class="shadow-sm p-4 bg-white pb-3">
-    <h2 class="h2">Order details</h2>
+    <h2 class="h2">Order information</h2>
     <hr class="text-success">
+    <form class="row" action="#" method="post" novalidate="novalidate">
+        <div class="col-md-12 mb-3 row">
+            <label class="col-md-4">Total: <span class="text-success">$<%= session[:total_cart] %></span></label>
+            <label class="col-md-4">Discount: <span class="text-success">$0.0</span></label>
+            <label class="col-md-4">Total payment: <span class="text-success">$<%= session[:total_cart] %></span></label>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="first-name" class="form-label">First name</label>
+            <input id="first-name" type="text" class="form-control" placeholder="Example: Pham Van" value="<%= current_user.first_name %>" required readonly>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="last-name" class="form-label">Last name <span class="text-danger">*</span></label>
+            <input id="last-name" type="text" class="form-control" placeholder="Example: Hung" value="<%= current_user.last_name %>" required readonly>
+        </div>
+        <div class="col-md-12 mb-3">
+            <label for="apartment-number" class="form-label">Apartment number <span class="text-danger">*</span></label>
+            <input id="apartment-number" type="text" class="form-control" placeholder="Example: HCMC National University Dormitory Zone B" value="<%= current_user.apartment_number %>" required>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="street" class="form-label">Street <span class="text-danger">*</span></label>
+            <input id="street" type="text" class="form-control" placeholder="Example: To Vinh Dien" value="<%= current_user.street %>" required>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="ward" class="form-label">Ward <span class="text-danger">*</span></label>
+            <input id="ward" type="text" class="form-control" placeholder="Example: Dong Hoa" value="<%= current_user.ward %>" required>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="district" class="form-label">District <span class="text-danger">*</span></label>
+            <input id="district" type="text" class="form-control" placeholder="Example: Di An" value="<%= current_user.district %>" required>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="province" class="form-label">Province <span class="text-danger">*</span></label>
+            <input id="province" type="text" class="form-control" placeholder="Example: Binh Duong" value="<%= current_user.province %>" required>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+            <input id="email" type="email" class="form-control" placeholder="Example: phamhunggl721@gmail.com" value="<%= current_user.email %>" required readonly>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="phone_number" class="form-label">Phone <span class="text-danger">*</span></label>
+            <input id="phone_number" type="text" class="form-control" placeholder="Example: 0898759325" value="<%= current_user.phone_number %>" required readonly>
+        </div>
+        <div class="col-md-12 mb-3">
+            <label for="coupon" class="form-label">Have a coupon? <a href="/coupons" target="_blank" class="text-danger text-decoration-none cursor-pointer">Click here to get coupon</a></label>
+            <div class="row">
+                <div class="col-md-6">
+                    <input id="coupon" type="text" class="form-control" placeholder="Enter coupon code">
+                </div>
+                <div class="col-md-6">
+                    <a href="" class="btn btn-success">Apply coupon</a>
+                </div>       
+            </div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="payments" class="form-label">Payments <span class="text-danger">*</span></label>
+            <select class="form-select" id="payments">
+                <% payments.each_with_index do |item, index| %>
+                    <option <%= index == 0 ? 'selected' : '' %> value="<%= item.id %>"><%= item.payment_name %></option>
+                <% end %>
+            </select>
+        </div>
+    </form>
     <div class="text-end">
         <a onclick="back_to_cart()" class="btn btn-secondary text-white"><i class="fa fa-faw fa-arrow-left"></i> Back to my cart</a>
         <a class="btn btn-success text-white">Checkout</a>     

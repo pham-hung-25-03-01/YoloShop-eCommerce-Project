@@ -189,3 +189,6 @@ Custom Css
 .w-0 {
   width: 0!important;
 }
+.table-border {
+  border-bottom: 0.5px solid #cde5d3!important;
+}

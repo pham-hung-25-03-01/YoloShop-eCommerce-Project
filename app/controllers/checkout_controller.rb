@@ -12,7 +12,8 @@ class CheckoutController < ApplicationController
       if user_signed_in?
         count_user_cart = Cart.where(user_id: current_user.id).count
         if count_user_cart > 0
-          render json: { html: render_to_string(partial: 'layouts/partials/confirm_order_information'), is_signed_in: true, is_cart_empty: false }
+          @payments = Payment.where(is_actived: true)
+          render json: { html: render_to_string(partial: 'layouts/partials/confirm_order_information', locals: {payments: @payments}), is_signed_in: true, is_cart_empty: false }
         else
           render json: { is_signed_in: true, is_cart_empty: true }
         end
