@@ -66,9 +66,9 @@
                 <div class="card">
                     <div class="card-body">
                         <h1 class="h2 font-weight-400"><%= @product.product_name %></h1>
-                        <p class="h3">$<%= @product.sell_price * (1 - @product.product_discount / 100) %>                 
+                        <p class="h3"><%= number_with_precision(@product.sell_price * (1 - @product.product_discount / 100), precision: 0) %> VND
                             <% unless @product.product_discount == 0 %>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<s>$<%= @product.sell_price %></s>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<s><%= number_with_precision(@product.sell_price, precision: 0) %> VND</s>
                             <% end %>
                         </p>
                         <p>

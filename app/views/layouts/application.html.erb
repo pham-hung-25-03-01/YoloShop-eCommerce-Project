@@ -41,5 +41,15 @@
     <%= javascript_include_tag 'templatemo.min', 'data-turbolinks-track': 'load' %>
     <%= javascript_include_tag 'custom', 'data-turbolinks-track': 'load' %>
     <!-- End Script -->
+
+    <% if current_user.nil? %>
+      <script type="text/javascript">
+          $(window).on('load', function() {
+            if(window.location.pathname == '/home'){
+              $('#sign-in').modal('show');
+            }
+          });
+      </script>
+    <% end %>
   </body>
 </html>

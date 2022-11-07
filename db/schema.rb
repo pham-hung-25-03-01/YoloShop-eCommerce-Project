@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_03_095847) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_07_101214) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -148,9 +148,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_03_095847) do
     t.string "bank_code"
     t.string "bank_transaction_no"
     t.string "transaction_no"
-    t.money "total_money", scale: 2, null: false
-    t.money "total_money_discount", scale: 2, null: false
-    t.money "total_money_payment", scale: 2, null: false
+    t.decimal "total_money", precision: 15, scale: 2, null: false
+    t.decimal "total_money_discount", precision: 15, scale: 2, null: false
+    t.decimal "total_money_payment", precision: 15, scale: 2, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "updated_by", null: false
@@ -163,7 +163,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_03_095847) do
     t.uuid "inventory_id", null: false
     t.uuid "order_id", null: false
     t.integer "quantity_of_order", null: false
-    t.money "sell_price", scale: 2, null: false
+    t.decimal "sell_price", precision: 15, scale: 2, null: false
     t.float "product_discount", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -236,8 +236,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_03_095847) do
   create_table "product_price_logs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "admin_id", null: false
     t.uuid "product_id", null: false
-    t.money "import_price", scale: 2, default: "0.0", null: false
-    t.money "sell_price", scale: 2, default: "0.0", null: false
+    t.decimal "import_price", precision: 15, scale: 2, default: "0.0", null: false
+    t.decimal "sell_price", precision: 15, scale: 2, default: "0.0", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "updated_by", null: false
@@ -258,8 +258,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_03_095847) do
     t.text "description"
     t.boolean "gender", null: false
     t.integer "warranty", default: 0, null: false
-    t.money "import_price", scale: 2, default: "0.0", null: false
-    t.money "sell_price", scale: 2, default: "0.0", null: false
+    t.decimal "import_price", precision: 15, scale: 2, default: "0.0", null: false
+    t.decimal "sell_price", precision: 15, scale: 2, default: "0.0", null: false
     t.float "product_discount", default: 0.0, null: false
     t.integer "shipping", default: 1, null: false
     t.float "score_rating", default: 0.0, null: false

@@ -1,9 +1,9 @@
 <div id="dropdownMenuCart-menu" class="shopping-cart dropdown-menu list-right">
     <div class="px-3 row" onclick="open_dropdown(event)">
-        <div class="col-md-7"><i class="fa fa-fw fa-cart-arrow-down text-dark"></i></div>
-        <div class="col-md-5 pb-2">
+        <div class="col-md-5"><i class="fa fa-fw fa-cart-arrow-down text-dark"></i></div>
+        <div class="col-md-7 pb-2">
             <span class="text-muted">Total:</span>
-            <span id="total-cart" class="text-success">$<%= session[:total_cart] %></span>
+            <span id="total-cart" class="text-success"><%= number_with_precision(session[:total_cart], precision: 0) %> VND</span>
         </div>
         <hr class="text-success" />
     </div>

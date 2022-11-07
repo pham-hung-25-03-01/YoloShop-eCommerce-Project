@@ -1,11 +1,11 @@
 <div class="shadow-sm p-4 bg-white pb-3">
     <h2 class="h2">Order information</h2>
     <hr class="text-success">
-    <form class="row" action="#" method="post" novalidate="novalidate">
+    <div class="row">
         <div class="col-md-12 mb-3 row">
-            <label class="col-md-4">Total: <span class="text-success">$<%= session[:total_cart] %></span></label>
-            <label class="col-md-4">Discount: <span class="text-success">$0.0</span></label>
-            <label class="col-md-4">Total payment: <span class="text-success">$<%= session[:total_cart] %></span></label>
+            <label class="col-md-4">Total: <span id="order-total" class="text-success"><%= number_with_precision(session[:total_cart], precision: 0) %></span> VND</label>
+            <label class="col-md-4">Discount: <span id="order-discount" class="text-success">0 VND</span></label>
+            <label class="col-md-4">Total payment: <span id="order-total-payment" class="text-success"><%= number_with_precision(session[:total_cart], precision: 0) %> VND</span></label>
         </div>
         <div class="col-md-6 mb-3">
             <label for="first-name" class="form-label">First name</label>
@@ -49,22 +49,24 @@
                 <div class="col-md-6">
                     <input id="coupon" type="text" class="form-control" placeholder="Enter coupon code">
                 </div>
-                <div class="col-md-6">
-                    <a href="" class="btn btn-success">Apply coupon</a>
-                </div>       
+                <div class="col-md-2">
+                    <a onclick="apply_coupon()" class="btn btn-success">Apply coupon</a>
+                </div>
+                <div id="coupon-notification" class="col-md-4">                   
+                </div>     
             </div>
         </div>
         <div class="col-md-6 mb-3">
             <label for="payments" class="form-label">Payments <span class="text-danger">*</span></label>
-            <select class="form-select" id="payments">
+            <select class="form-select font-weight-300" id="payments">
                 <% payments.each_with_index do |item, index| %>
-                    <option <%= index == 0 ? 'selected' : '' %> value="<%= item.id %>"><%= item.payment_name %></option>
+                    <option class="font-weight-300" <%= index == 0 ? 'selected' : '' %> value="<%= item.id %>"><%= item.payment_name %></option>
                 <% end %>
             </select>
         </div>
-    </form>
-    <div class="text-end">
-        <a onclick="back_to_cart()" class="btn btn-secondary text-white"><i class="fa fa-faw fa-arrow-left"></i> Back to my cart</a>
-        <a class="btn btn-success text-white">Checkout</a>     
+        <div class="text-end col-md-12">
+            <a onclick="back_to_cart()" class="btn btn-secondary text-white"><i class="fa fa-faw fa-arrow-left"></i> Back to my cart</a>
+            <a onclick="pay()" class="btn btn-success text-white font-size-18-px font-weight-300" >Checkout</a>     
+        </div>
     </div>
 </div>

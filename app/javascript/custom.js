@@ -63,9 +63,9 @@ function remove_from_cart(product_id, size, color){
                 else{
                     $('#count-cart').html(data.count_cart);    
                     $('#cart-item-'+data.inventory_id).remove();
-                    $('#total-cart').html('$'+data.total);
+                    $('#total-cart').html(data.total + ' VND');
                     $('#checkout-item-'+data.inventory_id).remove();
-                    $('#checkout-cart-total').html('$'+data.total);
+                    $('#checkout-cart-total').html(data.total + ' VND');
                     if(data.is_cart_empty){
                         $('#check-out-content').html('<label class="text-center w-100">Cart is empty</label>');
                         $('#checkout-table').html('<label class="text-center w-100">Your cart is empty.</label>');

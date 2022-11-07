@@ -49,12 +49,19 @@
                         </a>
                         <%= render partial: 'layouts/partials/favorite' %>
                     </div>
-                    <div class="dropdown">
-                        <a class="nav-icon position-relative text-decoration-none cursor-pointer" role="button" id="dropdownMenuCart" data-bs-toggle="dropdown">
-                            <i class="fa fa-fw fa-cart-arrow-down text-dark mr-3"></i>
-                            <span id="count-cart" class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"><%= session[:count_cart] %></span>
-                        </a>
-                        <%= render partial: 'layouts/partials/cart', locals: {is_cart_empty: @is_cart_empty} %>
+                    <div class="dropdown">                   
+                        <% if request.env['PATH_INFO'] == '/checkout' || request.env['PATH_INFO'] == '/checkout/index' %>
+                            <a class="nav-icon position-relative text-decoration-none cursor-pointer" role="button">
+                                <i class="fa fa-fw fa-cart-arrow-down text-dark mr-3"></i>
+                                <span id="count-cart" class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"><%= session[:count_cart] %></span>
+                            </a>
+                        <% else %>
+                            <a class="nav-icon position-relative text-decoration-none cursor-pointer" role="button" id="dropdownMenuCart" data-bs-toggle="dropdown">
+                                <i class="fa fa-fw fa-cart-arrow-down text-dark mr-3"></i>
+                                <span id="count-cart" class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"><%= session[:count_cart] %></span>
+                            </a>
+                            <%= render partial: 'layouts/partials/cart', locals: {is_cart_empty: @is_cart_empty} %>
+                        <% end %>                  
                     </div>
                     <div class="dropdown">
                         <a class="nav-icon position-relative text-decoration-none cursor-pointer dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown">

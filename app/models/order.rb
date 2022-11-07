@@ -1,7 +1,7 @@
 class Order < ApplicationRecord
   has_many :order_details
   belongs_to :user
-  belongs_to :coupon
+  belongs_to :coupon, optional: true
 
   validates_associated :order_details
 

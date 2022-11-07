@@ -12,14 +12,14 @@ function update_quantity(inventory_id){
         success: function(data){
             if(data.is_signed_in){
                 if(data.is_error){
-                    $('#cart-quantity-'+inventory_id).val(data.prev_quantity)
+                    $('#cart-quantity-'+inventory_id).val(data.prev_quantity);
                     alert('Product or quantity invalid');
                 }
                 else{
-                    $('#item-total-'+inventory_id).html('$'+data.total);
-                    $('#checkout-cart-total').html('$'+data.cart_total);
+                    $('#item-total-'+inventory_id).html(data.total+' VND');
+                    $('#checkout-cart-total').html(data.cart_total+' VND');
                     $('#cart-item-quantity-'+inventory_id).html('Quantity:'+data.quantity);
-                    $('#total-cart').html('$'+data.cart_total);
+                    $('#total-cart').html(data.cart_total+' VND');
                 }
             }
             else{
@@ -58,6 +58,76 @@ function back_to_cart(){
         success: function(data){
             if(data.is_signed_in){
                 $('#checkout-information').html(data.html);
+            }
+            else{
+                $('#sign-in').modal('show');
+            }
+        }        
+    });
+}
+function apply_coupon(){
+    coupon_id = $('#coupon').val();
+    if(coupon_id.trim() == ''){
+        alert('Please enter a valid coupon');
+    }
+    else{
+        $.ajax({
+            url: '/checkout/apply-coupon',
+            type: 'post',
+            data: {
+                coupon: {
+                    id: coupon_id
+                }
+            },
+            success: function(data){
+                if(data.is_signed_in){
+                    $('#order-discount').html(data.discount+' VND');
+                    $('#order-total-payment').html(data.total_payment+' VND');
+                    if(data.is_available){
+                        $('#coupon-notification').html('<label class="text-success p-2">Success!</label>');
+                    }
+                    else{
+                        $('#coupon-notification').html('<label class="text-danger p-2">Failure!</label>');
+                        alert('Coupon does not exist');
+                    }
+                }
+                else{
+                    $('#sign-in').modal('show');
+                }
+            }        
+        });
+    }
+}
+function pay(){
+    apartment_number = $('#apartment-number').val();
+    street = $('#street').val();
+    ward = $('#ward').val();
+    district = $('#district').val();
+    province = $('#province').val();
+    coupon = $('#coupon').val();
+    payment = $('#payments').find(":selected").val();
+    $.ajax({
+        url: '/checkout/pay',
+        type: 'post',
+        data: {
+            order_info: {
+                apartment_number: apartment_number,
+                street: street,
+                ward: ward,
+                district: district,
+                province: province,
+                coupon: coupon,
+                payment: payment
+            }
+        },
+        success: function(data){
+            if(data.is_signed_in){
+                if(data.is_error){
+                    alert('Please fill in your order information');
+                }
+                else{
+                    window.location.href = data.payment_url;
+                }
             }
             else{
                 $('#sign-in').modal('show');

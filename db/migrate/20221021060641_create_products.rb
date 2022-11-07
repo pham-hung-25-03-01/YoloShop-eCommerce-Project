@@ -12,8 +12,8 @@ class CreateProducts < ActiveRecord::Migration[7.0]
       t.text :description
       t.boolean :gender, null: false
       t.integer :warranty, null: false, limit: 3, default: 0
-      t.money :import_price, null: false, default: 0
-      t.money :sell_price, null: false, default: 0
+      t.decimal :import_price, precision: 15, scale: 2, null: false, default: 0
+      t.decimal :sell_price, precision: 15, scale: 2, null: false, default: 0
       t.float :product_discount, null: false, default: 0
       t.integer :shipping, null: false, limit: 3, default: 1
       t.float :score_rating, null: false, default: 0

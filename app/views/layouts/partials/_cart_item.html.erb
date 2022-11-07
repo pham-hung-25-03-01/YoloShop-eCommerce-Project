@@ -6,9 +6,9 @@
             </div>
             <div class="col-md-8 my-auto">
                 <span class="text-dark d-block font-size-1-1-rem"><%= item.inventory.product.product_name %> size <%= item.inventory.size %></span>
-                <span class="text-success font-size-0-9-rem">$<%= item.inventory.product.sell_price * (1 - item.inventory.product.product_discount / 100) %>                 
+                <span class="text-success font-size-0-9-rem"><%= number_with_precision(item.inventory.product.sell_price * (1 - item.inventory.product.product_discount / 100), precision: 0) %> VND               
                     <% unless item.inventory.product.product_discount == 0 %>
-                        &nbsp;&nbsp;&nbsp;<s class="text-muted">$<%= item.inventory.product.sell_price %></s>
+                        &nbsp;&nbsp;&nbsp;<s class="text-muted"><%= number_with_precision(item.inventory.product.sell_price, precision: 0) %></s> VND
                     <% end %>
                 </span>
                 <span id="cart-item-quantity-<%= item.inventory_id %>" class="text-muted mx-3 font-size-0-9-rem">Quantity: <%= item.quantity %></span>

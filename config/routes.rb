@@ -63,6 +63,9 @@ Rails.application.routes.draw do
     collection do
       get 'proceed-to-checkout', to: 'checkout/proceed_to_checkout'
       get 'back-to-cart', to: 'checkout/back_to_cart'
+      post 'apply-coupon', to: 'checkout/apply_coupon'
+      post 'pay', to: 'checkout/pay'
+      get 'result', to: 'checkout/result'
     end
   end
 end

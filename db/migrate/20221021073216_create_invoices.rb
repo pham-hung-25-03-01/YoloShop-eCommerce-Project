@@ -7,9 +7,9 @@ class CreateInvoices < ActiveRecord::Migration[7.0]
       t.string :bank_code
       t.string :bank_transaction_no
       t.string :transaction_no
-      t.money :total_money, null: false
-      t.money :total_money_discount, null: false
-      t.money :total_money_payment, null: false
+      t.decimal :total_money, precision: 15, scale: 2, null: false
+      t.decimal :total_money_discount, precision: 15, scale: 2, null: false
+      t.decimal :total_money_payment, precision: 15, scale: 2, null: false
 
       t.timestamps
       t.uuid :updated_by, null: false
