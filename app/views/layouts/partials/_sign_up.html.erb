@@ -1,0 +1,50 @@
+<div class="modal fade" id="sign-up" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+            <div class="row px-3">
+                <a class="btn-close cursor-pointer ml-auto" data-bs-dismiss="modal" aria-label="Close"></a>
+            </div>
+            <h1 class="h2 text-center mb-3 fw-light fs-5 text-success"><strong>Sign in</strong></h1>
+            <div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="first_name" placeholder="First name" required>
+                    <label for="first_name">First name <span class="text-danger">*</span></label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="last_name" placeholder="Last name" required>
+                    <label for="last_name">Last name <span class="text-danger">*</span></label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="phone_number" placeholder="Phone number" required>
+                    <label for="phone_number">Phone number <span class="text-danger">*</span></label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+                    <label for="email">Email address <span class="text-danger">*</span></label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="password" placeholder="Password" required>
+                    <label for="password">Password <span class="text-danger">*</span></label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="password_confirmation" placeholder="Password Confirmation" required>
+                    <label for="password_confirmation">Password Confirmation <span class="text-danger">*</span></label>
+                </div>
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" value="" id="agree-to-term-and-conditions">
+                    <label class="form-check-label" for="agree-to-term-and-conditions">
+                    Agree to terms and conditions
+                    </label>
+                </div>
+                <div class="d-grid">
+                    <a class="btn btn-success btn-login fw-bold font-size-18-px">Sign up</a>
+                </div>
+                <div class="mt-3 mb-3 text-center">
+                    <label>Have a account? <a onclick="open_sign_in()" class="text-decoration-none cursor-pointer text-right">Sign in</a></label>                              
+                </div>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>

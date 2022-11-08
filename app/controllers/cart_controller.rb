@@ -58,7 +58,7 @@ class CartController < ApplicationController
             return render json: {is_signed_in: true, is_error: true, prev_quantity: prev_quantity} if cart.nil? || params[:product][:quantity].to_i > quantity_of_inventory || params[:product][:quantity].to_i < 1
             cart.quantity = params[:product][:quantity]
             cart.save
-            total = cart.inventory.product.sell_price * (1 - cart.inventory.product.product_discount / 100) * cart.quantity
+            total = (cart.inventory.product.sell_price * (1 - cart.inventory.product.product_discount / 100) * cart.quantity).to_i
             cart_total = Inventory.joins(:product).joins(:carts).where(carts: {user_id: current_user.id}).pluck(Arel.sql('SUM(products.sell_price * (1 - products.product_discount / 100) * carts.quantity ) as total')).first || 0
             render json: {is_signed_in: true, is_error: false, quantity: cart.quantity, total: total, cart_total: cart_total}
         else

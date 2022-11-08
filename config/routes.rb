@@ -2,10 +2,12 @@ Rails.application.routes.draw do
   get 'checkout/index'
   devise_for :admins
   #devise_for :users
-  devise_for :users, controllers: {
-    omniauth_callbacks: 'users/omniauth_callbacks',
-    sessions: 'users/sessions',
-    registrations: 'users/registrations'
+  devise_for :users,
+    path_names: {sign_in: 'home'},
+    controllers: {
+      omniauth_callbacks: 'users/omniauth_callbacks',
+      sessions: 'users/sessions',
+      registrations: 'users/registrations'
   }
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'

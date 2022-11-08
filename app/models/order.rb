@@ -6,7 +6,6 @@ class Order < ApplicationRecord
   validates_associated :order_details
 
   validates :user_id, presence: true
-  validates :ship_date, comparison: { greater_than_or_equal_to: :created_at }
   validates :apartment_number, presence: true
   validates :street, presence: true
   validates :ward, presence: true

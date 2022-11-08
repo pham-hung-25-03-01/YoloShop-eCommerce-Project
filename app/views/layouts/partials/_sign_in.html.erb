@@ -15,22 +15,28 @@
                 <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
                 <label for="floatingPassword">Password</label>
               </div>
+              <div class="row">
+                <div class="col-md-7">
+                  <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
+                    <label class="form-check-label" for="rememberPasswordCheck">
+                      Remember password
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <div class="form-check mb-3">               
+                    <a class="text-decoration-none cursor-pointer text-right">
+                      Forgot password?
+                    </a>
+                  </div>
+                </div>
+              </div>
 
-              <div class="form-check mb-3">
-                  <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
-                  <label class="form-check-label" for="rememberPasswordCheck">
-                    Remember password
-                  </label>
-              </div>
-              <div class="form-check mb-3">               
-                  <a class="text-decoration-none cursor-pointer text-right">
-                    Forgot password?
-                  </a>
-              </div>
+
               <div class="d-grid">
                 <a class="btn btn-success btn-login fw-bold">Sign in</a>
               </div>
-              <hr class="my-2 mt-4">
               <div class="text-center row my-2">
                 <label>Or</label>
               </div>
@@ -40,12 +46,12 @@
                 </a>
               </div>
               <div class="d-grid">
-                <a class="btn btn-facebook btn-login fw-bold">
+                <a class="btn btn-facebook btn-login fw-bold" href="<%= user_facebook_omniauth_authorize_path %>" data-turbo="false" data-method="post">
                   <i class="fab fa-facebook-f me-2"></i> Sign in with Facebook
                 </a>
               </div>
               <div class="form-check mt-3 mb-3 text-center">
-                <label>Not a member? <a class="text-decoration-none cursor-pointer text-right">Create a account</a></label>                              
+                <label>Not a member? <a onclick="open_sign_up()" class="text-decoration-none cursor-pointer text-right">Create a account</a></label>                              
               </div>
             </form>
 

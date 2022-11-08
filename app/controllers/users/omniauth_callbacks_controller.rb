@@ -28,18 +28,41 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   #   super(scope)
   # end
 
+  def facebook
+    generic_callback("facebook")
+  end
+
   def google_oauth2
-    user = User.from_omniauth(auth)
-    if user.present?
-      sign_out_all_scopes
-      flash[:success] = t 'devise.omniauth_callbacks.success', kind: 'Google'
-      sign_in_and_redirect user, event: :authentication
+    generic_callback( "google_oauth2" )
+  end
+
+  def generic_callback(provider)
+    @identity = User.from_omniauth(auth)
+
+    @user = @identity || current_user
+    if @user.persisted?
+      sign_in_and_redirect @user, :event => :authentication
+      set_flash_message(:notice, :success, kind: provider.capitalize) if is_navigational_format?
     else
-      flash[:alert] =
-        t 'devise.omniauth_callbacks.failure', kind: 'Google', reason: "#{auth.info.email} is not authorized."
-      redirect_to new_user_session_path
+      session["devise.#{provider}_data"] = request.env["omniauth.auth"]
+      redirect_to new_user_registration_url
     end
   end
+
+  # def google_oauth2
+  #   user = User.from_omniauth(auth)
+  #   if user.present?
+  #     sign_out_all_scopes
+  #     flash[:success] = t 'devise.omniauth_callbacks.success', kind: 'Google'
+  #     sign_in_and_redirect user, event: :authentication
+  #   else
+  #     flash[:alert] =
+  #       t 'devise.omniauth_callbacks.failure', kind: 'Google', reason: "#{auth.info.email} is not authorized."
+  #     redirect_to new_user_session_path
+  #   end
+  # end
+
+
   protected
   def after_omniauth_failure_path_for(_scope)
     new_user_session_path

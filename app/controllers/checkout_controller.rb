@@ -80,7 +80,8 @@ class CheckoutController < ApplicationController
     vnp_url = ENV['VNP_URL']
     vnp_txnref = order_object.id
     vnp_order_info = ENV['VNP_ORDER_INFO']
-    vnp_amount = (session[:total_cart] * (1 - session[:coupon]['coupon_discount'] / 100) * 100).to_i.to_s
+    coupon = session[:coupon].nil? ? 0 :  session[:coupon]['coupon_discount']
+    vnp_amount = (session[:total_cart] * (1 - coupon / 100) * 100).to_i.to_s
     vnp_ipadd = request.remote_ip
 
     input_data = {
@@ -106,6 +107,100 @@ class CheckoutController < ApplicationController
     vnp_url
   end
   def result
+    # if checksum_valid!
+    #   if params["vnp_ResponseCode"] == "00"
+    #     current_user.cart.clear
+    #     flash[:success] = t('.payment_success')
+    #     redirect_to books_path
+    #   else
+    #     flash[:error] = t('.payment_failed')
+    #     redirect_to checkouts_path
+    #   end
+    # else
+    #   flash[:error] = t('.payment_failed')
+    #   redirect_to checkouts_path
+    # end
+    if checksum_valid!
+      permit_params = response_params
+      unless session[:order].nil?
+        vnp_amount = (session[:total_cart] * (1 - session[:coupon]['coupon_discount'] / 100) * 100).to_i
+        if vnp_amount == (permit_params['vnp_Amount'].to_i / 100)
+            if permit_params['vnp_ResponseCode'] == '00'
+              session[:order].save
+              code = '00'
+              message = 'Confirm Success'
+            else
+              code = '11'
+              message = 'Confirm Failed'
+            end
+            # save vnp_TransactionNo
+            #order_object.transaction_id = permit_params['vnp_TransactionNo']
+            #order_object.save!
+        else
+          code = '04'
+          message = 'Invalid amount'
+        end
+      else
+        code = '01'
+        message = 'Order not found'
+      end
+    else
+      code = '97'
+      message = 'Invalid Checksum'
+    end
+    render json: {code: code, message: message}
+  end
+  def vnp_ipn
+    logger = Logger.new("#{Rails.root}/log/payment_#{Date.today.to_s}.log")
+    response_data = []
+    if checksum_valid!
+      permit_params = response_params
+      unless session[:order].nil?
+        vnp_amount = (session[:total_cart] * (1 - session[:coupon]['coupon_discount'] / 100) * 100).to_i
+        if vnp_amount == (permit_params['vnp_Amount'].to_i / 100)
+            if permit_params['vnp_ResponseCode'] == '00'
+              Order.create!(session[:order])
+              code = '00'
+              message = 'Confirm Success'
+            else
+              code = '11'
+              message = 'Confirm Failed'
+            end
+            # save vnp_TransactionNo
+            #order_object.transaction_id = permit_params['vnp_TransactionNo']
+            #order_object.save!
+        else
+          code = '04'
+          message = 'Invalid amount'
+        end
+      else
+        code = '01'
+        message = 'Order not found'
+      end
+    else
+      code = '97'
+      message = 'Invalid Checksum'
+    end
+  
+    logger.info("VNPAY with params: " + permit_params.to_s + ", code: #{code}, message: #{message}")
+  
+    render json: { 'RspCode': code, 'Message': message }
+  rescue => e
+    logger.error('VNPAY with params: ' + permit_params.to_s + '\', ' + e.message)
+    render json: { 'RspCode': '99', 'Message': 'Unknow error' }
+  end
+  private
+  def checksum_valid!
+    vnp_secure_hash = params["vnp_SecureHash"]
+    data = response_params.to_h.map do |key, value|
+      "#{key}=#{value}"
+    end.join("&")
 
+    secure_hash = Digest::SHA256.hexdigest(ENV["VNP_HASH_SECRET"] + data)
+    vnp_secure_hash == secure_hash
+  end
+  
+  def response_params
+    params.permit("vnp_Amount", "vnp_BankCode", "vnp_BankTranNo", "vnp_CardType", "vnp_OrderInfo", "vnp_PayDate", "vnp_ResponseCode", "vnp_TmnCode", "vnp_TransactionNo", "vnp_TxnRef")
   end
 end

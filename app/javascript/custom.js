@@ -40,6 +40,7 @@ function get_quantity_in_stock(product_id){
 }
 function open_sign_in(){
     $('#sign-in').modal('show');
+    $('#sign-up').modal('hide');
 }
 function open_shopping_cart(){
     $(".shopping-cart").fadeToggle( "fast");
@@ -135,3 +136,7 @@ function open_dropdown_without_preventDefault(e) {
 $('.dropdown-item').on('click', function(e){
     e.stopPropagation();
 })
+function open_sign_up(){
+    $('#sign-in').modal('hide');
+    $('#sign-up').modal('show');
+}

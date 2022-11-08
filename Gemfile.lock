@@ -152,6 +152,8 @@ GEM
       hashie (>= 3.4.6)
       rack (>= 2.2.3)
       rack-protection
+    omniauth-facebook (9.0.0)
+      omniauth-oauth2 (~> 1.2)
     omniauth-google-oauth2 (1.1.1)
       jwt (>= 2.0)
       oauth2 (~> 2.0.6)
@@ -170,8 +172,6 @@ GEM
       nio4r (~> 2.0)
     racc (1.6.0)
     rack (2.2.4)
-    rack-cors (1.1.1)
-      rack (>= 2.0.0)
     rack-protection (3.0.2)
       rack
     rack-test (2.0.2)
@@ -270,11 +270,11 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   omniauth
+  omniauth-facebook
   omniauth-google-oauth2
   omniauth-rails_csrf_protection (~> 1.0)
   pg (~> 1.1)
   puma (~> 5.0)
-  rack-cors
   rails (~> 7.0.4)
   selenium-webdriver
   sprockets-rails
