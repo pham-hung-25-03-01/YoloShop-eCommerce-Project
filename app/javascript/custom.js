@@ -40,7 +40,6 @@ function get_quantity_in_stock(product_id){
 }
 function open_sign_in(){
     $('#sign-in').modal('show');
-    $('#sign-up').modal('hide');
 }
 function open_shopping_cart(){
     $(".shopping-cart").fadeToggle( "fast");
@@ -136,7 +135,18 @@ function open_dropdown_without_preventDefault(e) {
 $('.dropdown-item').on('click', function(e){
     e.stopPropagation();
 })
-function open_sign_up(){
-    $('#sign-in').modal('hide');
-    $('#sign-up').modal('show');
-}
+$('input[name=info]').change(function() { 
+    first_name = $('#first_name').val().trim();
+    last_name = $('#last_name').val().trim();
+    phone_number = $('#phone_number').val().trim();
+    email = $('#email').val().trim();
+    password = $('#password').val().trim();
+    password_confirmation = $('#password_confirmation').val().trim();
+    agree_to_terms_and_conditions = $('#agree_to_terms_and_conditions').is(':checked');
+    if(first_name == '' || last_name == '' || phone_number == '' || email == '' || password == '' || password_confirmation == '' || !agree_to_terms_and_conditions) {
+        $('#btn-sign-up').addClass('disabled');
+    }
+    else{
+        $('#btn-sign-up').removeClass('disabled');
+    }
+});
