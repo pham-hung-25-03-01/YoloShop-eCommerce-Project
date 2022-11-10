@@ -195,3 +195,6 @@ Custom Css
 .font-size-18-px {
   font-size: 18px!important;;
 }
+.list-style-type-none {
+  list-style-type: none !important;
+}

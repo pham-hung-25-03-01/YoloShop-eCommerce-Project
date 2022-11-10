@@ -7,10 +7,16 @@ Rails.application.routes.draw do
     controllers: {
       omniauth_callbacks: 'users/omniauth_callbacks',
       sessions: 'users/sessions',
-      registrations: 'users/registrations'
+      registrations: 'users/registrations',
+      confirmations: 'users/confirmations'
   }
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
+  end
+  resources :users do
+    member do
+      get :confirm_email
+    end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

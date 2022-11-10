@@ -35,3 +35,6 @@ VNP_ORDER_INFO: 'Payment for purchases'
 VNP_LOCALE: 'vn'
 VNP_CURRCODE: 'VND'
 VNP_COMMAND: 'pay'
+
+EMAIL_USERNAME: 'phamhunggl721@gmail.com'
+EMAIL_PASSWORD: 'znyzhrsfayunagmp'

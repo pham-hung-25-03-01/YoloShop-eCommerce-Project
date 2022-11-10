@@ -11,30 +11,30 @@
     <div class="row">
       <div class="col-md-5 mx-auto shadow bg-white">
         <form class="form-floating my-4 mb-3" id="new_user" action="/users" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="DxmajVBSrxZLk9JdXJXhxpnxJWOTFNpf8AbMECvoM1_4ROuudDjsR4-Ta8S95pATmwZFTWLGti_-GMdXG3zWVQ" autocomplete="off">
-          
+          <%= render "devise/shared/error_messages" %>
           <div class="form-floating mb-3">
-            <input autofocus="autofocus" type="text" name="user[first_name]" id="user_first_name" class="form-control" placeholder="Pham Van" required>
+            <input autofocus="autofocus" type="text" name="user[first_name]" id="user_first_name" class="form-control" placeholder="Pham Van" required oninvalid="this.setCustomValidity('Please fill out this field.')" onchange="this.setCustomValidity('')">
             <label for="user_first_name">First name <span class="text-danger">*</span></label>
           </div>
           <div class="form-floating mb-3">
-            <input autofocus="autofocus" type="text" name="user[last_name]" id="user_last_name" class="form-control" placeholder="Hung" required>
+            <input autofocus="autofocus" type="text" name="user[last_name]" id="user_last_name" class="form-control" placeholder="Hung" required oninvalid="this.setCustomValidity('Please fill out this field.')" onchange="this.setCustomValidity('')">
             <label for="user_last_name">Last name <span class="text-danger">*</span></label>
           </div>
           <div class="form-floating mb-3">
-            <input autofocus="autofocus" type="text" name="user[phone_number]" id="user_phone_number" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*?)\..*/g, '$1');" class="form-control" placeholder="0898759325" required>
+            <input autofocus="autofocus" type="text" name="user[phone_number]" id="user_phone_number" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*?)\..*/g, '$1');" class="form-control" placeholder="0898759325" required oninvalid="this.setCustomValidity('Please fill out this field.')" onchange="this.setCustomValidity('')">
             <label for="user_phone_number">Phone number <span class="text-danger">*</span></label>
           </div>
           <div class="form-floating mb-3">
-            <input autofocus="autofocus" autocomplete="email" type="email" name="user[email]" id="user_email" class="form-control" placeholder="name@example.com" required>
+            <input autofocus="autofocus" autocomplete="email" type="email" name="user[email]" id="user_email" class="form-control" placeholder="name@example.com" required oninvalid="this.setCustomValidity('Please fill out this field.')" onchange="this.setCustomValidity('')">
             <label for="user_email">Email <span class="text-danger">*</span></label>
           </div>
 
           <div class="form-floating mb-3">
-            <input autocomplete="new-password" type="password" name="user[password]" id="user_password" class="form-control" placeholder="Password" required>
+            <input autocomplete="new-password" type="password" name="user[password]" id="user_password" class="form-control" placeholder="Password" required oninvalid="this.setCustomValidity('Please fill out this field.')" onchange="this.setCustomValidity('')">
             <label for="user_password">Password <span class="text-danger">*</span> <em>(6 characters minimum)</em></label>
           </div>
           <div class="form-floating mb-3">
-            <input autocomplete="new-password" type="password" name="user[password_confirmation]" id="user_password_confirmation" class="form-control" placeholder="Password Confirmation" required>
+            <input autocomplete="new-password" type="password" name="user[password_confirmation]" id="user_password_confirmation" class="form-control" placeholder="Password Confirmation" required oninvalid="this.setCustomValidity('Please fill out this field.')" onchange="this.setCustomValidity('')">
             <label for="user_password_confirmation">Password confirmation <span class="text-danger">*</span></label>
           </div>
           <div class="form-check mb-3">
@@ -44,7 +44,7 @@
                 </label>
             </div>
           <div class="actions d-grid">
-            <input class="btn btn-success btn-login fw-bold font-size-18-px" type="submit" name="commit" value="Sign up" data-disable-with="Sign up">
+            <input id="btn-sign-up" class="btn btn-success btn-login fw-bold font-size-18-px disabled" type="submit" name="commit" value="Sign up" data-disable-with="Sign up">
           </div>
           <div class="mt-3 mb-3 text-center">
               <label>Have an account? <a href="/home" class="text-decoration-none cursor-pointer text-right">Sign in</a></label>                              
