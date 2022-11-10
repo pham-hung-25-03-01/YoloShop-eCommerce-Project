@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
   get 'checkout/index'
+  get '/users/sign_in' => redirect('/home')
   devise_for :admins
   #devise_for :users
   devise_for :users,
-    path_names: {sign_in: 'home'},
+    # path_names: {sign_in: 'home'},
     controllers: {
       omniauth_callbacks: 'users/omniauth_callbacks',
       sessions: 'users/sessions',
@@ -16,10 +17,10 @@ Rails.application.routes.draw do
   resources :users do
     member do
       get :confirm_email
+      get '/sign_in', to: redirect('/home')
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
   # Defines the root path route ("/")
   root to: 'home#index'
   resources :home

@@ -89,7 +89,8 @@
                             
                             <% if user_signed_in? %>
                                 | Your rating                             
-                                <% user_score_rating = @reviews.find_by(user_id: current_user.id, product_id: @product.id).user_score_rating.to_i %>
+                                <% user_review = @reviews.find_by(user_id: current_user.id, product_id: @product.id) %>
+                                <% user_score_rating = user_review.nil? ? 0 : user_review.user_score_rating.to_i%>
                                 <% user_score_rating.times do |i| %>
                                     <a class="cursor-pointer" onclick="rating('<%= @product.id %>', '<%= i + 1 %>')"><i id="star-rate-<%= i %>" class="text-warning fa fa-star"></i></a>      
                                 <% end %>

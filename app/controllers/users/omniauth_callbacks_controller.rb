@@ -65,8 +65,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   protected
   def after_omniauth_failure_path_for(_scope)
-    new_user_session_path
-    #root_path
+    #new_user_session_path
+    root_path
   end
   def after_sign_in_path_for(resource_or_scope)
     request.env['omniauth.origin'] || stored_location_for(resource_or_scope) || root_path

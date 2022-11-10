@@ -38,12 +38,17 @@ function show_more(product_id){
         },
         dataType: 'json',
         success: function(data){
-            $('#comments').append(data.html);
-            if(data.is_show_more){
-                $('#show-more').show();
+            if(data.is_signed_in){
+                $('#comments').append(data.html);
+                if(data.is_show_more){
+                    $('#show-more').show();
+                }
+                else{
+                    $('#show-more').hide();
+                }
             }
             else{
-                $('#show-more').hide();
+                $('#sign-in').modal('show');
             }
         }
     });

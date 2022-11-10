@@ -3,7 +3,11 @@ class CheckoutController < ApplicationController
   skip_before_action :verify_authenticity_token
   def index
     begin
-      @inventories = Inventory.where(is_actived: true)
+      if user_signed_in?
+        @inventories = Inventory.where(is_actived: true)
+      else
+        redirect_to home_index_path
+      end
     rescue StandardError => e
       p e.message
       p e.backtrace
