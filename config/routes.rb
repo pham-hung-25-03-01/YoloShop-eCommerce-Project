@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   devise_for :admins
   #devise_for :users
   devise_for :users,
-    # path_names: {sign_in: 'home'},
+    path_names: {sign_up: 'sign-up'},
     controllers: {
       omniauth_callbacks: 'users/omniauth_callbacks',
       sessions: 'users/sessions',

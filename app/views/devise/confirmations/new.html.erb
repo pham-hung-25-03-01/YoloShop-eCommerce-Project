@@ -1,0 +1,28 @@
+<section class="bg-light">
+<div class="container-fluid bg-light py-5 pb-3">
+    <div class="col-md-6 m-auto text-center">
+        <h1 class="h1">Resend confirmation instructions</h1>
+        <p>
+            Please enter your email to resend confirmation instructions.
+        </p>
+    </div>
+</div>
+  <div class="container pb-5">
+    <div class="row">
+      <div class="col-md-5 mx-auto shadow bg-white">
+        <form class="form-floating my-4 mb-3" id="new_user" action="/users/confirmation" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="imxVOENpHcI1S8gt_qHKMgVwgC5oU93TFFK4EOGNRRrZMEPSvpNeG_uSC7_g1cHepuF8Wu8Y3dNKP8VzRaET_g" autocomplete="off">
+            <%= render "devise/shared/error_messages" %>
+            <div class="form-floating mb-3">
+                <input autofocus="autofocus" autocomplete="email" type="email" name="user[email]" id="user_email" class="form-control" placeholder="name@example.com" required oninvalid="this.setCustomValidity('Please fill out this field.')" onchange="this.setCustomValidity('')">
+                <label for="user_email">Email <span class="text-danger">*</span></label>
+            </div>
+            <div class="actions d-grid">
+                <input class="btn btn-success btn-login fw-bold font-size-18-px" type="submit" name="commit" value="Resend confirmation instructions" data-disable-with="Resend confirmation instructions">
+                <a href="/home" class="btn btn-secondary btn-login fw-bold font-size-18-px my-3"><i class="fa fa-faw fa-arrow-left"></i> Back to home</a>
+            </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

@@ -6,6 +6,18 @@
                 <a class="btn-close cursor-pointer ml-auto" data-bs-dismiss="modal" aria-label="Close"></a>
             </div>
             <h1 class="h2 text-center mb-3 fw-light fs-5 text-success"><strong>Sign in</strong></h1>
+
+
+<% if false %>
+  <form action="/users/sign_in" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="KIfMI7vXps-lS7vYh_2m0udWWmQPBeTZWjIb5bHLvQNpCOtNteQyQPQOuYP_KD2JtUwnd_kllTxZKQ9FgntMKA" autocomplete="off">
+  <input type="text" name="user[email]" id="user_email">
+  <input type="password" name="user[password]" id="user_password">
+  <input name="user[remember_me]" type="hidden" value="0" autocomplete="off"><input type="checkbox" value="1" name="user[remember_me]" id="user_remember_me">
+  <label for="user_remember_me">Remember me</label>
+  <input type="submit" name="commit" value="Sign in" data-disable-with="Sign in">
+  <a href="/users/password/new">Forgot your password?</a>
+</form>
+<% end %>
             <form>
               <div class="form-floating mb-3">
                 <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
@@ -32,10 +44,8 @@
                   </div>
                 </div>
               </div>
-
-
               <div class="d-grid">
-                <a class="btn btn-success btn-login fw-bold">Sign in</a>
+                <a href="<%= user_session_path %>" class="btn btn-success btn-login fw-bold">Sign in</a>
               </div>
               <div class="text-center row my-2">
                 <label>Or</label>
@@ -51,7 +61,7 @@
                 </a>
               </div>
               <div class="form-check mt-3 mb-3 text-center">
-                <label>Not a member? <a href="<%= new_user_registration_path %>" class="text-decoration-none cursor-pointer text-right">Create a account</a></label>                              
+                <label>Not a member? <a href="/users/sign-up" class="text-decoration-none cursor-pointer text-right">Create a account</a></label>                              
               </div>
             </form>
 
