@@ -16,9 +16,9 @@
                     <% end %>
                 </li>
                 <li class="text-muted text-right">
-                    <%= number_with_precision(product.sell_price * (1 - product.product_discount / 100), precision: 0) %> VND             
+                    <%= number_to_currency(product.sell_price * (1 - product.product_discount / 100), precision: 2) %>           
                     <% unless product.product_discount == 0 %>
-                        &nbsp;&nbsp;&nbsp;<s><%= number_with_precision(product.sell_price, precision: 0) %></s> VND
+                        &nbsp;&nbsp;&nbsp;<s><%= number_to_currency(product.sell_price, precision: 2) %></s>
                     <% end %>           
                 </li>
             </ul>

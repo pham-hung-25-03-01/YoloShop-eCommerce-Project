@@ -63,9 +63,9 @@ function remove_from_cart(product_id, size, color){
                 else{
                     $('#count-cart').html(data.count_cart);    
                     $('#cart-item-'+data.inventory_id).remove();
-                    $('#total-cart').html(data.total + ' VND');
+                    $('#total-cart').html(formatter.format(data.total));
                     $('#checkout-item-'+data.inventory_id).remove();
-                    $('#checkout-cart-total').html(data.total + ' VND');
+                    $('#checkout-cart-total').html(formatter.format(data.total));
                     if(data.is_cart_empty){
                         $('#check-out-content').html('<label class="text-center w-100">Cart is empty</label>');
                         $('#checkout-table').html('<label class="text-center w-100">Your cart is empty.</label>');
@@ -159,3 +159,51 @@ $('#agree_to_terms_and_conditions').change(function(){
         $('#btn-sign-up').addClass('disabled');
     }
 })
+$('#sign-in').on('hidden.bs.modal', function (e) {
+    $(this)
+      .find("input[type=email]")
+         .val('')
+         .end()
+      .find("input[type=password]")
+         .val('')
+         .end()
+      .find("input[type=checkbox]")
+         .prop("checked", "")
+         .end();
+})
+
+const rmCheck = document.getElementById("user_remember_me"),
+    emailInput = document.getElementById("user_email"),
+    passwordInput = document.getElementById("user_password");
+
+if (localStorage.checkbox && localStorage.checkbox !== "") {
+  rmCheck.setAttribute("checked", "checked");
+  emailInput.value = localStorage.username;
+  passwordInput.value = localStorage.password;
+} else {
+  rmCheck.removeAttribute("checked");
+  emailInput.value = "";
+  passwordInput.value = "";
+}
+
+function lsRememberMe() {
+  if (rmCheck.checked && emailInput.value !== "") {
+    localStorage.username = emailInput.value;
+    localStorage.password = passwordInput.value;
+    localStorage.checkbox = rmCheck.value;
+  } else {
+    localStorage.username = "";
+    localStorage.password = "";
+    localStorage.checkbox = "";
+  }
+}
+
+// Create our number formatter.
+const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  
+    // These options are needed to round to whole numbers if that's what you want.
+    //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+    //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+});

@@ -16,10 +16,10 @@ function update_quantity(inventory_id){
                     alert('Product or quantity invalid');
                 }
                 else{
-                    $('#item-total-'+inventory_id).html(data.total+' VND');
-                    $('#checkout-cart-total').html(data.cart_total+' VND');
+                    $('#item-total-'+inventory_id).html(formatter.format(data.total));
+                    $('#checkout-cart-total').html(formatter.format(data.cart_total));
                     $('#cart-item-quantity-'+inventory_id).html('Quantity:'+data.quantity);
-                    $('#total-cart').html(data.cart_total+' VND');
+                    $('#total-cart').html(formatter.format(data.cart_total));
                 }
             }
             else{
@@ -81,8 +81,8 @@ function apply_coupon(){
             },
             success: function(data){
                 if(data.is_signed_in){
-                    $('#order-discount').html(data.discount+' VND');
-                    $('#order-total-payment').html(data.total_payment+' VND');
+                    $('#order-discount').html(formatter.format(data.discount));
+                    $('#order-total-payment').html(formatter.format(data.total_payment));
                     if(data.is_available){
                         $('#coupon-notification').html('<label class="text-success p-2">Success!</label>');
                     }

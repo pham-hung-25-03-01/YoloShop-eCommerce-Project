@@ -1,5 +1,4 @@
 class CartController < ApplicationController
-    skip_before_action :verify_authenticity_token
     def add_to_cart
         begin
             if user_signed_in?
@@ -7,7 +6,7 @@ class CartController < ApplicationController
                 quantity = params[:product][:quantity].to_i
                 if quantity > 0 && !inventory.nil?
                     return render json: { is_signed_in: true, is_available: false, is_error: false } if inventory.quantity_of_inventory < quantity
-                    cart = Cart.find_by(inventory_id: inventory.id)
+                    cart = Cart.find_by(inventory_id: inventory.id, user_id: current_user.id)
                     if cart.nil?
                         cart = Cart.create!(user_id: current_user.id, inventory_id: inventory.id, quantity: quantity, updated_by: current_user.id)
                         count_cart = Cart.where(user_id: current_user.id).count
@@ -35,7 +34,7 @@ class CartController < ApplicationController
         begin
             if user_signed_in?
                 inventory = Inventory.find_by(product_id: params[:product][:product_id], size: params[:product][:size], color_url: params[:product][:color], is_actived: true)
-                cart = Cart.find_by(inventory_id: inventory.id)
+                cart = Cart.find_by(inventory_id: inventory.id, user_id: current_user.id)
                 return render json: {is_signed_in: true, is_error: true} if cart.nil?
                 cart.destroy
                 count_cart = Cart.where(user_id: current_user.id).count

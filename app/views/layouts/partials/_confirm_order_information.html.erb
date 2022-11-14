@@ -3,9 +3,9 @@
     <hr class="text-success">
     <div class="row">
         <div class="col-md-12 mb-3 row">
-            <label class="col-md-4">Total: <span id="order-total" class="text-success"><%= number_with_precision(session[:total_cart], precision: 0) %></span> VND</label>
-            <label class="col-md-4">Discount: <span id="order-discount" class="text-success">0 VND</span></label>
-            <label class="col-md-4">Total payment: <span id="order-total-payment" class="text-success"><%= number_with_precision(session[:total_cart], precision: 0) %> VND</span></label>
+            <label class="col-md-4">Total: <span id="order-total" class="text-success"><%= number_to_currency(session[:total_cart], precision: 2) %></span></label>
+            <label class="col-md-4">Discount: <span id="order-discount" class="text-success"><%= number_to_currency(0, percision: 2) %></span></label>
+            <label class="col-md-4">Total payment: <span id="order-total-payment" class="text-success"><%= number_to_currency(session[:total_cart], precision: 2) %></span></label>
         </div>
         <div class="col-md-6 mb-3">
             <label for="first-name" class="form-label">First name</label>

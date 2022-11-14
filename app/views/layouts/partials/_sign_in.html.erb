@@ -8,17 +8,57 @@
             <h1 class="h2 text-center mb-3 fw-light fs-5 text-success"><strong>Sign in</strong></h1>
 
 
-<% if false %>
+<% if true %>
   <form action="/users/sign_in" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="KIfMI7vXps-lS7vYh_2m0udWWmQPBeTZWjIb5bHLvQNpCOtNteQyQPQOuYP_KD2JtUwnd_kllTxZKQ9FgntMKA" autocomplete="off">
-  <input type="text" name="user[email]" id="user_email">
-  <input type="password" name="user[password]" id="user_password">
-  <input name="user[remember_me]" type="hidden" value="0" autocomplete="off"><input type="checkbox" value="1" name="user[remember_me]" id="user_remember_me">
-  <label for="user_remember_me">Remember me</label>
-  <input type="submit" name="commit" value="Sign in" data-disable-with="Sign in">
-  <a href="/users/password/new">Forgot your password?</a>
+    <div class="form-floating mb-3">
+      <input type="email" class="form-control" name="user[email]" id="user_email" placeholder="name@example.com" autocomplete="email">
+      <label for="user_email">Email address</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="password" class="form-control" name="user[password]" id="user_password" placeholder="Password">
+      <label for="user_password">Password</label>
+    </div>
+    <div class="row">
+      <div class="col-md-7">
+        <div class="form-check mb-3">
+          <input name="user[remember_me]" type="hidden" value="0" autocomplete="off"><input class="form-check-input" type="checkbox" value="1" name="user[remember_me]" id="user_remember_me">
+          <label class="form-check-label" for="user_remember_me">
+            Remember me
+          </label>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="form-check mb-3">               
+          <a class="text-decoration-none cursor-pointer text-right" href="/users/password/new">
+            Forgot password?
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="d-grid">
+      <input class="btn btn-success btn-login fw-bold" type="submit" name="commit" value="Sign in" data-disable-with="Sign in" onclick="lsRememberMe()">
+    </div>
+    <div class="text-center row my-2">
+      <label>Or</label>
+    </div>
+    <div class="d-grid mb-2">
+      <a class="btn btn-google btn-login fw-bold" href="<%= user_google_oauth2_omniauth_authorize_path %>" data-turbo="false">
+        <i class="fab fa-google me-2"></i> Sign in with Google
+      </a>
+    </div>
+    <div class="d-grid">
+      <a class="btn btn-facebook btn-login fw-bold" href="<%= user_facebook_omniauth_authorize_path %>" data-turbo="false" data-method="post">
+        <i class="fab fa-facebook-f me-2"></i> Sign in with Facebook
+      </a>
+    </div>
+    <div class="form-check mt-3 mb-3 text-center">
+      <label>Not a member? <a href="/users/sign-up" class="text-decoration-none cursor-pointer text-right">Create a account</a></label>                              
+    </div>
 </form>
 <% end %>
-            <form>
+
+<% if false %>
+              <form>
               <div class="form-floating mb-3">
                 <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
                 <label for="floatingInput">Email address</label>
@@ -64,6 +104,7 @@
                 <label>Not a member? <a href="/users/sign-up" class="text-decoration-none cursor-pointer text-right">Create a account</a></label>                              
               </div>
             </form>
+<% end %>
 
       </div>
     </div>

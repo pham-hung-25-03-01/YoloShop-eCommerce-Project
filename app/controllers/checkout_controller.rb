@@ -1,6 +1,5 @@
 require 'securerandom'
 class CheckoutController < ApplicationController
-  skip_before_action :verify_authenticity_token
   def index
     begin
       if user_signed_in?

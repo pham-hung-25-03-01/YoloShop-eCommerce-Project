@@ -1,5 +1,4 @@
 class CommentsController < ApplicationController
-  skip_before_action :verify_authenticity_token
   DEFAULT_PER_COMMENT = ENV['DEFAULT_PER_COMMENT'].to_i
   def show_more
     begin

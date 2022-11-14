@@ -104,7 +104,7 @@ function add_to_cart(product_id){
                             $('#cart').append(data.html);
                         }
                         $('#count-cart').html(data.count_cart);    
-                        $('#total-cart').html(data.total + ' VND'); 
+                        $('#total-cart').html(formatter.format(data.total)); 
                         $('#check-out-content').html('<hr class="text-success my-0 mb-2"/><div class="text-center"><a type="button" href="/checkout" class="btn btn-success text-white">Checkout</a></div>')
                     }
                     else{

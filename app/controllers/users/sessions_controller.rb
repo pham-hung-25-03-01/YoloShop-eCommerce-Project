@@ -1,12 +1,20 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
+  def failed_login?
+    (options = request.env["warden.options"]) && options[:action] == "unauthenticated"
+  end 
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
-  # def new
-  #   super
-  # end
+  def new
+    if failed_login?
+      set_flash_message!(:alert, :invalid)
+      redirect_to root_path
+    else
+      super
+    end
+  end
 
   # POST /resource/sign_in
   # def create
