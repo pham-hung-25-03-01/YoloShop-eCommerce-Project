@@ -107,6 +107,7 @@ class CheckoutController < ApplicationController
     vnp_url = vnp_url + '?' + input_data.to_query
     vnp_security_hash = Digest::SHA256.hexdigest(vnp_hash_secret + original_data)
     vnp_url += '&vnp_SecureHashType=SHA256&vnp_SecureHash=' + vnp_security_hash
+    p vnp_url
     vnp_url
   end
   def result
