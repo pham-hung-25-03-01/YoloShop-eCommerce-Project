@@ -2,7 +2,7 @@ class CreateInvoices < ActiveRecord::Migration[7.0]
   def change
     create_table :invoices, id: :uuid, default: 'gen_random_uuid()' do |t|
       t.uuid :order_id, null: false
-      t.uuid :admin_id, null: false
+      t.uuid :admin_id
       t.uuid :payment_id, null: false
       t.string :bank_code
       t.string :bank_transaction_no

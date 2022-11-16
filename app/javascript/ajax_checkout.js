@@ -85,6 +85,8 @@ function apply_coupon(){
                     $('#order-total-payment').html(formatter.format(data.total_payment));
                     if(data.is_available){
                         $('#coupon-notification').html('<label class="text-success p-2">Success!</label>');
+                        $("coupon").prop('disabled', true);
+                        $("apply-coupon").remove();
                     }
                     else{
                         $('#coupon-notification').html('<label class="text-danger p-2">Failure!</label>');

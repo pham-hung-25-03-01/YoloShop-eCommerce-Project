@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_11_021021) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_16_041021) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -143,8 +143,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_11_021021) do
 
   create_table "invoices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "order_id", null: false
-    t.uuid "admin_id", null: false
-    t.uuid "payment_id", null: false
+    t.uuid "admin_id"
     t.string "bank_code"
     t.string "bank_transaction_no"
     t.string "transaction_no"
@@ -157,6 +156,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_11_021021) do
     t.boolean "is_actived", default: true, null: false
     t.datetime "deleted_at"
     t.uuid "deleted_by"
+    t.uuid "payment_id", null: false
   end
 
   create_table "order_details", primary_key: ["inventory_id", "order_id"], force: :cascade do |t|

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get 'checkout/index'
   get '/users/sign_in' => redirect('/home')
+  match 'checkout/result' => 'checkout#result', :via => :get
   devise_for :admins
   #devise_for :users
   devise_for :users,
