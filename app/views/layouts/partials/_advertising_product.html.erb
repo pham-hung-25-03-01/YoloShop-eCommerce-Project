@@ -1,15 +1,15 @@
 <!-- Start Advertising Product -->
 <div class="col-12 col-md-4 mb-4">
     <div class="card h-100">
-        <%= link_to image_tag( product.product_images.find_by(is_default: true).image_url, class: 'card-img-top', alt: product.product_name), home_index_path %>
+        <%= link_to image_tag( product.product_images.find_by(is_default: true).image_url, class: 'card-img-top', alt: product.product_name),  '/products/'+product.meta_title %>
         <div class="card-body">
             <ul class="list-unstyled d-flex justify-content-between">
-                <li>
+                <li class="position-relative">
                     <% product.score_rating.to_i.times do %>
                         <i class="text-warning fa fa-star"></i>              
                     <% end %>            
-                    <% if product.score_rating - product.score_rating.to_i > 0.5 %>
-                        <i class="text-warning fa fa-star-half"></i>    
+                    <% if product.score_rating - product.score_rating.to_i >= 0.5 %>
+                        <i class="text-warning fa fa-star-half star-half-decoration"></i>    
                     <% end %>
                     <% (5- product.score_rating.to_i).times do %>
                         <i class="text-muted fa fa-star"></i>   

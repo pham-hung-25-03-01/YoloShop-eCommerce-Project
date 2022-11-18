@@ -27,12 +27,12 @@
                 </li>
             </ul>
             <ul class="list-unstyled d-flex justify-content-center mb-1">
-                <li>
+                <li class="position-relative">
                     <% product.score_rating.to_i.times do %>
                         <i class="text-warning fa fa-star"></i>              
                     <% end %>            
-                    <% if product.score_rating - product.score_rating.to_i > 0.5 %>
-                        <i class="text-warning fa fa-star-half"></i>    
+                    <% if product.score_rating - product.score_rating.to_i >= 0.5 %>
+                        <i class="text-warning fa fa-star-half star-half-decoration"></i>    
                     <% end %>
                     <% (5- product.score_rating.to_i).times do %>
                         <i class="text-muted fa fa-star"></i>   

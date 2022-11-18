@@ -72,31 +72,35 @@
                             <% end %>
                         </p>
                         <p>
-                            <% index = 0 %>
-                            <% @product.score_rating.to_i.times do %>
-                                <i id="product-star-rate-<%= index %>" class="text-warning fa fa-star"></i>
-                                <% index += 1 %>            
-                            <% end %>            
-                            <% if @product.score_rating - @product.score_rating.to_i >= 0.5 %>
-                                <i id="product-star-rate-<%= index %>" class="text-warning fa fa-star-half"></i> 
-                                <% index += 1 %>        
-                            <% end %>
-                            <% (5- @product.score_rating.to_i).times do %>
-                                <i id="product-star-rate-<%= index %>" class="text-muted fa fa-star"></i>   
-                                <% index += 1 %>
-                            <% end %>
+                            <label id="product-star-rate" class="position-relative">
+                                <% index = 0 %>
+                                <% @product.score_rating.to_i.times do %>
+                                    <i id="product-star-rate-<%= index %>" class="text-warning fa fa-star"></i>
+                                    <% index += 1 %>            
+                                <% end %>            
+                                <% if @product.score_rating - @product.score_rating.to_i >= 0.5 %>
+                                    <i id="product-star-rate-<%= index %>" class="text-warning fa fa-star-half star-half-decoration"></i> 
+                                    <% index += 1 %>        
+                                <% end %>
+                                <% (5- @product.score_rating.to_i).times do %>
+                                    <i id="product-star-rate-<%= index %>" class="text-muted fa fa-star"></i>   
+                                    <% index += 1 %>
+                                <% end %>
+                            </label>
                             <span id="rate" class="list-inline-item text-dark mx-0">Rating <%= number_with_precision(@product.score_rating, precision: 1) %> (<%= @product.number_of_rates %> rates) | <%= @product.comments.count %> Comments</span>
                             
                             <% if user_signed_in? %>
-                                | Your rating                             
-                                <% user_review = @reviews.find_by(user_id: current_user.id, product_id: @product.id) %>
-                                <% user_score_rating = user_review.nil? ? 0 : user_review.user_score_rating.to_i%>
-                                <% user_score_rating.times do |i| %>
-                                    <a class="cursor-pointer" onclick="rating('<%= @product.id %>', '<%= i + 1 %>')"><i id="star-rate-<%= i %>" class="text-warning fa fa-star"></i></a>      
-                                <% end %>
-                                <% (5- user_score_rating).times do |i| %>
-                                    <a class="cursor-pointer" onclick="rating('<%= @product.id %>', '<%= i + 1 + user_score_rating %>')"><i id="star-rate-<%= i + user_score_rating %>" class="text-muted fa fa-star"></i></a>      
-                                <% end %>
+                                | Your rating   
+                                <% user_review = @reviews.find_by(user_id: current_user.id, product_id: @product.id) %>  
+                                <% user_score_rating = user_review.nil? ? 0 : user_review.user_score_rating.to_i%>                          
+                                <label id="star-rate" onmouseout="out_animation_rating(<%= user_score_rating - 1 %>)">                                                                     
+                                    <% user_score_rating.times do |i| %>
+                                        <a class="cursor-pointer" onclick="rating('<%= @product.id %>', '<%= i + 1 %>')"><i onmouseover="animation_rating(this)" id="star-rate-<%= i %>" class="text-warning fa fa-star"></i></a>      
+                                    <% end %>
+                                    <% (5- user_score_rating).times do |i| %>
+                                        <a class="cursor-pointer" onclick="rating('<%= @product.id %>', '<%= i + 1 + user_score_rating %>')"><i onmouseover="animation_rating(this)" id="star-rate-<%= i + user_score_rating %>" class="text-muted fa fa-star"></i></a>      
+                                    <% end %>
+                                </label>
                             <% end %>                       
                         </p>
                         <h5 class="font-weight-400">Description:</h5>

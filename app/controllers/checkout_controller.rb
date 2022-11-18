@@ -3,8 +3,11 @@ class CheckoutController < ApplicationController
   def index
     begin
       if user_signed_in?
-        @inventories = Inventory.where(is_actived: true)
+        @inventories = Inventory.where(
+          is_actived: true
+        )
         session[:coupon] = nil
+        session[:order] = nil
       else
         redirect_to home_index_path
       end
@@ -19,12 +22,26 @@ class CheckoutController < ApplicationController
         count_user_cart = Cart.where(user_id: current_user.id).count
         if count_user_cart > 0
           @payments = Payment.where(is_actived: true)
-          render json: { html: render_to_string(partial: 'layouts/partials/confirm_order_information', locals: {payments: @payments}), is_signed_in: true, is_cart_empty: false }
+          render json: {
+            html: render_to_string(
+              partial: 'layouts/partials/confirm_order_information',
+              locals: {
+                payments: @payments
+              }
+            ),
+            is_signed_in: true,
+            is_cart_empty: false
+          }
         else
-          render json: { is_signed_in: true, is_cart_empty: true }
+          render json: {
+            is_signed_in: true,
+            is_cart_empty: true
+          }
         end
       else
-        render json: { is_signed_in: false }
+        render json: {
+          is_signed_in: false
+        }
       end
     rescue StandardError => e
       p e.message
@@ -34,10 +51,23 @@ class CheckoutController < ApplicationController
   def back_to_cart
     begin
       if user_signed_in?
-        @inventories = Inventory.where(is_actived: true)
-        render json: { html: render_to_string(partial: 'layouts/partials/update_cart', locals: {carts: @carts, inventories: @inventories}), is_signed_in: true }
+        @inventories = Inventory.where(
+          is_actived: true
+        )
+        render json: {
+          html: render_to_string(
+            partial: 'layouts/partials/update_cart',
+            locals: {
+              carts: @carts,
+              inventories: @inventories
+            }
+          ),
+          is_signed_in: true
+        }
       else
-        render json: { is_signed_in: false }
+        render json: {
+          is_signed_in: false
+        }
       end
     rescue StandardError => e
       p e.message
@@ -47,14 +77,29 @@ class CheckoutController < ApplicationController
   def apply_coupon
     begin
       if user_signed_in?
-        coupon = Coupon.find_by(id: params[:coupon][:id], is_actived: true)
+        coupon = Coupon.find_by(
+          id: params[:coupon][:id],
+          is_actived: true
+        )
         session[:coupon] = coupon
-        return render json: { is_signed_in: true, discount: 0, total_payment: session[:total_cart], is_available: false } if coupon.nil? || coupon.start_date.to_date > Time.now.to_date || coupon.end_date.to_date < Time.now.to_date || coupon.number_of_uses < 1
+        return render json: {
+          is_signed_in: true,
+          discount: 0,
+          total_payment: session[:total_cart],
+          is_available: false
+        } if coupon.nil? || coupon.start_date.to_date > Time.now.to_date || coupon.end_date.to_date < Time.now.to_date || coupon.number_of_uses < 1
         discount = session[:total_cart] * coupon.coupon_discount / 100
         total_payment = session[:total_cart] - discount
-        render json: { is_signed_in: true, discount: discount, total_payment: total_payment, is_available: true }
+        render json: {
+          is_signed_in: true,
+          discount: discount,
+          total_payment: total_payment,
+          is_available: true
+        }
       else
-        render json: { is_signed_in: false }
+        render json: {
+          is_signed_in: false
+        }
       end
     rescue StandardError => e
       p e.message
@@ -64,14 +109,35 @@ class CheckoutController < ApplicationController
   def pay
     begin
       if user_signed_in?
-        return render json: {is_signed_in: true, is_error: true } if params[:order_info][:apartment_number].strip.empty? || params[:order_info][:street].strip.empty? || params[:order_info][:ward].strip.empty? || params[:order_info][:district].strip.empty? || params[:order_info][:province].strip.empty? || params[:order_info][:payment].strip.empty?
+        return render json: {
+          is_signed_in: true,
+          is_error: true
+        } if params[:order_info][:apartment_number].strip.empty? || params[:order_info][:street].strip.empty? || params[:order_info][:ward].strip.empty? || params[:order_info][:district].strip.empty? || params[:order_info][:province].strip.empty? || params[:order_info][:payment].strip.empty?
         coupon_id = session[:coupon].nil? ? nil : session[:coupon]['id']
-        order = Order.new(id: SecureRandom.uuid, user_id: current_user.id, coupon_id: coupon_id, apartment_number: params[:order_info][:apartment_number], street: params[:order_info][:street], ward: params[:order_info][:ward], district: params[:order_info][:district], province: params[:order_info][:province], status: 0, updated_by: current_user.id, is_actived: true)
+        order = Order.new(
+          id: SecureRandom.uuid,
+          user_id: current_user.id,
+          coupon_id: coupon_id,
+          apartment_number: params[:order_info][:apartment_number],
+          street: params[:order_info][:street],
+          ward: params[:order_info][:ward],
+          district: params[:order_info][:district],
+          province: params[:order_info][:province],
+          status: 0,
+          updated_by: current_user.id,
+          is_actived: true
+        )
         session[:order] = order
         payment_url = params[:order_info][:payment].to_s.eql?(ENV['VNPAY_E_WALLET_PAYMENT_ID'].to_s) ? get_payment_url(order) : ENV['CHECKOUT_RESULT_URL']
-        render json: {is_signed_in: true, is_error: false, payment_url: payment_url }
+        render json: {
+          is_signed_in: true,
+          is_error: false,
+          payment_url: payment_url
+        }
       else
-        render json: { is_signed_in: false }
+        render json: {
+          is_signed_in: false
+        }
       end
     rescue StandardError => e
       p e.message
@@ -104,15 +170,39 @@ class CheckoutController < ApplicationController
             user_cart.each do |item|
               product = item.inventory.product
               sell_price = product.sell_price * (1 - product.product_discount / 100)
-              OrderDetail.create(inventory_id: item.inventory_id, order_id: session[:order].id, quantity_of_order: item.quantity, sell_price: sell_price, product_discount: product.product_discount, created_by: current_user.id, updated_by: current_user.id)
+              OrderDetail.create(
+                inventory_id: item.inventory_id,
+                order_id: session[:order].id,
+                quantity_of_order: item.quantity,
+                sell_price: sell_price,
+                product_discount: product.product_discount,
+                created_by: current_user.id,
+                updated_by: current_user.id
+              )
               item.inventory.quantity_of_inventory -= item.quantity
-              item.inventory.save 
-              #update(quantity_of_inventory: "quantity_of_inventory - #{item.quantity}")
+              item.inventory.save
               item.destroy
             end
-            Invoice.create(order_id: session[:order].id, payment_id: ENV['VNPAY_E_WALLET_PAYMENT_ID'], bank_code: permit_params['vnp_BankCode'], bank_transaction_no: permit_params['vnp_BankTranNo'], transaction_no: permit_params['vnp_TransactionNo'], total_money: session[:total_cart], total_money_discount: session[:total_cart] * coupon_discount / 100, total_money_payment: vnp_amount, updated_by: current_user.id)
+            Invoice.create(
+              order_id: session[:order].id,
+              payment_id: ENV['VNPAY_E_WALLET_PAYMENT_ID'],
+              bank_code: permit_params['vnp_BankCode'],
+              bank_transaction_no: permit_params['vnp_BankTranNo'],
+              transaction_no: permit_params['vnp_TransactionNo'],
+              total_money: session[:total_cart],
+              total_money_discount: session[:total_cart] * coupon_discount / 100,
+              total_money_payment: vnp_amount,
+              updated_by: current_user.id
+            )
+            coupon_update = Coupon.find(session[:order].coupon_id)
+            unless coupon_update.nil?
+              coupon_update.number_of_uses -= 1
+              coupon_update.save
+            end
+            refresh_header
             @pay_code = '00'
             @pay_message = 'Confirm Success'
+            @products = Product.where(is_actived: true).limit(3)
           else
             @pay_code = '11'
             @pay_message = 'Confirm Failed'
@@ -129,7 +219,7 @@ class CheckoutController < ApplicationController
       @pay_code = '97'
       @pay_message = 'Invalid Checksum'
     end
-    #render json: {code: @pay_code, message: @pay_message}
+    @order = session[:order]
   end
  
   private
@@ -217,6 +307,19 @@ class CheckoutController < ApplicationController
   end
   
   def response_params
-    params.permit("vnp_Amount", "vnp_BankCode", "vnp_BankTranNo", "vnp_CardType", "vnp_OrderInfo", "vnp_PayDate", "vnp_ResponseCode", "vnp_TmnCode", "vnp_TransactionNo", "vnp_TransactionStatus", "vnp_TxnRef", "vnp_SecureHash")
+    params.permit(
+      'vnp_Amount',
+      'vnp_BankCode',
+      'vnp_BankTranNo',
+      'vnp_CardType',
+      'vnp_OrderInfo',
+      'vnp_PayDate',
+      'vnp_ResponseCode',
+      'vnp_TmnCode',
+      'vnp_TransactionNo',
+      'vnp_TransactionStatus',
+      'vnp_TxnRef',
+      'vnp_SecureHash'
+    )
   end
 end

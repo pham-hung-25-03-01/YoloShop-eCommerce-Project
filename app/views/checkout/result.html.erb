@@ -1,2 +1,30 @@
-<%= @pay_code %>
-<%= @pay_message %>
+<div class="container py-5">
+    <div class="row"> 
+        <% if @pay_code == "00" %>
+            <h2 class="h1 text-success text-center"><i class="fa fa-fw fa-thumbs-up"></i> Payment success!</h2>
+            <p class="text-dark text-center">
+                Order id: <%= @order.id %></br>
+                <a href="/checkout" class="btn btn-success my-5 mb-0">View this order</a>
+            </p>
+            <section class="py-5">
+                <div class="container">
+                    <div class="row text-left p-2 pb-3">
+                        <h4>Related Products</h4>
+                    </div>
+
+                    <!--Start Carousel Wrapper-->
+                    <div id="carousel-related-product" class="row">
+                        <%= render partial: 'layouts/partials/product', collection: @products, as: :product %>
+                    </div>
+                </div>
+            </section>
+        <% else %>
+            <h2 class="h1 text-danger text-center"><i class="fa fa-fw fa-exclamation-triangle"></i> Oops! Payment failed</h2>
+            <p class="text-danger text-center">
+                Error code: <%= @pay_code %></br>
+                Message: <%= @pay_message %></br>
+                <a href="/checkout" class="btn btn-success my-5 mb-0"><i class="fa fa-faw fa-arrow-left"></i> Try paying again</a>
+            </p>
+        <% end %>   
+    </div>
+</div>
