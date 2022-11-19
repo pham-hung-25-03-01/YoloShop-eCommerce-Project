@@ -8,6 +8,7 @@
 
     <!-- Start CSS -->
     <%= stylesheet_link_tag 'bootstrap.min', 'data-turbo-track': 'reload' %>
+    <%= stylesheet_link_tag 'autoComplete.min', 'data-turbo-track': 'reload' %>
     <%= stylesheet_link_tag 'templatemo.min', 'data-turbo-track': 'reload' %>
     <%= stylesheet_link_tag 'custom', 'data-turbo-track': 'reload' %>
 
@@ -38,7 +39,11 @@
     <%= javascript_include_tag 'jquery-1.11.0.min', 'data-turbolinks-track': 'load' %>
     <%= javascript_include_tag 'jquery-migrate-1.2.1.min', 'data-turbolinks-track': 'load' %>
     <%= javascript_include_tag 'bootstrap.bundle.min', 'data-turbolinks-track': 'load' %>
+    <%= javascript_include_tag 'autoComplete.min', 'data-turbolinks-track': 'load' %>
     <%= javascript_include_tag 'templatemo.min', 'data-turbolinks-track': 'load' %>
+    <script>
+      var product_names = <%= @product_names %>
+    </script>
     <%= javascript_include_tag 'custom', 'data-turbolinks-track': 'load' %>
     <!-- End Script -->
     <% if current_user.nil? %>

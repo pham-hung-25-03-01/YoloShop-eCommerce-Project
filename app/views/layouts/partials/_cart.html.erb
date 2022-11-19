@@ -3,7 +3,7 @@
         <div class="col-md-5"><i class="fa fa-fw fa-cart-arrow-down text-dark"></i></div>
         <div class="col-md-7 pb-2">
             <span class="text-muted">Total:</span>
-            <span id="total-cart" class="text-success"><%= number_to_currency(session[:total_cart], precision: 2) %></span>
+            <span id="total-cart" class="text-success"><%= number_to_currency(session[:total_cart], precision: 0, unit: 'VND', format: '%n %u') %></span>
         </div>
         <hr class="text-success" />
     </div>

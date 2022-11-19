@@ -63,9 +63,9 @@ function remove_from_cart(product_id, size, color){
                 else{
                     $('#count-cart').html(data.count_cart);    
                     $('#cart-item-'+data.inventory_id).remove();
-                    $('#total-cart').html(formatter.format(data.total));
+                    $('#total-cart').html(formatter.format(data.total).replaceAll('.', ','));
                     $('#checkout-item-'+data.inventory_id).remove();
-                    $('#checkout-cart-total').html(formatter.format(data.total));
+                    $('#checkout-cart-total').html(formatter.format(data.total).replaceAll('.', ','));
                     if(data.is_cart_empty){
                         $('#check-out-content').html('<label class="text-center w-100">Cart is empty</label>');
                         $('#checkout-table').html('<label class="text-center w-100">Your cart is empty.</label>');
@@ -199,11 +199,61 @@ function lsRememberMe() {
 }
 
 // Create our number formatter.
-const formatter = new Intl.NumberFormat('en-US', {
+const formatter = new Intl.NumberFormat('it-IT', {
     style: 'currency',
-    currency: 'USD',
-  
+    currency: 'VND',
     // These options are needed to round to whole numbers if that's what you want.
     //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
     //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
 });
+
+const autoCompleteJS = new autoComplete({
+    selector: "#autoComplete",
+    placeHolder: "Search...",
+    data: {
+        src: product_names,
+        cache: true,
+    },
+    resultsList: {
+        element: (list, data) => {
+            if (!data.results.length) {
+                // Create "No Results" message element
+                const message = document.createElement("div");
+                // Add class to the created element
+                message.setAttribute("class", "no_result");
+                // Add message text content
+                message.innerHTML = `<span class="mx-4 text-muted">Found No Results for "${data.query}"</span>`;
+                // Append message element to the results list
+                list.prepend(message);
+            }
+        },
+        noResults: true,
+    },
+    resultItem: {
+        highlight: true
+    },
+    events: {
+        input: {
+            selection: (event) => {
+                const selection = event.detail.selection.value;
+                autoCompleteJS.input.value = selection;
+            }
+        }
+    }
+});
+
+$('#autoComplete').keyup(function (event){
+    product_name = $('#autoComplete').val().trim();
+    if(product_name != ""){
+        console.log(event.which)
+        if (event.key === "Enter") {
+            $('#search-form').attr('action', '/products/'+convertToSlug(product_name));
+            $('#search-form').submit();
+        }
+    }
+});
+function convertToSlug(Text) {
+    return Text.toLowerCase()
+               .replace(/[^\w ]+/g, '')
+               .replace(/ +/g, '-');
+}

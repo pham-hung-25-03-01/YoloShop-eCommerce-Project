@@ -100,13 +100,16 @@
         <div class="w-100 pt-1 mb-5 text-right">
             <button type="button" class="btn-close cursor-pointer" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form action="" method="get" class="modal-content modal-body border-0 p-0">
+        <%# <form action="" method="get" class="modal-content modal-body border-0 p-0">
             <div class="input-group mb-2">
-                <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Search ...">
+                <input type="text" class="form-control" id="autoComplete" name="q">
                 <button type="submit" class="input-group-text bg-success text-light">
                     <i class="fa fa-fw fa-search text-white"></i>
                 </button>
             </div>
+        </form> %>
+        <form id="search-form" method="get" class="modal-content modal-body border-0 p-0">
+            <input class="w-100" id="autoComplete" type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off">
         </form>
     </div>
 </div>

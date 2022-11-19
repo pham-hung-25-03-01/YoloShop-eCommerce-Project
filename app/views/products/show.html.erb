@@ -4,6 +4,9 @@
         <div class="row">
             <div class="col-lg-5 mt-5">
                 <div class="card mb-3">
+                    <% if @product.product_discount > 0 %>
+                        <div class="ribbon ribbon-top-left"><span>Sale <%= number_to_percentage(@product.product_discount, precision: 0) %></span></div>
+                    <% end %>
                     <%= image_tag @product.product_images.find_by(is_default: true).image_url, class: 'card-img img-fluid', alt: @product.product_name, id: 'product-detail' %>
                 </div>
                 <div class="row pt-5">
@@ -66,9 +69,9 @@
                 <div class="card">
                     <div class="card-body">
                         <h1 class="h2 font-weight-400"><%= @product.product_name %></h1>
-                        <p class="h3"><%= number_to_currency(@product.sell_price * (1 - @product.product_discount / 100), precision: 2) %>
+                        <p class="h3"><%= number_to_currency(@product.sell_price * (1 - @product.product_discount / 100), precision: 0, unit: 'VND', format: '%n %u') %>
                             <% unless @product.product_discount == 0 %>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<s><%= number_to_currency(@product.sell_price, precision: 2) %></s>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<s><%= number_to_currency(@product.sell_price, precision: 0, unit: 'VND', format: '%n %u') %></s>
                             <% end %>
                         </p>
                         <p>
@@ -92,8 +95,9 @@
                             <% if user_signed_in? %>
                                 | Your rating   
                                 <% user_review = @reviews.find_by(user_id: current_user.id, product_id: @product.id) %>  
-                                <% user_score_rating = user_review.nil? ? 0 : user_review.user_score_rating.to_i%>                          
-                                <label id="star-rate" onmouseout="out_animation_rating(<%= user_score_rating - 1 %>)">                                                                     
+                                <% user_score_rating = user_review.nil? ? 0 : user_review.user_score_rating.to_i%>  
+                                <input type="hidden" id="star-rate" value="<%= user_score_rating < 1 ? 0 : user_score_rating - 1 %>">                        
+                                <label onmouseout="out_animation_rating()">                                                                     
                                     <% user_score_rating.times do |i| %>
                                         <a class="cursor-pointer" onclick="rating('<%= @product.id %>', '<%= i + 1 %>')"><i onmouseover="animation_rating(this)" id="star-rate-<%= i %>" class="text-warning fa fa-star"></i></a>      
                                     <% end %>

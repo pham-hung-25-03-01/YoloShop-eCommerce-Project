@@ -35,6 +35,12 @@ class ApplicationController < ActionController::Base
         is_favored: true
       )
     end
+    @product_names = Product.where(
+      is_actived: true
+    ).order(
+      product_name: :ASC
+    ).pluck(:product_name).to_a.to_json.html_safe
+    p @product_names
   end
     # def devise_mapping
     #     @devise_mapping ||= Devise.mappings[:user]

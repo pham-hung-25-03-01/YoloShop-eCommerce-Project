@@ -6,10 +6,7 @@
             </div>
             <div class="col-md-8 my-auto">
                 <span class="text-dark d-block font-size-1-1-rem"><%= item.inventory.product.product_name %> size <%= item.inventory.size %></span>
-                <span class="text-success font-size-0-9-rem"><%= number_to_currency(item.inventory.product.sell_price * (1 - item.inventory.product.product_discount / 100), precision: 2) %>               
-                    <% unless item.inventory.product.product_discount == 0 %>
-                        &nbsp;&nbsp;&nbsp;<s class="text-muted"><%= number_to_currency(item.inventory.product.sell_price, precision: 2) %></s>
-                    <% end %>
+                <span class="text-success font-size-0-9-rem"><%= number_to_currency(item.inventory.product.sell_price * (1 - item.inventory.product.product_discount / 100), precision: 0, unit: 'VND', format: '%n %u') %>               
                 </span>
                 <span id="cart-item-quantity-<%= item.inventory_id %>" class="text-muted mx-3 font-size-0-9-rem">Quantity: <%= item.quantity %></span>
             </div>

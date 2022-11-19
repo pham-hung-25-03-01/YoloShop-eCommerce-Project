@@ -1,6 +1,9 @@
 <div name="product" class="col-md-4">
     <div class="card mb-4 product-wap rounded-0">
         <div class="card rounded-0">
+            <% if product.product_discount > 0 %>
+                <div class="ribbon ribbon-top-right"><span>Sale <%= number_to_percentage(product.product_discount, precision: 0) %></span></div>
+            <% end %>
             <%= image_tag product.product_images.find_by(is_default: true).image_url, class: 'card-img rounded-0 img-fluid', alt: product.product_name %>
             <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                 <ul class="list-unstyled">
@@ -40,9 +43,9 @@
                 </li>
             </ul>
             <p class="text-center mb-0">
-                <%= number_to_currency(product.sell_price * (1 - product.product_discount / 100), precision: 2) %>            
+                <%= number_to_currency(product.sell_price * (1 - product.product_discount / 100), precision: 0, unit: 'VND', format: '%n %u') %>            
                 <% unless product.product_discount == 0 %>
-                    &nbsp;&nbsp;&nbsp;<s><%= number_to_currency(product.sell_price, precision: 2) %></s>
+                    &nbsp;&nbsp;&nbsp;<s><%= number_to_currency(product.sell_price, precision: 0, unit: 'VND', format: '%n %u') %></s>
                 <% end %> 
             </p>
         </div>

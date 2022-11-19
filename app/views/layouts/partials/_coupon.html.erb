@@ -1,0 +1,22 @@
+<div class="col-md-6 my-3">
+    <div class="card rounded-3 shadow-sm py-3">
+        <div class="row mx-0">
+            <div class="coupon-decoration-top">
+            </div>
+            <div class="col-md-4 text-center vertical px-4 d-flex align-items-center">
+                <h2 class="text-uppercase text-success mb-0 font-size-2-5-rem font-weight-600">Sale <%= number_to_percentage(coupon.coupon_discount, precision: 0) %></h2>
+            </div>
+            <div class="col-md-8">
+                <p class="text-center text-danger font-size-1-5-rem font-weight-600">
+                    GET IT NOW !!!
+                </p>
+                <div class="copy-button m-2 mr-0">
+                    <input id="copyvalue-<%= coupon.id %>" type="text" readonly value="<%= coupon.id %>" />
+                    <a name="copybtn" id="copybtn-<%= coupon.id %>" onclick="copyIt('<%= coupon.id %>')" class="btn btn-danger font-weight-400">COPY</a>
+                </div>
+            </div>
+            <div class="coupon-decoration-bottom">
+            </div>
+            </div>
+    </div>
+</div>

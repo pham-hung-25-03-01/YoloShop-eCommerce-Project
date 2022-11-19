@@ -48,8 +48,7 @@ function rating(product_id, user_score_rating){
                         $("i[name='star-rate-"+ data.user_id +"-"+ i+"']").addClass('text-muted');
                     }
                 }
-                //document.getElementById('').onmouseout = out_animation_rating(user_score_rating - 1);
-                //$('#star-rate').prop('onmouseout', out_animation_rating(user_score_rating - 1));
+                $('#star-rate').val(user_score_rating - 1);
             }
             else{
                 $('#sign-in').modal('show');
@@ -69,7 +68,8 @@ function animation_rating(element){
         $('#star-rate-'+ j).addClass('text-muted');
     }
 }
-function out_animation_rating(index){
+function out_animation_rating(){
+    index = parseInt($('#star-rate').val());
     for(let i=0; i<=index; i++){
         $('#star-rate-'+ i).removeClass('text-muted');
         $('#star-rate-'+ i).addClass('text-warning');

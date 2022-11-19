@@ -16,10 +16,10 @@ function update_quantity(inventory_id){
                     alert('Product or quantity invalid');
                 }
                 else{
-                    $('#item-total-'+inventory_id).html(formatter.format(data.total));
-                    $('#checkout-cart-total').html(formatter.format(data.cart_total));
+                    $('#item-total-'+inventory_id).html(formatter.format(data.total).replaceAll('.', ','));
+                    $('#checkout-cart-total').html(formatter.format(data.cart_total).replaceAll('.', ','));
                     $('#cart-item-quantity-'+inventory_id).html('Quantity:'+data.quantity);
-                    $('#total-cart').html(formatter.format(data.cart_total));
+                    $('#total-cart').html(formatter.format(data.cart_total).replaceAll('.', ','));
                 }
             }
             else{
@@ -81,8 +81,8 @@ function apply_coupon(){
             },
             success: function(data){
                 if(data.is_signed_in){
-                    $('#order-discount').html(formatter.format(data.discount));
-                    $('#order-total-payment').html(formatter.format(data.total_payment));
+                    $('#order-discount').html(formatter.format(data.discount).replaceAll('.', ','));
+                    $('#order-total-payment').html(formatter.format(data.total_payment).replaceAll('.', ','));
                     if(data.is_available){
                         $('#coupon-notification').html('<label class="text-success p-2">Success!</label>');
                         $("#coupon").prop('disabled', true);
