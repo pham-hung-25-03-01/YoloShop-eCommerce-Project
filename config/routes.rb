@@ -78,4 +78,5 @@ Rails.application.routes.draw do
       get 'result', to: 'checkout/result'
     end
   end
+  match '*path' => redirect('/404.html'), via: :all
 end

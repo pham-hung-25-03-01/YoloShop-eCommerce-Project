@@ -71,7 +71,7 @@
                         <h1 class="h2 font-weight-400"><%= @product.product_name %></h1>
                         <p class="h3"><%= number_to_currency(@product.sell_price * (1 - @product.product_discount / 100), precision: 0, unit: 'VND', format: '%n %u') %>
                             <% unless @product.product_discount == 0 %>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<s><%= number_to_currency(@product.sell_price, precision: 0, unit: 'VND', format: '%n %u') %></s>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<s class="text-muted"><%= number_to_currency(@product.sell_price, precision: 0, unit: 'VND', format: '%n %u') %></s>
                             <% end %>
                         </p>
                         <p>

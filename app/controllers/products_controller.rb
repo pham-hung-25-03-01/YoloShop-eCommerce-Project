@@ -61,7 +61,7 @@ class ProductsController < ApplicationController
     begin
       @product = Product.find_by(
         meta_title: params[:meta_title]
-      )
+      ) or return redirect_to_404
       @supplier = Supplier.find(
         @product.supplier_id
       )

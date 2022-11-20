@@ -2,6 +2,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   skip_before_action :verify_authenticity_token
   before_action :refresh_header
+
+  def redirect_to_404
+    redirect_to '/404.html'
+  end
   def refresh_header
     if current_user.nil?
       session[:count_favorite] = nil
@@ -40,10 +44,15 @@ class ApplicationController < ActionController::Base
     ).order(
       product_name: :ASC
     ).pluck(:product_name).to_a.to_json.html_safe
-    p @product_names
   end
     # def devise_mapping
     #     @devise_mapping ||= Devise.mappings[:user]
     # end
     # helper_method :devise_mapping
+  def new
+    redirect_to_404
+  end
+  def show
+    redirect_to_404
+  end
 end
