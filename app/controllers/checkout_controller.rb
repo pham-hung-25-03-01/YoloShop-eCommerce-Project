@@ -111,8 +111,12 @@ class CheckoutController < ApplicationController
       if user_signed_in?
         return render json: {
           is_signed_in: true,
-          is_error: true
+          is_error: 1
         } if params[:order_info][:apartment_number].strip.empty? || params[:order_info][:street].strip.empty? || params[:order_info][:ward].strip.empty? || params[:order_info][:district].strip.empty? || params[:order_info][:province].strip.empty? || params[:order_info][:payment].strip.empty?
+        return render json: {
+          is_signed_in: true,
+          is_error: 2
+        } unless verify_recaptcha(response: params[:order_info][:recaptcha_response])
         coupon_id = session[:coupon].nil? ? nil : session[:coupon]['id']
         order = Order.new(
           id: SecureRandom.uuid,
@@ -131,7 +135,7 @@ class CheckoutController < ApplicationController
         payment_url = params[:order_info][:payment].to_s.eql?(ENV['VNPAY_E_WALLET_PAYMENT_ID'].to_s) ? get_payment_url(order) : ENV['CHECKOUT_RESULT_URL']
         render json: {
           is_signed_in: true,
-          is_error: false,
+          is_error: 0,
           payment_url: payment_url
         }
       else

@@ -108,6 +108,7 @@ function pay(){
     province = $('#province').val();
     coupon = $('#coupon').val();
     payment = $('#payments').find(":selected").val();
+    recaptcha_response = grecaptcha.getResponse();
     $.ajax({
         url: '/checkout/pay',
         type: 'post',
@@ -119,13 +120,19 @@ function pay(){
                 district: district,
                 province: province,
                 coupon: coupon,
-                payment: payment
+                payment: payment,
+                recaptcha_response:  recaptcha_response
             }
         },
         success: function(data){
             if(data.is_signed_in){
-                if(data.is_error){
-                    alert('Please fill in your order information');
+                if(data.is_error > 0){
+                    if(data.is_error == 1){
+                        alert('Please fill in your order information');
+                    }
+                    else {                      
+                        alert('There was an error with the recaptcha code below. Please re-enter the code.');
+                    }
                 }
                 else{
                     window.location.href = data.payment_url;
