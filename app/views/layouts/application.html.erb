@@ -49,7 +49,7 @@
     <% if current_user.nil? %>
       <script type="text/javascript">
           $(window).on('load', function() {
-            if(window.location.pathname == '/home'){
+            if(window.location.pathname == '/home' || window.location.pathname == '/' || window.location.pathname == '/home/index'){
               $('#sign-in').modal('show');
             }
           });

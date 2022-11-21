@@ -1,0 +1,8 @@
+<li class="order list-style-type-none" class="order list-style-type-none">
+    <div class="time font-size-0-9-rem"><%= order.created_at.strftime('%d-%m-%Y %I:%M:%S %p') %></div>
+    <div class="order-content">
+        <label>Order id: <%= order.id %></label></br>
+        <label>Ship date: <%= order.ship_date.nil? ? '' : order.ship_date.strftime('%d-%m-%Y') %></label>
+    </div>
+    <span class="badge bg-primary badge-right">Primary</span>
+</li>

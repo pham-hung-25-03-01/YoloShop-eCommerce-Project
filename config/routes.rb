@@ -20,6 +20,11 @@ Rails.application.routes.draw do
       get :confirm_email
       get '/sign_in', to: redirect('/home')
     end
+    collection do
+      patch 'update-user-information', to: 'users/update_user_information'
+      patch 'update-user-password', to: 'users/update_user_password'
+      get 'orders-history', to: 'users/orders_history'
+    end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   # Defines the root path route ("/")
@@ -78,5 +83,10 @@ Rails.application.routes.draw do
       get 'result', to: 'checkout/result'
     end
   end
+  # resource :user do
+  #   collection do
+  #     get '/id=:id', to: 'users#show'
+  #   end
+  # end
   match '*path' => redirect('/404.html'), via: :all
 end

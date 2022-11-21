@@ -114,6 +114,12 @@ Custom Css
 .font-weight-600 {
   font-weight: 600!important;
 }
+.border-left-green {
+  border-left: 3px solid #56ae6c;
+}
+.pt-0-7-rem {
+  padding-top: 0.7rem!important;
+}
 .margin-bottom-0-rem {
   margin-bottom: 0rem!important;;
 }
@@ -267,7 +273,6 @@ Custom Css
   top: 30px;
   transform: rotate(45deg);
 }
-
 .ribbon-top-left {
   top: -10px;
   left: -10px;
@@ -290,7 +295,6 @@ Custom Css
   top: 30px;
   transform: rotate(-45deg);
 }
-
 .vertical {
   border-right: 5px dotted #56ae6c;
 }
@@ -314,7 +318,6 @@ Custom Css
   border-top-right-radius: 50%;
   border-top-left-radius: 50%;
 }
-
 .copy-button {
   display: flex;
   justify-content: space-between;
@@ -327,7 +330,6 @@ Custom Css
   padding: 0 5px;
   border: 1px solid #e1e1e1;
 }
-
 .copy-button input {
   width: 100%;
   height: 100%;
@@ -335,8 +337,51 @@ Custom Css
   outline: none;
   font-size: 15px;
 }
-
 .copy-button a {
   padding: 5px 20px;
   border: 1px solid transparent;
+}
+
+.sessions{
+  margin-top: 2rem;
+  border-radius: 12px;
+  position: relative;
+}
+.order {
+  position: relative!important;
+  padding-bottom: 1.5rem;
+  border-left: 1px solid #abaaed;
+  position: relative;
+  padding-left: 20px;
+  margin-left: 10px;
+}
+.time{
+  color: #2a2839;
+  font-weight: 500;
+}
+.order:last-child{
+  border: 0px;
+  padding-bottom: 0;
+}
+.order:before{
+  content: '';
+  width: 15px;
+  height: 15px;
+  background: white;
+  border: 1px solid #4e5ed3;
+  box-shadow: 3px 3px 0px #bab5f8;
+  box-shadow: 3px 3px 0px #bab5f8;
+  border-radius: 50%;
+  position: absolute;
+  left: -10px;
+  top: 0px;
+}
+.order-content{
+  line-height: 1.5;
+  margin-top:0.4rem;
+}
+.badge-right {
+  position: absolute;
+  right: 0;
+  top: 0;
 }

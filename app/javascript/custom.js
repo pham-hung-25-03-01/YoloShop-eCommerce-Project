@@ -160,16 +160,18 @@ $('#agree_to_terms_and_conditions').change(function(){
     }
 })
 $('#sign-in').on('hidden.bs.modal', function (e) {
-    $(this)
-      .find("input[type=email]")
-         .val('')
-         .end()
-      .find("input[type=password]")
-         .val('')
-         .end()
-      .find("input[type=checkbox]")
-         .prop("checked", "")
-         .end();
+    if(!$('#user_remember_me').prop('checked')){
+        $(this)
+        .find("input[type=email]")
+           .val('')
+           .end()
+        .find("input[type=password]")
+           .val('')
+           .end()
+        .find("input[type=checkbox]")
+           .prop("checked", "")
+           .end();
+    }
 })
 
 const rmCheck = document.getElementById("user_remember_me"),

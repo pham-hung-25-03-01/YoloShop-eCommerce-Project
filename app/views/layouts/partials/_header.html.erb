@@ -69,8 +69,8 @@
                             <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
                         </a>
                         <ul id="dropdownMenuLink-menu" class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Personal infomation</a></li>
-                            <li><a class="dropdown-item" href="#">Your order history</a></li>
+                            <li><a class="dropdown-item" href="<%= edit_user_path(current_user.id) %>">Personal infomation</a></li>
+                            <li><a class="dropdown-item" href="/users/orders-history">Your orders history</a></li>
                             <li><a class="dropdown-item" href="<%= destroy_user_session_path %>">Sign out</a></li>
                         </ul>
                     </div>          

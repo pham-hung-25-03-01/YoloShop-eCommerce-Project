@@ -1,0 +1,102 @@
+<section class="bg-white">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-6 m-auto text-center">
+                <h1 class="font-weight-400">Hello <span class="text-success"><%= (@user.first_name + ' ' + @user.last_name).strip %>!</span></h1>
+                <div>
+                    Thank you for trusting to buy products in our shop.
+                </div>
+            </div>
+        </div>
+        <div class="p-4 pb-3 row">
+            <div class="col-md-4">
+                <div class="px-3 pb-1 text-danger border-left-green">
+                    <h3 class="font-weight-300">My avatar</h3>
+                </div>
+                <div class="text-center my-3 mb-2">
+                    <div>
+                        <img class="rounded-circle img-fluid border" src="<%= @user.avatar_url %>">
+                    </div>
+                    <div>
+                        <a href="#" class="btn btn-success my-3 mb-0">Change avatar</a>               
+                    </div>
+                </div>
+                <div class="form-input mb-4">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" value="<%= @user.email %>" readonly>
+                </div>
+                <div class="my-5 mb-3 px-3 text-danger border-left-green">
+                    <h3 class="font-weight-300">Password</h3>
+                </div>
+                <div class="pt-0-7-rem mb-3">
+                    <label class="form-label" for="user_new_password">New password</label>
+                    <input type="password" name="user[new_password]" id="user_new_password" class="form-control" placeholder="Example: 123Aa@">
+                </div>
+                <div class="text-center py-3">
+                    <a onclick="update_user_password()" class="btn btn-success">Change password</a>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="px-3 text-danger border-left-green">
+                    <h3 class="font-weight-300">Personal information</h3>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label" for="user_first_name">First name</label>
+                        <input type="text" name="user[first_name]" id="user_first_name" class="form-control" placeholder="Example: Pham Van" value="<%= @user.first_name.strip.empty? ? '' : @user.first_name %>">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label" for="user_last_name">Last name <span class="text-danger">*</span></label>
+                        <input type="text" name="user[last_name]" id="user_last_name" class="form-control" placeholder="Example: Hung" value="<%= @user.last_name.strip.empty? ? '' : @user.last_name %>" required oninvalid="this.setCustomValidity('Please fill out this field.')" onchange="this.setCustomValidity('')">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label" for="user_gender">Gender</label>
+                        <select name="user[gender]" id="user_gender" class="form-control font-weight-300">                    
+                            <% if @user.gender.nil? %>
+                                <option class="font-weight-300" value="-1" selected>Choose gender</option>
+                                <option class="font-weight-300" value="1">Male</option>
+                                <option class="font-weight-300" value="0">Female</option>
+                            <% else %>
+                                <option class="font-weight-300" value="1" <%= @user.gender ? 'selected' : '' %>>Male</option>
+                                <option class="font-weight-300" value="0" <%= @user.gender ? '' : 'selected' %>>Female</option>
+                            <% end %>
+                        </select>
+                    </div> 
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label" for="user_birthday">Birthday</label>
+                        <input type="date" name="user[birthday]" id="user_birthday" class="form-control" value="<%= @user.birthday.nil? ? '' : @user.birthday.strftime("%Y-%m-%d") %>">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label" for="user_phone_number">Phone <span class="text-danger">*</span></label>
+                        <input type="text" name="user[phone_number]" id="user_phone_number" class="form-control" placeholder="Example: 0898759325" value="<%= @user.phone_number.nil? ? '' : @user.phone_number %>" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*?)\..*/g, '$1');" required oninvalid="this.setCustomValidity('Please fill out this field.')" onchange="this.setCustomValidity('')">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label" for="user_apartment_number">Apartment number</label>
+                        <input type="text" name="user[apartment_number]" id="user_apartment_number" class="form-control" placeholder="Example: HCMC National University Dormitory Zone B" value="<%= @user.apartment_number.nil? ? '' : @user.apartment_number %>">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label" for="user_street">Street</label>
+                        <input type="text" name="user[street]" id="user_street" class="form-control" placeholder="Example: To Vinh Dien" value="<%= @user.street.nil? ? '' : @user.street %>">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label" for="user_ward">Ward</label>
+                        <input type="text" name="user[ward]" id="user_ward" class="form-control" placeholder="Example: Dong Hoa" value="<%= @user.ward.nil? ? '' : @user.ward %>">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label" for="user_district">District</label>
+                        <input type="text" name="user[district]" id="user_district" class="form-control" placeholder="Example: Di An" value="<%= @user.district.nil? ? '' : @user.district %>">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label" for="user_province">Province</label>
+                        <input type="text" name="user[province]" id="user_province" class="form-control" placeholder="Example: Binh Duong" value="<%= @user.province.nil? ? '' : @user.province %>">
+                    </div>
+                    <div class="col-md-12 my-3 text-center">
+                        <a class="btn btn-success" onclick="update_user_information()">Update information</a>
+                    </div>                       
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%= javascript_include_tag 'ajax_user', 'data-turbolinks-track': 'load' %>

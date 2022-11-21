@@ -198,7 +198,7 @@ class CheckoutController < ApplicationController
               total_money_payment: vnp_amount,
               updated_by: current_user.id
             )
-            coupon_update = Coupon.find(session[:order].coupon_id)
+            coupon_update = Coupon.find_by(id: session[:order].coupon_id)
             unless coupon_update.nil?
               coupon_update.number_of_uses -= 1
               coupon_update.save
