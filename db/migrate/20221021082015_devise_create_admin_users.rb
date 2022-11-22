@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-class DeviseCreateAdmins < ActiveRecord::Migration[7.0]
+class DeviseCreateAdminUsers < ActiveRecord::Migration[7.0]
   def change
-    create_table :admins, id: :uuid, default: 'gen_random_uuid()' do |t|
-      t.uuid :role_id, null: false
+    create_table :admin_users, id: :uuid, default: 'gen_random_uuid()' do |t|
       t.text :first_name
       t.text :last_name
       t.text :avatar_url
@@ -13,6 +12,7 @@ class DeviseCreateAdmins < ActiveRecord::Migration[7.0]
       ## Database authenticatable
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
+      t.integer :permission, null: false, default: 0
 
       ## Recoverable
       t.string   :reset_password_token
@@ -39,18 +39,18 @@ class DeviseCreateAdmins < ActiveRecord::Migration[7.0]
       # t.string   :unlock_token # Only if unlock strategy is :email or :both
       # t.datetime :locked_at
 
+
       t.boolean :status, null: false, default: true
       t.timestamps null: false
-      t.uuid :created_by, null: false
-      t.uuid :updated_by, null: false
+      t.uuid :updated_by
       t.boolean :is_actived, null: false, default: true
       t.datetime :deleted_at
       t.uuid :deleted_by
     end
 
-    add_index :admins, :email,                unique: true
-    add_index :admins, :reset_password_token, unique: true
-    # add_index :admins, :confirmation_token,   unique: true
-    # add_index :admins, :unlock_token,         unique: true
+    add_index :admin_users, :email,                unique: true
+    add_index :admin_users, :reset_password_token, unique: true
+    # add_index :admin_users, :confirmation_token,   unique: true
+    # add_index :admin_users, :unlock_token,         unique: true
   end
 end

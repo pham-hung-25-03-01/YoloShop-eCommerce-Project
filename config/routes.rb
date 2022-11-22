@@ -2,8 +2,8 @@ Rails.application.routes.draw do
   get 'checkout/index'
   get '/users/sign_in' => redirect('/home')
   match 'checkout/result' => 'checkout#result', :via => :get
-  devise_for :admins
-  #devise_for :users
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   devise_for :users,
     path_names: {sign_up: 'sign-up'},
     controllers: {

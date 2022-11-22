@@ -40,6 +40,7 @@ class UsersController < ApplicationController
         current_user.ward = ward.empty? ? nil : ward
         current_user.district = district.empty? ? nil : district
         current_user.province = province.empty? ? nil : province
+        current_user.updated_by = current_user.id
         current_user.save
         return render json: {
           is_signed_in: true,
@@ -69,6 +70,7 @@ class UsersController < ApplicationController
           message: 'Password must contains at least six characters, including at least one lowercase letter, one uppercase letter, one digit and one special character!'
         } unless password_complexity?(password)
         current_user.encrypted_password = BCrypt::Password.create(password)
+        current_user.updated_by = current_user.id
         current_user.save
         return render json: {
           is_signed_in: true,

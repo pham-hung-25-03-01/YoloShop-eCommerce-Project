@@ -1,6 +1,6 @@
 class Invoice < ApplicationRecord
   belongs_to :order
-  belongs_to :admin, optional: true
+  belongs_to :admin_user, optional: true
   belongs_to :payment
 
   validates :order_id, presence: true, uniqueness: true

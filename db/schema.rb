@@ -10,13 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_16_041021) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_22_104709) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "admins", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "role_id", null: false
+  create_table "active_admin_comments", force: :cascade do |t|
+    t.string "namespace"
+    t.text "body"
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.string "author_type"
+    t.bigint "author_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author"
+    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
+    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource"
+  end
+
+  create_table "admin_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "first_name"
     t.text "last_name"
     t.text "avatar_url"
@@ -24,19 +37,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_16_041021) do
     t.string "phone_number", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.integer "permission", default: 0, null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.boolean "status", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "created_by", null: false
-    t.uuid "updated_by", null: false
-    t.boolean "is_actived", default: true, null: false
-    t.datetime "deleted_at"
-    t.uuid "deleted_by"
-    t.index ["email"], name: "index_admins_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+    t.uuid "updated_by"
+    t.index ["email"], name: "index_admin_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
   create_table "ages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -52,7 +61,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_16_041021) do
 
   create_table "banners", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "event_id", null: false
-    t.uuid "admin_id", null: false
+    t.uuid "admin_user_id", null: false
     t.text "banner_url", null: false
     t.datetime "created_at", default: -> { "now()" }, null: false
   end
@@ -130,7 +139,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_16_041021) do
 
   create_table "inventory_quantity_logs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "inventory_id", null: false
-    t.uuid "admin_id", null: false
+    t.uuid "admin_user_id", null: false
     t.integer "quantity_of_import", default: 0, null: false
     t.integer "quantity_of_export", default: 0, null: false
     t.datetime "created_at", null: false
@@ -143,7 +152,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_16_041021) do
 
   create_table "invoices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "order_id", null: false
-    t.uuid "admin_id"
+    t.uuid "admin_user_id"
     t.string "bank_code"
     t.string "bank_transaction_no"
     t.string "transaction_no"
@@ -203,17 +212,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_16_041021) do
     t.uuid "deleted_by"
   end
 
-  create_table "permissions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.text "permission_name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.uuid "created_by", null: false
-    t.uuid "updated_by", null: false
-    t.boolean "is_actived", default: true, null: false
-    t.datetime "deleted_at"
-    t.uuid "deleted_by"
-  end
-
   create_table "product_groups", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "product_group_name", null: false
     t.datetime "created_at", null: false
@@ -234,7 +232,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_16_041021) do
   end
 
   create_table "product_price_logs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "admin_id", null: false
+    t.uuid "admin_user_id", null: false
     t.uuid "product_id", null: false
     t.decimal "import_price", precision: 15, scale: 2, default: "0.0", null: false
     t.decimal "sell_price", precision: 15, scale: 2, default: "0.0", null: false
@@ -282,28 +280,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_16_041021) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "updated_by", null: false
-  end
-
-  create_table "role_details", primary_key: ["permission_id", "role_id"], force: :cascade do |t|
-    t.uuid "permission_id", null: false
-    t.uuid "role_id", null: false
-    t.datetime "created_at", default: -> { "now()" }, null: false
-    t.uuid "created_by", null: false
-    t.boolean "is_actived", default: true, null: false
-    t.datetime "deleted_at"
-    t.uuid "deleted_by"
-  end
-
-  create_table "roles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.text "role_name", null: false
-    t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.uuid "created_by", null: false
-    t.uuid "updated_by", null: false
-    t.boolean "is_actived", default: true, null: false
-    t.datetime "deleted_at"
-    t.uuid "deleted_by"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -361,17 +337,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_16_041021) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "admins", "roles", name: "admins_role_id_fkey"
-  add_foreign_key "banners", "admins", name: "banners_admin_id_fkey"
+  add_foreign_key "banners", "admin_users", name: "banners_admin_user_id_fkey"
   add_foreign_key "banners", "events", name: "banners_event_id_fkey"
   add_foreign_key "carts", "inventories", name: "carts_inventory_id_fkey"
   add_foreign_key "carts", "users", name: "carts_user_id_fkey"
   add_foreign_key "comments", "products", name: "comments_product_id_fkey"
   add_foreign_key "comments", "users", name: "comments_user_id_fkey"
   add_foreign_key "inventories", "products", name: "inventories_product_id_fkey"
-  add_foreign_key "inventory_quantity_logs", "admins", name: "inventory_quantity_logs_admin_id_fkey"
+  add_foreign_key "inventory_quantity_logs", "admin_users", name: "inventory_quantity_logs_admin_user_id_fkey"
   add_foreign_key "inventory_quantity_logs", "inventories", name: "inventory_quantity_logs_inventory_id_fkey"
-  add_foreign_key "invoices", "admins", name: "invoices_admin_id_fkey"
+  add_foreign_key "invoices", "admin_users", name: "invoices_admin_user_id_fkey"
   add_foreign_key "invoices", "orders", name: "invoices_order_id_fkey"
   add_foreign_key "invoices", "payments", name: "invoices_payment_id_fkey"
   add_foreign_key "order_details", "inventories", name: "order_details_inventory_id_fkey"
@@ -379,7 +354,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_16_041021) do
   add_foreign_key "orders", "coupons", name: "orders_coupon_id_fkey"
   add_foreign_key "orders", "users", name: "orders_user_id_fkey"
   add_foreign_key "product_images", "products", name: "product_images_product_id_fkey"
-  add_foreign_key "product_price_logs", "admins", name: "product_price_logs_admin_id_fkey"
+  add_foreign_key "product_price_logs", "admin_users", name: "product_price_logs_admin_user_id_fkey"
   add_foreign_key "product_price_logs", "products", name: "product_price_logs_product_id_fkey"
   add_foreign_key "products", "ages", name: "products_age_id_fkey"
   add_foreign_key "products", "categories", name: "products_category_id_fkey"
@@ -388,6 +363,4 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_16_041021) do
   add_foreign_key "products", "suppliers", name: "products_supplier_id_fkey"
   add_foreign_key "reviews", "products", name: "reviews_product_id_fkey"
   add_foreign_key "reviews", "users", name: "reviews_user_id_fkey"
-  add_foreign_key "role_details", "permissions", name: "role_details_permission_id_fkey"
-  add_foreign_key "role_details", "roles", name: "role_details_role_id_fkey"
 end

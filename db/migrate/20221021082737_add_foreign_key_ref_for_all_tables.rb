@@ -11,12 +11,8 @@ class AddForeignKeyRefForAllTables < ActiveRecord::Migration[7.0]
     execute 'ALTER TABLE products ADD FOREIGN KEY (age_id) REFERENCES ages (id);'
 
     # product_price_logs table
-    execute 'ALTER TABLE product_price_logs ADD FOREIGN KEY (admin_id) REFERENCES admins (id);'
+    execute 'ALTER TABLE product_price_logs ADD FOREIGN KEY (admin_user_id) REFERENCES admin_users (id);'
     execute 'ALTER TABLE product_price_logs ADD FOREIGN KEY (product_id) REFERENCES products (id);'
-
-    # role_details table
-    execute 'ALTER TABLE role_details ADD FOREIGN KEY (permission_id) REFERENCES permissions (id);'
-    execute 'ALTER TABLE role_details ADD FOREIGN KEY (role_id) REFERENCES roles (id);'
 
     # comments table
     execute 'ALTER TABLE comments ADD FOREIGN KEY (product_id) REFERENCES products (id);'
@@ -24,10 +20,7 @@ class AddForeignKeyRefForAllTables < ActiveRecord::Migration[7.0]
 
     # banners table
     execute 'ALTER TABLE banners ADD FOREIGN KEY (event_id) REFERENCES events (id);'
-    execute 'ALTER TABLE banners ADD FOREIGN KEY (admin_id) REFERENCES admins (id);'
-
-    # admins table
-    execute 'ALTER TABLE admins ADD FOREIGN KEY (role_id) REFERENCES roles (id);'
+    execute 'ALTER TABLE banners ADD FOREIGN KEY (admin_user_id) REFERENCES admin_users (id);'
 
     # reviews table
     execute 'ALTER TABLE reviews ADD FOREIGN KEY (product_id) REFERENCES products (id);'
@@ -38,7 +31,7 @@ class AddForeignKeyRefForAllTables < ActiveRecord::Migration[7.0]
 
     # inventory_quantity_logs table
     execute 'ALTER TABLE inventory_quantity_logs ADD FOREIGN KEY (inventory_id) REFERENCES inventories (id);'
-    execute 'ALTER TABLE inventory_quantity_logs ADD FOREIGN KEY (admin_id) REFERENCES admins (id);'
+    execute 'ALTER TABLE inventory_quantity_logs ADD FOREIGN KEY (admin_user_id) REFERENCES admin_users (id);'
 
     # orders table
     execute 'ALTER TABLE orders ADD FOREIGN KEY (user_id) REFERENCES users (id);'
@@ -50,7 +43,7 @@ class AddForeignKeyRefForAllTables < ActiveRecord::Migration[7.0]
 
     # invoices table
     execute 'ALTER TABLE invoices ADD FOREIGN KEY (order_id) REFERENCES orders (id);'
-    execute 'ALTER TABLE invoices ADD FOREIGN KEY (admin_id) REFERENCES admins (id);'
+    execute 'ALTER TABLE invoices ADD FOREIGN KEY (admin_user_id) REFERENCES admin_users (id);'
     execute 'ALTER TABLE invoices ADD FOREIGN KEY (payment_id) REFERENCES payments (id);'
     
     # carts table
