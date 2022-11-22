@@ -86,6 +86,7 @@ Rails.application.routes.draw do
       post 'apply-coupon', to: 'checkout/apply_coupon'
       post 'pay', to: 'checkout/pay'
       get 'result', to: 'checkout/result'
+      get 'order-success', to: 'checkout/order_success'
     end
   end
   match '*path' => redirect('/404.html'), via: :all

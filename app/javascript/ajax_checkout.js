@@ -130,8 +130,13 @@ function pay(){
                     if(data.is_error == 1){
                         alert('Please fill in your order information');
                     }
-                    else {                      
-                        alert('There was an error with the recaptcha code below. Please re-enter the code.');
+                    else {
+                        if(data.is_error == 2){
+                            alert('Please update your phone number in Personal Information before checkout.');
+                        }
+                        else{
+                            alert('There was an error with the recaptcha code below. Please re-enter the code.');
+                        }                              
                     }
                 }
                 else{

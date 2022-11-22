@@ -4,7 +4,7 @@
         <% invoice =  order.invoices.where(is_actived: true).first %>
         <div class="row">
             <label class="col-md-6">Order id: <%= order.id %></label>
-            <label class="col-md-6">Invoice id: <%= invoice.nil? ? 'You have not paid for this order.' : invoice.id %></label>
+            <label class="col-md-6">Invoice id: <%= invoice.total_money_payment == 0 ? "You have not paid for this order (Total: #{number_to_currency(invoice.total_money - invoice.total_money_discount, precision: 0, unit: 'VND', format: '%n %u')})" : invoice.id %></label>
         </div>       
         <% unless invoice.nil? %>
             <div class="row">

@@ -116,6 +116,10 @@ class CheckoutController < ApplicationController
         return render json: {
           is_signed_in: true,
           is_error: 2
+        } if current_user.phone_number.nil?
+        return render json: {
+          is_signed_in: true,
+          is_error: 3
         } unless verify_recaptcha(response: params[:order_info][:recaptcha_response])
         coupon_id = session[:coupon].nil? ? nil : session[:coupon]['id']
         order = Order.new(
@@ -132,7 +136,14 @@ class CheckoutController < ApplicationController
           is_actived: true
         )
         session[:order] = order
-        payment_url = params[:order_info][:payment].to_s.eql?(ENV['VNPAY_E_WALLET_PAYMENT_ID'].to_s) ? get_payment_url(order) : ENV['CHECKOUT_RESULT_URL']
+        payment_url = ''
+        case params[:order_info][:payment]
+        when ENV['COD_CASH_ON_DELIVERY_PAYMENT_ID']
+          payment_url = '/checkout/order-success'
+        when ENV['VNPAY_E_WALLET_PAYMENT_ID']
+          payment_url = get_payment_url(order)
+        end
+        #payment_url = params[:order_info][:payment].to_s.eql?(ENV['VNPAY_E_WALLET_PAYMENT_ID'].to_s) ? get_payment_url(order) : ENV['CHECKOUT_RESULT_URL']
         render json: {
           is_signed_in: true,
           is_error: 0,
@@ -142,6 +153,56 @@ class CheckoutController < ApplicationController
         render json: {
           is_signed_in: false
         }
+      end
+    rescue StandardError => e
+      p e.message
+      p e.backtrace
+    end
+  end
+  def order_success
+    begin
+      if user_signed_in?
+        if !Order.find_by(id: session[:order].id).nil? || session[:order].nil?
+          redirect_to_404
+        else
+          session[:order].save
+          coupon_discount = session[:coupon].nil? ? 0 : session[:coupon]['coupon_discount']
+          user_cart = Cart.where(user_id: current_user.id)
+          user_cart.each do |item|
+            product = item.inventory.product
+            sell_price = product.sell_price * (1 - product.product_discount / 100)
+            OrderDetail.create(
+              inventory_id: item.inventory_id,
+              order_id: session[:order].id,
+              quantity_of_order: item.quantity,
+              sell_price: sell_price,
+              product_discount: product.product_discount,
+              created_by: current_user.id,
+              updated_by: current_user.id
+            )
+            item.inventory.quantity_of_inventory -= item.quantity
+            item.inventory.save
+            item.destroy
+          end
+          Invoice.create(
+            order_id: session[:order].id,
+            payment_id: ENV['COD_CASH_ON_DELIVERY_PAYMENT_ID'],
+            total_money: session[:total_cart],
+            total_money_discount: session[:total_cart] * coupon_discount / 100,
+            total_money_payment: 0,
+            updated_by: current_user.id
+          )
+          coupon_update = Coupon.find_by(id: session[:order].coupon_id)
+          unless coupon_update.nil?
+            coupon_update.number_of_uses -= 1
+            coupon_update.save
+          end
+          refresh_header
+          @products = Product.where(is_actived: true).limit(3)
+          @order = session[:order]
+        end
+      else
+        redirect_to root_path
       end
     rescue StandardError => e
       p e.message
