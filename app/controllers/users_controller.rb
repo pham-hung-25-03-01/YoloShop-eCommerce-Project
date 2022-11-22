@@ -61,18 +61,24 @@ class UsersController < ApplicationController
   end
   def update_user_password
     begin
-      password = params[:user][:password]
-      return render json: {
-        is_signed_in: true,
-        is_update_success: false,
-        message: 'Password must contains at least six characters, including at least one lowercase letter, one uppercase letter, one digit and one special character!'
-      } unless password_complexity?(password)
-      current_user.encrypted_password = BCrypt::Password.create(password)
-      current_user.save
-      return render json: {
-        is_signed_in: true,
-        is_update_success: true
-      }
+      if user_signed_in?
+        password = params[:user][:password]
+        return render json: {
+          is_signed_in: true,
+          is_update_success: false,
+          message: 'Password must contains at least six characters, including at least one lowercase letter, one uppercase letter, one digit and one special character!'
+        } unless password_complexity?(password)
+        current_user.encrypted_password = BCrypt::Password.create(password)
+        current_user.save
+        return render json: {
+          is_signed_in: true,
+          is_update_success: true
+        }
+      else
+        render json: {
+          is_signed_in: false
+        }
+      end
     rescue StandardError => e
       p e.message
       p e.backtrace
@@ -80,10 +86,14 @@ class UsersController < ApplicationController
   end
   def orders_history
     begin
-      @orders = Order.where(
-        user_id: current_user.id,
-        is_actived: true
-      )
+      if user_signed_in?
+        @orders = Order.where(
+          user_id: current_user.id,
+          is_actived: true
+        ).order(created_at: :DESC)
+      else
+        redirect_to root_path
+      end
     rescue StandardError => e
       p e.message
       p e.backtrace

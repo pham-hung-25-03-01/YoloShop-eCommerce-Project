@@ -350,7 +350,7 @@ Custom Css
 .order {
   position: relative!important;
   padding-bottom: 1.5rem;
-  border-left: 1px solid #abaaed;
+  border-left: 1px solid #56ae6c;
   position: relative;
   padding-left: 20px;
   margin-left: 10px;
@@ -359,18 +359,14 @@ Custom Css
   color: #2a2839;
   font-weight: 500;
 }
-.order:last-child{
-  border: 0px;
-  padding-bottom: 0;
-}
 .order:before{
   content: '';
   width: 15px;
   height: 15px;
   background: white;
-  border: 1px solid #4e5ed3;
-  box-shadow: 3px 3px 0px #bab5f8;
-  box-shadow: 3px 3px 0px #bab5f8;
+  border: 1px solid #56ae6c;
+  box-shadow: 3px 3px 0px #b5f8be;
+  box-shadow: 3px 3px 0px #b5f8be;
   border-radius: 50%;
   position: absolute;
   left: -10px;
@@ -384,4 +380,7 @@ Custom Css
   position: absolute;
   right: 0;
   top: 0;
+}
+.btn-view-order {
+  color: #565e64;
 }

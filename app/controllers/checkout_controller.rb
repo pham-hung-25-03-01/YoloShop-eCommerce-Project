@@ -149,19 +149,6 @@ class CheckoutController < ApplicationController
     end
   end
   def result
-    # if checksum_valid!
-    #   if params["vnp_ResponseCode"] == "00"
-    #     current_user.cart.clear
-    #     flash[:success] = t('.payment_success')
-    #     redirect_to books_path
-    #   else
-    #     flash[:error] = t('.payment_failed')
-    #     redirect_to checkouts_path
-    #   end
-    # else
-    #   flash[:error] = t('.payment_failed')
-    #   redirect_to checkouts_path
-    # end
     if checksum_valid!
       permit_params = response_params
       unless session[:order].nil?

@@ -1,8 +1,36 @@
 <li class="order list-style-type-none" class="order list-style-type-none">
-    <div class="time font-size-0-9-rem"><%= order.created_at.strftime('%d-%m-%Y %I:%M:%S %p') %></div>
+    <div class="time font-size-0-9-rem"><%= order.created_at.strftime('%d-%m-%Y %I:%M:%S %p') %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a onclick="get_order_details('<%= order.id %>')" class="btn-view-order cursor-pointer"><i class="fa fa-fw fa-eye"></i></a></div>
     <div class="order-content">
-        <label>Order id: <%= order.id %></label></br>
-        <label>Ship date: <%= order.ship_date.nil? ? '' : order.ship_date.strftime('%d-%m-%Y') %></label>
+        <% invoice =  order.invoices.where(is_actived: true).first %>
+        <div class="row">
+            <label class="col-md-6">Order id: <%= order.id %></label>
+            <label class="col-md-6">Invoice id: <%= invoice.nil? ? 'You have not paid for this order.' : invoice.id %></label>
+        </div>       
+        <% unless invoice.nil? %>
+            <div class="row">
+                <label class="col-md-6">Payments: <%= invoice.payment.payment_name %></label>
+                <label class="col-md-6">Total money payment: <%= number_to_currency(invoice.total_money_payment, precision: 0, unit: 'VND', format: '%n %u') %> </label>
+            </div>
+        <% end %>
+        
+        <% unless invoice.bank_code.nil? %>
+            <div class="row">
+                <label class="col-md-6">Bank code: <%= invoice.bank_code %></label>
+                <label class="col-md-6">Transaction no: <%= invoice.transaction_no %> </label>
+            </div>
+        <% end %>
+        <div class="row">
+            <label class="col-md-6">Address: <%= "#{order.apartment_number}, #{order.street}, #{order.ward}, #{order.district}, #{order.province}." %></label>
+            <label class="col-md-6">Ship date: <%= order.ship_date.nil? ? '' : order.ship_date.strftime('%d-%m-%Y') %></label>
+        </div>
     </div>
-    <span class="badge bg-primary badge-right">Primary</span>
+    <% case order.status 
+        when 0 %>
+            <span class="badge bg-warning badge-right">Pending</span>
+        <% when 1 %>
+            <span class="badge bg-success badge-right">Shipping</span>
+        <% when 2 %>
+            <span class="badge bg-primary badge-right">Completed</span>
+    <% end %>
+    <hr class="text-success mb-0">
 </li>

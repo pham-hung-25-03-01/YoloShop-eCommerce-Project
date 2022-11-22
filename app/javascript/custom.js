@@ -61,7 +61,7 @@ function remove_from_cart(product_id, size, color){
                     alert('Product invalid');
                 }
                 else{
-                    $('#count-cart').html(data.count_cart);    
+                    $('#count-cart').html(data.count_cart);
                     $('#cart-item-'+data.inventory_id).remove();
                     $('#total-cart').html(formatter.format(data.total).replaceAll('.', ','));
                     $('#checkout-item-'+data.inventory_id).remove();
@@ -135,21 +135,6 @@ function open_dropdown_without_preventDefault(e) {
 $('.dropdown-item').on('click', function(e){
     e.stopPropagation();
 })
-// $('input[name=info]').change(function() { 
-//     first_name = $('#user_first_name').val().trim();
-//     last_name = $('#user_last_name').val().trim();
-//     phone_number = $('#user_phone_number').val().trim();
-//     email = $('#user_email').val().trim();
-//     password = $('#user_password').val().trim();
-//     password_confirmation = $('#user_password_confirmation').val().trim();
-//     agree_to_terms_and_conditions = $('#agree_to_terms_and_conditions').is(':checked');
-//     if(first_name == '' || last_name == '' || phone_number == '' || email == '' || password == '' || password_confirmation == '' || !agree_to_terms_and_conditions) {
-//         $('#btn-sign-up').addClass('disabled');
-//     }
-//     else{
-//         $('#btn-sign-up').removeClass('disabled');
-//     }
-// });
 $('#agree_to_terms_and_conditions').change(function(){
     agree_to_terms_and_conditions = $('#agree_to_terms_and_conditions').is(':checked');
     if(agree_to_terms_and_conditions) {       

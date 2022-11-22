@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h5 class="modal-title">Order id: <%= order_id %></h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+    <table class="table table-borderless table-hover">
+        <thead class="table-border">
+            <tr>
+                <td scope="col">#</td>
+                <td scope="col">Produc name</td>
+                <td scope="col">Size</td>
+                <td scope="col">Color</td>
+                <td scope="col">Price</td>
+                <td scope="col">Quantity</td>
+                <td scope="col">Total</td>
+            </tr>
+        </thead>
+        <tbody class="table-border">                
+            <% order_details.each_with_index do |item, index| %>
+                <tr id="checkout-item-<%= item.inventory_id %>">
+                    <td class="tr-text-center" scope="row"><%= index + 1 %></td>
+                    <td class="tr-text-center"><%= link_to item.inventory.product.product_name, "/products/#{item.inventory.product.meta_title}", class: 'text-decoration-none text-success' %></td>
+                    <td class="tr-text-center"><%= item.inventory.size %></td>
+                    <td><%= image_tag item.inventory.color_url, class: 'item-img' %></td>
+                    <td class="tr-text-center"><%= number_to_currency(item.inventory.product.sell_price * (1 - item.inventory.product.product_discount/100), precision: 0, unit: 'VND', format: '%n %u') %></td>
+                    <td class="tr-text-center"><%= item.quantity_of_order %></td>
+                    <td id="item-total-<%= item.inventory_id %>" class="tr-text-center"><%= number_to_currency(item.inventory.product.sell_price * (1 - item.inventory.product.product_discount/100) * item.quantity_of_order, precision: 0, unit: 'VND', format: '%n %u') %></td>
+                </tr> 
+            <% end %>        
+        </tbody>
+    </table>
+</div>

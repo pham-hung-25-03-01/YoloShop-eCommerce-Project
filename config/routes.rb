@@ -52,6 +52,11 @@ Rails.application.routes.draw do
       get ':meta_title', to: 'products#show'
     end
   end
+  resources :orders do
+    collection do
+      get 'get-order-details', to: 'orders/get_order_details'
+    end
+  end
   resources :comments do
     collection do
       get 'show-more', to: 'comments/show_more'
@@ -83,10 +88,5 @@ Rails.application.routes.draw do
       get 'result', to: 'checkout/result'
     end
   end
-  # resource :user do
-  #   collection do
-  #     get '/id=:id', to: 'users#show'
-  #   end
-  # end
   match '*path' => redirect('/404.html'), via: :all
 end

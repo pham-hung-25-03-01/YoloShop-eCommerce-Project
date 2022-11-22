@@ -9,29 +9,21 @@
             </div>
         </div>
         <div class="my-5 p-4 pb-3 row bg-white shadow">
-
-
-
-
-
-
-
-
-
-
-    <ul class="sessions">
-      <%= render partial: 'layouts/partials/orders_summary', collection: @orders, as: :order %>
-    </ul>
-
-
-
-
-
-
-
-
-
-
+            <ul class="sessions">
+            <%= render partial: 'layouts/partials/orders_summary', collection: @orders, as: :order %>
+            </ul>
         </div>
     </div>
 </section>
+
+<!-- Modal -->
+<div class="modal fade" id="order-details" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div id="order-details-content" class="modal-content">
+
+    </div>
+  </div>
+</div>
+
+
+<%= javascript_include_tag 'ajax_orders', 'data-turbolinks-track': 'load' %>

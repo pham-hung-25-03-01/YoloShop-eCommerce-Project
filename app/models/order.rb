@@ -1,9 +1,11 @@
 class Order < ApplicationRecord
   has_many :order_details
+  has_many :invoices
   belongs_to :user
   belongs_to :coupon, optional: true
 
   validates_associated :order_details
+  validates_associated :invoices
 
   validates :user_id, presence: true
   validates :apartment_number, presence: true
