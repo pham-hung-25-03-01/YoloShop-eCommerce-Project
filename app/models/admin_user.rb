@@ -5,6 +5,7 @@ class AdminUser < ApplicationRecord
          :recoverable, :rememberable, :validatable
   validates :phone_number, presence: true, uniqueness: true, on: [:create, :update]
   validates :last_name, presence: true
+  validates :permission, presence: true
   validate :password_complexity, :first_name_complexity, :last_name_complexity, :phone_number_complexity
   def password_complexity
     if password.present? and not password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/)

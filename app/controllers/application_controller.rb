@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   skip_before_action :verify_authenticity_token
   before_action :refresh_header
+  rescue_from ActiveRecord::RecordNotFound, with: :redirect_to_404
 
   def redirect_to_404
     redirect_to '/404.html'
