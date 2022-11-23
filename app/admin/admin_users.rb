@@ -7,7 +7,10 @@ ActiveAdmin.register AdminUser do
     column :first_name
     column :last_name
     column :avatar_url
-    column (:birthday) { |time| time.birthday.strftime('%B %d, %Y') }
+    # do |avatar_url|
+    #   link_to(image_tag(avatar_url), avatar_url)
+    # end
+    column(:birthday) { |time| time.birthday.strftime('%B %d, %Y') }
     column :phone_number
     column :email
     column :permission
@@ -32,6 +35,7 @@ ActiveAdmin.register AdminUser do
       f.input :first_name, as: :string
       f.input :last_name, as: :string
       f.input :avatar, as: :file
+      # , hint: f.template.image_tag(f.object.avatar_url)
       f.input :birthday, as: :datepicker, input_html: { value: f.object.birthday.try(:strftime, '%Y-%m-%d') }
       f.input :phone_number, input_html: { maxlength: 10, oninput: "this.value = this.value.replace(/[^0-9]/g, '').replace(/(\\..*?)\\..*/g, '$1');" }
       f.input :email, input_html: { readonly: true, disabled: true}
@@ -53,7 +57,12 @@ ActiveAdmin.register AdminUser do
 
     def update
       @admin_user = AdminUser.find(params[:id])
-      @admin_user.avatar_url = params[:admin_user][:avatar].original_filename
+      File.open(Rails.root.join('public', 'uploads', params[:admin_user][:avatar].original_filename), 'wb') do |file|
+        file.write(params[:admin_user][:avatar].read)
+      end
+      image_url = "public/uploads/#{params[:admin_user][:avatar].original_filename}"
+      @admin_user.avatar_url = Cloudinary::Uploader.upload(image_url)['url']
+      File.delete(image_url) if File.exist?(image_url)
       params[:admin_user].reject! { |p| p['avatar'] }
       super
     end

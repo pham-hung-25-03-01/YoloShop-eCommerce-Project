@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: dlzgqgu4l
+  api_key: '586536231795384'
+  api_secret: ldxxFlhB57gl7bCZl9kMnJKC398
+  enhance_image_tag: true
+  static_file_support: false
+production:
+  cloud_name: dlzgqgu4l
+  api_key: '586536231795384'
+  api_secret: ldxxFlhB57gl7bCZl9kMnJKC398
+  enhance_image_tag: true
+  static_file_support: true
+test:
+  cloud_name: dlzgqgu4l
+  api_key: '586536231795384'
+  api_secret: ldxxFlhB57gl7bCZl9kMnJKC398
+  enhance_image_tag: true
+  static_file_support: false
