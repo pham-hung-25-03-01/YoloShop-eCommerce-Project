@@ -5,7 +5,7 @@ class CreateProducts < ActiveRecord::Migration[7.0]
       t.uuid :supplier_id, null: false
       t.uuid :product_group_id, null: false
       t.uuid :category_id, null: false
-      t.uuid :age_id, null: false
+      t.uuid :age_id
       t.text :product_name, null: false, unique: true
       t.text :meta_title, null: false, unique: true
       t.text :origin

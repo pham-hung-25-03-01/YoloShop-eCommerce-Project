@@ -39,15 +39,15 @@ ActiveAdmin.register AdminUser do
       if f.object.new_record?
         f.input :email
       else
-        f.input :email, input_html: { readonly: true, disabled: true}
+        f.input :email, input_html: { readonly: true, disabled: true }
       end
       f.input :password
       f.input :password_confirmation
       f.input :permission
       unless f.object.new_record?
-        f.li "Created at #{f.object.created_at}"
-        f.li "Created at #{f.object.created_at}"
-        f.li "Created at #{f.object.created_at}"
+        f.li "Created at: #{f.object.created_at}"
+        f.li "Updated at: #{f.object.updated_at}"
+        f.li "Updated by: #{f.object.updated_by}"
       end
     end
     f.actions
@@ -56,8 +56,17 @@ ActiveAdmin.register AdminUser do
   controller do
     def create
       unless params[:admin_user][:avatar].nil?
-        File.open(Rails.root.join('public', 'uploads', params[:admin_user][:avatar].original_filename), 'wb') do |file|
-          file.write(params[:admin_user][:avatar].read)
+        File.open(
+          Rails.root.join(
+            'public',
+            'uploads',
+            params[:admin_user][:avatar].original_filename
+          ),
+          'wb'
+        ) do |file|
+          file.write(
+            params[:admin_user][:avatar].read
+          )
         end
         image_url = "public/uploads/#{params[:admin_user][:avatar].original_filename}"
         @admin_user.avatar_url = Cloudinary::Uploader.upload(image_url)['url']
@@ -69,15 +78,26 @@ ActiveAdmin.register AdminUser do
 
     def update
       params[:admin_user].reject! { |p| p['email'] }
-      @admin_user = AdminUser.find(params[:id])
+      @admin_user = AdminUser.find(
+        params[:id]
+      )
       unless @admin_user.avatar_url.nil?
         public_id = @admin_user.avatar_url.split('/')[-1].split('.')[0]
         Cloudinary::Uploader.destroy(public_id)
         @admin_user.avatar_url = nil
       end
       unless params[:admin_user][:avatar].nil?
-        File.open(Rails.root.join('public', 'uploads', params[:admin_user][:avatar].original_filename), 'wb') do |file|
-          file.write(params[:admin_user][:avatar].read)
+        File.open(
+          Rails.root.join(
+            'public',
+            'uploads',
+            params[:admin_user][:avatar].original_filename
+          ),
+          'wb'
+        ) do |file|
+          file.write(
+            params[:admin_user][:avatar].read
+          )
         end
         image_url = "public/uploads/#{params[:admin_user][:avatar].original_filename}"
         @admin_user.avatar_url = Cloudinary::Uploader.upload(image_url)['url']
@@ -85,6 +105,9 @@ ActiveAdmin.register AdminUser do
       end
       params[:admin_user].reject! { |p| p['avatar'] }
       super
+    end
+    def edit
+      @page_title = 'Hey, edit this user whose id is #' + resource.id
     end
   end
 
