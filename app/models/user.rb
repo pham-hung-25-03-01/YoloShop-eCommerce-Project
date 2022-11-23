@@ -3,7 +3,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:facebook, :google_oauth2]
-  validates :phone_number, presence: true, uniqueness: true, on: :create
+  validates :last_name, presence: true
+  validates :phone_number, presence: true, uniqueness: true, on: [:create, :update]
   validate :password_complexity, :first_name_complexity, :last_name_complexity, :phone_number_complexity
 
   def password_complexity
