@@ -29,32 +29,27 @@ ActiveAdmin.register Banner do
       end
       f.actions
     end
-    # batch_action :destroy, confirm: 'Are you sure you want to delete these ages?' do |ids|
-    #   ids.each do |id|
-    #     Age.update(
-    #       id,
-    #       is_actived: false,
-    #       deleted_at: Time.now,
-    #       deleted_by: current_admin_user.id
-    #     )
-    #     Product.where(
-    #       age_id: id
-    #     ).update_all(
-    #       age_id: nil
-    #     )
-    #   end
-    #   redirect_to collection_path
-    # end
+    batch_action :destroy, confirm: 'Are you sure you want to delete these banners?' do |ids|
+      ids.each do |id|
+        banner = Banner.find(id)
+        public_id = banner.banner_url.split('/')[-1].split('.')[0]
+        Cloudinary::Uploader.destroy(public_id)
+        banner.destroy
+      end
+      redirect_to collection_path, notice: "Successfully deleted #{ids.count} banner#{ids.count > 1 ? 's' : ''}"
+    end
     show do |banner|
       attributes_table do
         row :event do
           link_to banner.event.event_name, admin_event_path(banner.event.id) unless banner.event_id.nil?
         end
-        row :admin_user
         row :banner_url do
           link_to banner.banner_url, banner.banner_url, target: '_blank'
         end
         row :created_at
+        row 'created by' do
+          link_to banner.admin_user.email, admin_admin_user_path(banner.admin_user.id)
+        end
       end
     end
     controller do
@@ -89,10 +84,10 @@ ActiveAdmin.register Banner do
         end
       end
       def destroy
-        @banner = Banner.find(
+        banner = Banner.find(
           params[:id]
         )
-        public_id = @banner.banner_url.split('/')[-1].split('.')[0]
+        public_id = banner.banner_url.split('/')[-1].split('.')[0]
         Cloudinary::Uploader.destroy(public_id)
         super
       end

@@ -2,9 +2,9 @@ class CreateProducts < ActiveRecord::Migration[7.0]
   def change
     create_table :products, id: :uuid, default: 'gen_random_uuid()' do |t|
       t.uuid :event_id
-      t.uuid :supplier_id, null: false
-      t.uuid :product_group_id, null: false
-      t.uuid :category_id, null: false
+      t.uuid :supplier_id
+      t.uuid :product_group_id
+      t.uuid :category_id
       t.uuid :age_id
       t.text :product_name, null: false, unique: true
       t.text :meta_title, null: false, unique: true

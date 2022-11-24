@@ -24,8 +24,14 @@ ActiveAdmin.register Age do
       unless f.object.new_record?
         f.li "Created at: #{f.object.created_at}"
         f.li "Updated at: #{f.object.updated_at}"
-        f.li "Created by: #{f.object.created_by}"
-        f.li "Updated by: #{f.object.updated_by}"
+        f.li do
+          admin_user = AdminUser.find(f.object.created_by)
+          "Created by: #{link_to admin_user.email, admin_admin_user_path(admin_user.id)}".html_safe
+        end
+        f.li do
+          admin_user = AdminUser.find(f.object.updated_by)
+          "Updated by: #{link_to admin_user.email, admin_admin_user_path(admin_user.id)}".html_safe
+        end
       end
     end
     f.actions
@@ -51,14 +57,21 @@ ActiveAdmin.register Age do
       row :age_name
       row :created_at
       row :updated_at
-      row :created_by
-      row :updated_by
+      row :created_by do
+        admin_user = AdminUser.find(age.created_by)
+        link_to admin_user.email, admin_admin_user_path(admin_user.id)
+      end
+      row :updated_by do
+        admin_user = AdminUser.find(age.updated_by)
+        link_to admin_user.email, admin_admin_user_path(admin_user.id)
+      end
     end
   end
   before_create do |age|
-    age.created_at = Time.now
-    age.updated_at = Time.now
     age.created_by = current_admin_user.id
+    age.updated_by = current_admin_user.id
+  end
+  before_update do |age|
     age.updated_by = current_admin_user.id
   end
   controller do
@@ -74,7 +87,12 @@ ActiveAdmin.register Age do
         super
       else
         age_inactive.update(
-          is_actived: true
+          created_by: current_admin_user.id,
+          updated_by: current_admin_user.id,
+          created_at: Time.now,
+          is_actived: true,
+          deleted_at: nil,
+          deleted_by: nil
         )
         redirect_to resource_path(age_inactive.id), notice: 'Age was successfully created.'
       end

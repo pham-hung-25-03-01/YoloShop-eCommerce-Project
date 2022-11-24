@@ -5,19 +5,21 @@ class Product < ApplicationRecord
   has_many :inventories
   has_many :reviews
   belongs_to :event, optional: true
-  belongs_to :supplier
-  belongs_to :product_group
-  belongs_to :category
+  belongs_to :supplier, optional: true
+  belongs_to :product_group, optional: true
+  belongs_to :category, optional: true
   belongs_to :age, optional: true
 
   #validates_associated :product_images
   validates_associated :age
+  validates_associated :product_group
+  validates_associated :category
+  validates_associated :supplier
   validates_associated :comments
   validates_associated :product_price_logs
   validates_associated :inventories
   validates_associated :reviews
 
-  #validates :event_id, presence: true
   validates :supplier_id, presence: true
   validates :product_group_id, presence: true
   validates :category_id, presence: true
