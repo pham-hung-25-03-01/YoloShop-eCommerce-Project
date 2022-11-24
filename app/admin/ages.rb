@@ -44,7 +44,7 @@ ActiveAdmin.register Age do
         age_id: nil
       )
     end
-    redirect_to collection_path
+    redirect_to collection_path, notice: "Successfully deleted #{ids.count} age#{ids.count > 1 ? 's' : ''}"
   end
   show do |age|
     attributes_table do

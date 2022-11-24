@@ -1,5 +1,6 @@
 ActiveAdmin.register Banner do
     permit_params :event_id, :banner
+    actions :all, except: [:update, :edit]
   
     index do
       selectable_column
@@ -44,56 +45,57 @@ ActiveAdmin.register Banner do
     #   end
     #   redirect_to collection_path
     # end
-    # show do |age|
-    #   attributes_table do
-    #     row :age_name
-    #     row :created_at
-    #     row :updated_at
-    #     row :created_by
-    #     row :updated_by
-    #   end
-    # end
-    # before_create do |age|
-    #   age.created_at = Time.now
-    #   age.updated_at = Time.now
-    #   age.created_by = current_admin_user.id
-    #   age.updated_by = current_admin_user.id
-    # end
-    # controller do
-    #   def scoped_collection
-    #     super.where(is_actived: true)
-    #   end
-    #   def create
-    #     age_inactive = Age.find_by(
-    #       age_name: params[:age][:age_name],
-    #       is_actived: false
-    #     )
-    #     if age_inactive.nil?
-    #       super
-    #     else
-    #       age_inactive.update(
-    #         is_actived: true
-    #       )
-    #       redirect_to resource_path(age_inactive.id), notice: 'Age was successfully created.'
-    #     end
-    #   end
-    #   def destroy
-    #     Age.update(
-    #       params[:id],
-    #       is_actived: false,
-    #       deleted_at: Time.now,
-    #       deleted_by: current_admin_user.id
-    #     )
-    #     Product.where(
-    #       age_id: params[:id]
-    #     ).update_all(
-    #       age_id: nil
-    #     )
-    #     redirect_to admin_ages_path
-    #   end
-    #   def edit
-    #     @page_title = 'Hey, edit this age whose id is #' + resource.id
-    #   end
-    # end
+    show do |banner|
+      attributes_table do
+        row :event do
+          link_to banner.event.event_name, admin_event_path(banner.event.id) unless banner.event_id.nil?
+        end
+        row :admin_user
+        row :banner_url do
+          link_to banner.banner_url, banner.banner_url, target: '_blank'
+        end
+        row :created_at
+      end
+    end
+    controller do
+      def create
+        unless params[:banner][:banner].nil?
+          File.open(
+            Rails.root.join(
+              'public',
+              'uploads',
+              params[:banner][:banner].original_filename
+            ),
+            'wb'
+          ) do |file|
+            file.write(
+              params[:banner][:banner].read
+            )
+          end
+          image_url = "public/uploads/#{params[:banner][:banner].original_filename}"
+          banner_url = Cloudinary::Uploader.upload(image_url)['url']
+          File.delete(image_url) if File.exist?(image_url)
+        end
+        banner = Banner.create(
+          event_id: params[:banner][:event_id],
+          banner_url: banner_url,
+          created_at: Time.now,
+          admin_user_id: current_admin_user.id
+        )
+        if banner.valid?
+          redirect_to resource_path(banner.id), notice: 'Banner was successfully created.'
+        else
+          redirect_to new_admin_banner_path, alert: "Banner can't be blank."
+        end
+      end
+      def destroy
+        @banner = Banner.find(
+          params[:id]
+        )
+        public_id = @banner.banner_url.split('/')[-1].split('.')[0]
+        Cloudinary::Uploader.destroy(public_id)
+        super
+      end
+    end
     
 end

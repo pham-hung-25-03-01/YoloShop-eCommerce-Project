@@ -1,5 +1,5 @@
 class Event < ApplicationRecord
-  has_one :banners
+  has_one :banner
   has_many :products
 
   validates_associated :banners
