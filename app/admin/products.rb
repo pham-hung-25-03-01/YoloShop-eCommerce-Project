@@ -1,6 +1,6 @@
 ActiveAdmin.register Product do
     permit_params :event_id, :supplier_id, :product_group_id, :category_id, :age_id, :product_name, :origin, :description,
-    :gender, :warranty, :import_price, :sell_price, :product_discount, :shipping, :score_rating, :number_of_rates, :is_available
+    :gender, :warranty, :import_price, :sell_price, :product_discount, :shipping, :score_rating, :number_of_rates, :is_available, :is_actived
   
     index do
       selectable_column
@@ -48,31 +48,43 @@ ActiveAdmin.register Product do
     filter :product_discount, as: :numeric
     filter :score_rating, as: :numeric
   
-    # form do |f|
-    #   f.semantic_errors
-    #   f.inputs do
-    #     f.input :supplier_name, as: :string
-    #     f.input :contract_date, as: :datepicker, input_html: { value: f.object.contract_date.try(:strftime, '%Y-%m-%d') }
-    #     f.input :phone_number, input_html: { maxlength: 10, oninput: "this.value = this.value.replace(/[^0-9]/g, '').replace(/(\\..*?)\\..*/g, '$1');" }
-    #     f.input :email
-    #     f.input :address
-    #     f.input :is_cooperated
-    #     f.br
-    #     unless f.object.new_record?
-    #       f.li "Created at: #{f.object.created_at}"
-    #       f.li "Updated at: #{f.object.updated_at}"
-    #       f.li do
-    #         admin_user = AdminUser.find(f.object.created_by)
-    #         "Created by: #{link_to admin_user.email, admin_admin_user_path(admin_user.id)}".html_safe
-    #       end
-    #       f.li do
-    #         admin_user = AdminUser.find(f.object.updated_by)
-    #         "Updated by: #{link_to admin_user.email, admin_admin_user_path(admin_user.id)}".html_safe
-    #       end
-    #     end
-    #   end
-    #   f.actions
-    # end
+    form do |f|
+      f.semantic_errors
+      f.inputs do
+        f.input :product_name, as: :string
+        f.input :product_group, as: :select, collection: ProductGroup.where(is_actived: true).collect { |product_group| [product_group.product_group_name, product_group.id] }
+        f.input :supplier, as: :select, collection: Supplier.where(is_actived: true).collect { |supplier| [supplier.supplier_name, supplier.id] }
+        f.input :category, as: :select, collection: Category.where(is_actived: true).collect { |category| [category.category_name, category.id] }
+        f.input :age, as: :select, collection: Age.where(is_actived: true).collect { |age| [age.age_name, age.id] }
+        f.input :event, as: :select, collection: Event.where(is_actived: true).collect { |event| [event.event_name, event.id] }
+        f.input :gender, as: :select, collection: ([['Male', true], ['Female', false]])
+        f.input :origin, as: :string
+        f.input :description
+        f.input :warranty
+        f.input :import_price, input_html: { value: number_with_precision(f.object.import_price, precision: 0) }
+        f.input :sell_price, input_html: { value: number_with_precision(f.object.sell_price, precision: 0) }
+        f.input :product_discount, label: 'Discount', input_html: { value: f.object.product_discount.round(1) }
+        f.input :shipping
+        f.input :score_rating, input_html: { value: f.object.score_rating.round(1) }
+        f.input :number_of_rates
+        f.input :is_available
+        f.input :is_actived, label: 'Show?'
+        f.br
+        unless f.object.new_record?
+          f.li "Created at: #{f.object.created_at}"
+          f.li "Updated at: #{f.object.updated_at}"
+          f.li do
+            admin_user = AdminUser.find(f.object.created_by)
+            "Created by: #{link_to admin_user.email, admin_admin_user_path(admin_user.id)}".html_safe
+          end
+          f.li do
+            admin_user = AdminUser.find(f.object.updated_by)
+            "Updated by: #{link_to admin_user.email, admin_admin_user_path(admin_user.id)}".html_safe
+          end
+        end
+      end
+      f.actions
+    end
     # batch_action :destroy, confirm: 'Are you sure you want to delete these suppliers?' do |ids|
     #   ids.each do |id|
     #     Supplier.update(
@@ -92,7 +104,13 @@ ActiveAdmin.register Product do
     show do |product|
       attributes_table do
         row :product_name
-        #row :product_images
+        row 'image' do
+          html = ''
+          product.product_images.each do |product_image|
+            html = "#{html} #{link_to(image_tag(product_image.image_url, width: '70px', height: '70px', class: 'border-img'), product_image.image_url, target: '_blank')}"
+          end
+          html.html_safe
+        end
         row :product_group do
           product_group = ProductGroup.find_by(id: product.product_group_id)
           link_to product_group.product_group_name, admin_product_group_path(product.product_group_id) unless product_group.nil?
@@ -118,8 +136,29 @@ ActiveAdmin.register Product do
         end
         row :origin
         row :description
-        row :warranty
-        
+        row :warranty do
+          "#{product.warranty} month#{product.warranty > 1 ? 's' : ''}"
+        end
+        row :import_price do
+          number_to_currency(product.import_price, precision: 0, unit: ' VND', format: '%n %u')
+        end
+        row :sell_price do
+          number_to_currency(product.sell_price, precision: 0, unit: ' VND', format: '%n %u')
+        end
+        row 'Discount' do
+          product.product_discount.round(1)
+        end
+        row :shipping do
+          "#{product.shipping} day#{product.shipping > 1 ? 's' : ''}"
+        end
+        row :score_rating do
+          product.score_rating.round(1)
+        end
+        row :number_of_rates
+        row :is_available
+        row 'Show' do
+          product.is_actived ? status_tag('yes') : status_tag('no')
+        end
         row :created_at
         row :updated_at
         row :created_by do
@@ -136,9 +175,10 @@ ActiveAdmin.register Product do
     #   supplier.created_by = current_admin_user.id
     #   supplier.updated_by = current_admin_user.id
     # end
-    # before_update do |supplier|
-    #   supplier.updated_by = current_admin_user.id
-    # end
+    before_update do |product|
+      product.meta_title = product.product_name.parameterize
+      product.updated_by = current_admin_user.id
+    end
     # controller do
     #   def scoped_collection
     #     super.where(is_actived: true)

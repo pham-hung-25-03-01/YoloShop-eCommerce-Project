@@ -53,9 +53,9 @@ gem 'devise'
 
 gem 'omniauth'
 
-gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
-gem "omniauth-rails_csrf_protection", "~> 1.0"
+gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection', '~> 1.0'
 
 # Use Figaro to support create environment variables
 gem 'figaro'
@@ -65,12 +65,12 @@ gem 'composite_primary_keys', '~> 14.0.4'
 
 gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
 
-gem 'recaptcha', require: 'recaptcha/rails'
 gem 'bcrypt'
+gem 'recaptcha', require: 'recaptcha/rails'
 
 gem 'activeadmin'
-gem 'sass-rails'
 gem 'cloudinary'
+gem 'sass-rails'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

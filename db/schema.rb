@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_24_125018) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_25_070052) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -268,8 +268,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_24_125018) do
     t.uuid "created_by", null: false
     t.uuid "updated_by", null: false
     t.boolean "is_actived", default: true, null: false
-    t.datetime "deleted_at"
-    t.uuid "deleted_by"
   end
 
   create_table "reviews", primary_key: ["product_id", "user_id"], force: :cascade do |t|

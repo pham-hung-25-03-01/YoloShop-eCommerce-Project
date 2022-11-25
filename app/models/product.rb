@@ -5,16 +5,15 @@ class Product < ApplicationRecord
   has_many :inventories
   has_many :reviews
   belongs_to :event, optional: true
-  belongs_to :supplier, optional: true
-  belongs_to :product_group, optional: true
-  belongs_to :category, optional: true
-  belongs_to :age, optional: true
+  belongs_to :supplier
+  belongs_to :product_group
+  belongs_to :category
+  belongs_to :age
 
-  #validates_associated :product_images
   validates_associated :age
   validates_associated :product_group
   validates_associated :category
-  validates_associated :supplier
+  #validates_associated :supplier
   validates_associated :comments
   validates_associated :product_price_logs
   validates_associated :inventories
@@ -23,6 +22,8 @@ class Product < ApplicationRecord
   validates :supplier_id, presence: true
   validates :product_group_id, presence: true
   validates :category_id, presence: true
+  validates :age_id, presence: true
+
   validates :product_name, presence: true, uniqueness: true, length: { maximum: 500, too_long: '%{count} characters is the maximum allowed' }
   validates :meta_title, presence: true, uniqueness: true
   validates :origin, length: { maximum: 300, too_long: '%{count} characters is the maximum allowed' }
@@ -35,5 +36,4 @@ class Product < ApplicationRecord
   validates :shipping, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :score_rating, presence: true, numericality: { greater_than_or_equal: 0 }
   validates :number_of_rates, presence: true, numericality: { only_integer: true, greater_than_or_equal: 0 }
-  validates :is_available, presence: true
 end
