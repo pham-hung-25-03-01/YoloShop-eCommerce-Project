@@ -18,6 +18,7 @@ ActiveAdmin.register AdminUser do
     column :updated_by
     actions
   end
+  filter :id_eq, label: 'id'
   filter :first_name
   filter :last_name
   filter :birthday

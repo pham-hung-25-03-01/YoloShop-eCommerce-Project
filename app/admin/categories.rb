@@ -11,6 +11,7 @@ ActiveAdmin.register Category do
       column :updated_by
       actions
     end
+    filter :id_eq, label: 'id'
     filter :category_name
     filter :created_at
     filter :updated_at

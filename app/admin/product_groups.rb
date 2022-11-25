@@ -11,6 +11,7 @@ ActiveAdmin.register ProductGroup do
       column :updated_by
       actions
     end
+    filter :id_eq, label: 'id'
     filter :product_group_name
     filter :created_at
     filter :updated_at

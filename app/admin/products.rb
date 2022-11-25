@@ -1,6 +1,7 @@
 ActiveAdmin.register Product do
-    permit_params :event_id, :supplier_id, :product_group_id, :category_id, :age_id, :product_name, :origin, :description,
+    permit_params :image, :event_id, :supplier_id, :product_group_id, :category_id, :age_id, :product_name, :origin, :description,
     :gender, :warranty, :import_price, :sell_price, :product_discount, :shipping, :score_rating, :number_of_rates, :is_available, :is_actived
+    actions :all, except: [:destroy]
   
     index do
       selectable_column
@@ -35,8 +36,12 @@ ActiveAdmin.register Product do
       column :score_rating do |item|
         item.score_rating.round(1)
       end
+      column 'Show' do |item|
+        item.is_actived ? status_tag('yes') : status_tag('no')
+      end
       actions
     end
+    filter :id_eq, label: 'id'
     filter :product_name
     filter :supplier, as: :select, collection: -> { Supplier.where(is_actived: true).pluck(:supplier_name, :id) }
     filter :category, as: :select, collection: -> { Category.where(is_actived: true).pluck(:category_name, :id) }
@@ -47,11 +52,19 @@ ActiveAdmin.register Product do
     filter :sell_price, as: :numeric
     filter :product_discount, as: :numeric
     filter :score_rating, as: :numeric
+    filter :is_actived, label: 'show'
   
     form do |f|
       f.semantic_errors
       f.inputs do
         f.input :product_name, as: :string
+        if f.object.new_record?
+          f.input :image, as: :file
+        else
+          f.li do
+            "#{f.label 'Product images'} #{f.a 'Edit product images', href: admin_product_images_path(product_id: f.object.id)}".html_safe
+          end
+        end
         f.input :product_group, as: :select, collection: ProductGroup.where(is_actived: true).collect { |product_group| [product_group.product_group_name, product_group.id] }
         f.input :supplier, as: :select, collection: Supplier.where(is_actived: true).collect { |supplier| [supplier.supplier_name, supplier.id] }
         f.input :category, as: :select, collection: Category.where(is_actived: true).collect { |category| [category.category_name, category.id] }
@@ -63,10 +76,10 @@ ActiveAdmin.register Product do
         f.input :warranty
         f.input :import_price, input_html: { value: number_with_precision(f.object.import_price, precision: 0) }
         f.input :sell_price, input_html: { value: number_with_precision(f.object.sell_price, precision: 0) }
-        f.input :product_discount, label: 'Discount', input_html: { value: f.object.product_discount.round(1) }
+        f.input :product_discount, label: 'Discount', input_html: { value: f.object.product_discount.nil? ? '' : f.object.product_discount.round(1) }
         f.input :shipping
-        f.input :score_rating, input_html: { value: f.object.score_rating.round(1) }
-        f.input :number_of_rates
+        f.input :score_rating, input_html: { value: f.object.score_rating.nil? ? '' : f.object.score_rating.round(1) } unless f.object.new_record?
+        f.input :number_of_rates unless f.object.new_record?
         f.input :is_available
         f.input :is_actived, label: 'Show?'
         f.br
@@ -85,22 +98,30 @@ ActiveAdmin.register Product do
       end
       f.actions
     end
-    # batch_action :destroy, confirm: 'Are you sure you want to delete these suppliers?' do |ids|
-    #   ids.each do |id|
-    #     Supplier.update(
-    #       id,
-    #       is_actived: false,
-    #       deleted_at: Time.now,
-    #       deleted_by: current_admin_user.id
-    #     )
-    #     Product.where(
-    #       supplier_id: id
-    #     ).update_all(
-    #       supplier_id: nil
-    #     )
-    #   end
-    #   redirect_to collection_path, notice: "Successfully deleted #{ids.count} supplier#{ids.count > 1 ? 's' : ''}"
-    # end
+    batch_action :show, confirm: 'Are you sure you want to show these products?' do |ids|
+      count = 0
+      ids.each do |id|
+        product = Product.find(id)
+        count += 1 unless product.is_actived
+        product.is_actived = true
+        product.updated_at = Time.now
+        product.updated_by = current_admin_user.id
+        product.save(validate: false)
+      end
+      redirect_to collection_path, notice: "Successfully showed #{count} product#{count > 1 ? 's' : ''}"
+    end
+    batch_action :hide, confirm: 'Are you sure you want to hide these products?' do |ids|
+      count = 0
+      ids.each do |id|
+        product = Product.find(id)
+        count += 1 if product.is_actived
+        product.is_actived = false
+        product.updated_at = Time.now
+        product.updated_by = current_admin_user.id
+        product.save(validate: false)
+      end
+      redirect_to collection_path, notice: "Successfully hid #{count} product#{count > 1 ? 's' : ''}"
+    end
     show do |product|
       attributes_table do
         row :product_name
@@ -129,7 +150,7 @@ ActiveAdmin.register Product do
         end
         row :event do
           event = Event.find_by(id: product.event_id)
-          link_to event.event_name, admin_age_path(product.event_id) unless event.nil?
+          link_to event.event_name, admin_event_path(product.event_id) unless event.nil?
         end
         row :gender do
           product.gender ? status_tag('Male', class: 'yes') : status_tag('Female', class: 'no')
@@ -171,63 +192,63 @@ ActiveAdmin.register Product do
         end
       end
     end
-    # before_create do |supplier|
-    #   supplier.created_by = current_admin_user.id
-    #   supplier.updated_by = current_admin_user.id
-    # end
     before_update do |product|
       product.meta_title = product.product_name.parameterize
       product.updated_by = current_admin_user.id
     end
-    # controller do
-    #   def scoped_collection
-    #     super.where(is_actived: true)
-    #   end
-    #   def create
-    #     supplier_inactive = Supplier.find_by(
-    #       supplier_name: params[:supplier][:supplier_name],
-    #       is_actived: false
-    #     )
-    #     if supplier_inactive.nil?
-    #       super
-    #     else
-    #       supplier_inactive.update(
-    #         contract_date: params[:supplier][:contract_date],
-    #         phone_number: params[:supplier][:phone_number],
-    #         email: params[:supplier][:email],
-    #         address: params[:supplier][:address],
-    #         is_cooperated: params[:supplier][:is_cooperated],
-    #         created_by: current_admin_user.id,
-    #         updated_by: current_admin_user.id,
-    #         created_at: Time.now,
-    #         is_actived: true,
-    #         deleted_at: nil,
-    #         deleted_by: nil
-    #       )
-    #       if supplier_inactive.valid?
-    #         redirect_to resource_path(supplier_inactive.id), notice: 'Supplier was successfully created.'
-    #       else
-    #         redirect_to new_admin_supplier_path, alert: "Supplier is invalid."
-    #       end
-    #     end
-    #   end
-    #   def destroy
-    #     Supplier.update(
-    #       params[:id],
-    #       is_actived: false,
-    #       deleted_at: Time.now,
-    #       deleted_by: current_admin_user.id
-    #     )
-    #     Product.where(
-    #       supplier_id: params[:id]
-    #     ).update_all(
-    #       supplier_id: nil
-    #     )
-    #     redirect_to admin_suppliers_path
-    #   end
-    #   def edit
-    #     @page_title = 'Hey, edit this supplier whose id is #' + resource.id
-    #   end
-    # end
+    controller do
+      def create
+        if params[:product][:image].nil?
+          redirect_to new_admin_product_path, alert: "Image can't be blank."
+        else
+          product = Product.create(
+            event_id: params[:product][:event_id],
+            supplier_id: params[:product][:supplier_id],
+            product_group_id: params[:product][:product_group_id],
+            category_id: params[:product][:category_id],
+            age_id: params[:product][:age_id],
+            product_name: params[:product][:product_name],
+            meta_title: params[:product][:product_name].parameterize,
+            origin: params[:product][:origin],
+            description: params[:product][:description],
+            gender: params[:product][:gender],
+            warranty: params[:product][:warranty],
+            import_price: params[:product][:import_price],
+            sell_price: params[:product][:sell_price],
+            product_discount: params[:product][:product_discount],
+            shipping: params[:product][:shipping],
+            score_rating: 0,
+            number_of_rates: 0,
+            is_available: params[:product][:is_available],
+            is_actived: params[:product][:is_actived],
+            created_by: current_admin_user.id,
+            updated_by: current_admin_user.id
+          )
+          unless product.valid?
+            return redirect_to new_admin_product_path, alert: "Product is invalid."
+          end
+          File.open(
+            Rails.root.join(
+              'public',
+              'uploads',
+              params[:product][:image].original_filename
+            ),
+            'wb'
+          ) do |file|
+            file.write(
+              params[:product][:image].read
+            )
+          end
+          image_url = "public/uploads/#{params[:product][:image].original_filename}"
+          product_image_url = Cloudinary::Uploader.upload(image_url)['url']
+          ProductImage.create(product_id: product.id, image_url: product_image_url, is_default: true, created_at: Time.now, created_by: current_admin_user.id)
+          File.delete(image_url) if File.exist?(image_url)
+          redirect_to resource_path(product.id), notice: 'Product was successfully created.'
+        end
+      end
+      def edit
+        @page_title = 'Hey, edit this product whose id is #' + resource.id
+      end
+    end
     
 end

@@ -11,6 +11,7 @@ ActiveAdmin.register Age do
     column :updated_by
     actions
   end
+  filter :id_eq, label: 'id'
   filter :age_name
   filter :created_at
   filter :updated_at

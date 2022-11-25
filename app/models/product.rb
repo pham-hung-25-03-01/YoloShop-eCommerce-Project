@@ -13,7 +13,7 @@ class Product < ApplicationRecord
   validates_associated :age
   validates_associated :product_group
   validates_associated :category
-  #validates_associated :supplier
+  validates_associated :product_images
   validates_associated :comments
   validates_associated :product_price_logs
   validates_associated :inventories
@@ -30,10 +30,10 @@ class Product < ApplicationRecord
   validates :description, length: { maximum: 1000, too_long: '%{count} characters is the maximum allowed' }
   validates :gender, presence: true
   validates :warranty, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-  validates :import_price, presence: true, numericality: true, format: { with: /\d{1,9}(\.\d{0,2})?/ }
-  validates :sell_price, presence: true, numericality: true, format: { with: /\d{1,9}(\.\d{0,2})?/ }
+  validates :import_price, presence: true, numericality: { greater_than_or_equal_to: 0 }, format: { with: /\d{1,9}(\.\d{0,2})?/ }
+  validates :sell_price, presence: true, numericality: { greater_than_or_equal_to: 0 }, format: { with: /\d{1,9}(\.\d{0,2})?/ }
   validates :product_discount, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :shipping, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-  validates :score_rating, presence: true, numericality: { greater_than_or_equal: 0 }
-  validates :number_of_rates, presence: true, numericality: { only_integer: true, greater_than_or_equal: 0 }
+  validates :score_rating, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  validates :number_of_rates, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 end

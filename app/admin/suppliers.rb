@@ -12,6 +12,7 @@ ActiveAdmin.register Supplier do
       column :is_cooperated
       actions
     end
+    filter :id_eq, label: 'id'
     filter :supplier_name
     filter :contract_date
     filter :phone_number

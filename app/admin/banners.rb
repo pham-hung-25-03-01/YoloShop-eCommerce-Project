@@ -13,6 +13,7 @@ ActiveAdmin.register Banner do
       column 'Created By', :admin_user_id
       actions
     end
+    filter :id_eq, label: 'id'
     filter :event_id_eq, label: 'event id'
     filter :created_at
     filter :admin_user_id_eq, label: 'created by'

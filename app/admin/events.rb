@@ -11,6 +11,7 @@ ActiveAdmin.register Event do
     column :updated_by
     actions
   end
+  filter :id_eq, label: 'id'
   filter :event_name
   filter :created_at
   filter :updated_at
