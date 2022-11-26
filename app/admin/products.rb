@@ -84,6 +84,14 @@ ActiveAdmin.register Product do
         f.input :is_actived, label: 'Show?'
         f.br
         unless f.object.new_record?
+          f.li do
+            "#{f.label 'Comments'} #{f.a 'Edit comments', href: admin_product_comments_path(product_id: f.object.id)}".html_safe
+          end
+          f.li do
+            "#{f.label 'Reviews'} #{f.a 'View reviews', href: admin_reviews_path(product_id: f.object.id)}".html_safe
+          end
+        end
+        unless f.object.new_record?
           f.li "Created at: #{f.object.created_at}"
           f.li "Updated at: #{f.object.updated_at}"
           f.li do

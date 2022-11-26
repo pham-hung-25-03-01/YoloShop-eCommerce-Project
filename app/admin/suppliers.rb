@@ -66,8 +66,12 @@ ActiveAdmin.register Supplier do
         row :id
         row :supplier_name
         row :contract_date
-        row :phone_number
-        row :email
+        row :phone_number do
+          link_to supplier.phone_number, "tel:#{supplier.phone_number}"
+        end
+        row :email do
+          link_to supplier.email, "mailto:#{supplier.email}"
+        end
         row :address
         row :is_cooperated
         row :created_at

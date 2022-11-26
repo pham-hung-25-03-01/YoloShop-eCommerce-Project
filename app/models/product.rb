@@ -10,10 +10,11 @@ class Product < ApplicationRecord
   belongs_to :category
   belongs_to :age
 
+  validates_associated :event
   validates_associated :age
   validates_associated :product_group
   validates_associated :category
-  validates_associated :product_images
+  #validates_associated :product_images
   validates_associated :comments
   validates_associated :product_price_logs
   validates_associated :inventories
