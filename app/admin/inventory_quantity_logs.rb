@@ -90,7 +90,7 @@ ActiveAdmin.register InventoryQuantityLog do
             inventory_quantity_log.save
             inventory.quantity_of_inventory += (inventory_quantity_log.quantity_of_export - inventory_quantity_log.quantity_of_import)
             inventory.save
-            redirect_to admin_inventory_quantity_logs_path(inventory_id: inventory.id), notice: 'Successfully deleted 1 product image.'
+            redirect_to admin_inventory_quantity_logs_path(inventory_id: inventory.id), notice: 'Inventory quantity log was successfully deleted.'
         end
     end
 end

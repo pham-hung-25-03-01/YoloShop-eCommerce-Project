@@ -86,6 +86,50 @@ class UsersController < ApplicationController
       p e.backtrace
     end
   end
+  def update_avatar
+    begin
+      if user_signed_in?
+        return render json: {
+          is_signed_in: true,
+          is_update_success: false,
+          message: 'File is invalid'
+        } if params[:file].eql?('undefined')
+        unless current_user.avatar_url.nil?
+          public_id = current_user.avatar_url.split('/')[-1].split('.')[0]
+          Cloudinary::Uploader.destroy(public_id)
+        end
+        File.open(
+          Rails.root.join(
+            'public',
+            'uploads',
+            params[:file].original_filename
+          ),
+          'wb'
+        ) do |file|
+          file.write(
+            params[:file].read
+          )
+        end
+        image_url = "public/uploads/#{params[:file].original_filename}"
+        avatar_url = Cloudinary::Uploader.upload(image_url)['url']
+        current_user.avatar_url = avatar_url
+        current_user.save
+        File.delete(image_url) if File.exist?(image_url)
+        return render json: {
+          is_signed_in: true,
+          is_update_success: true,
+          avatar_url: avatar_url
+        }
+      else
+        render json: {
+          is_signed_in: false
+        }
+      end
+    rescue StandardError => e
+      p e.message
+      p e.backtrace
+    end
+  end
   def orders_history
     begin
       if user_signed_in?

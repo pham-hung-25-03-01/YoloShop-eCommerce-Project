@@ -110,7 +110,7 @@ ActiveAdmin.register Age do
       ).update_all(
         age_id: nil
       )
-      redirect_to admin_ages_path
+      redirect_to admin_ages_path, notice: 'Age was successfully deleted.'
     end
     def edit
       @page_title = 'Hey, edit this age whose id is #' + resource.id

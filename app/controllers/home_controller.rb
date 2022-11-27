@@ -24,6 +24,7 @@ class HomeController < ApplicationController
       ).limit(
         DEFAULT_PER_SECTION
       )
+      @banners = Banner.all
     rescue StandardError => e
       p e.message
       p e.backtrace

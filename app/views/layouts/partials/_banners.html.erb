@@ -64,6 +64,27 @@
                 </div>
             </div>
         </div>
+        <% banners.each do |banner| %>
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <%= image_tag banner.banner_url, class: 'img-fluid', alt: banner.banner_url %>
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left">
+                                <h1 class="h1">Banner</h1>
+                                <h3 class="h2">Yolo eCommerce</h3>
+                                <p>
+                                    "The World's Most <strong>Comfortable Shoes</strong>".</br>
+                                    We use natural materials to make our shoes and place a heavy emphasis on being eco-friendly.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% end %>
     </div>
     <a class="carousel-control-prev text-decoration-none w-auto ps-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="prev">
         <i class="fas fa-chevron-left"></i>

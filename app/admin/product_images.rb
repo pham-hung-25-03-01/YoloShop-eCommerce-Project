@@ -137,7 +137,7 @@ ActiveAdmin.register ProductImage do
                     default_product_image.is_default = true
                     default_product_image.save(validate: false)
                 end
-                redirect_to admin_product_images_path(product_id: product_image.product_id), notice: 'Successfully deleted 1 product image.'
+                redirect_to admin_product_images_path(product_id: product_image.product_id), notice: 'Product image was successfully deleted.'
             end
         end
     end

@@ -15,10 +15,11 @@
                 </div>
                 <div class="text-center my-3 mb-2">
                     <div>
-                        <img class="rounded-circle img-fluid border" src="<%= @user.avatar_url %>">
+                        <img id="user_avatar" class="rounded-circle img-fluid border avatar-resize" src="<%= @user.avatar_url.nil? ? asset_path('avatar_empty.png') : @user.avatar_url %>">
                     </div>
                     <div>
-                        <a href="#" class="btn btn-success my-3 mb-0">Change avatar</a>               
+                        <input onchange="update_avatar()" name="fileUpload" id="fileUpload" accept="images/*" type="file" hidden />
+                        <a onclick="change_avatar()" class="btn btn-success my-3 mb-0">Change avatar</a>               
                     </div>
                 </div>
                 <div class="form-input mb-4">

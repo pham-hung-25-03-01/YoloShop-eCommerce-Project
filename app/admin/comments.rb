@@ -52,7 +52,7 @@ ActiveAdmin.register Comment, as: 'Product_Comment' do
                 deleted_at: Time.now,
                 deleted_by: current_admin_user.id
             )
-            redirect_to admin_product_comments_path(product_id: session[:product_id]), notice: 'Successfully deleted 1 product image.'
+            redirect_to admin_product_comments_path(product_id: session[:product_id]), notice: 'Comment was successfully deleted.'
         end
     end
 end

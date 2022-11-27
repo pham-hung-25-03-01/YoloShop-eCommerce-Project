@@ -140,6 +140,9 @@ ActiveAdmin.register Product do
           end
           html.html_safe
         end
+        row ' ' do
+          link_to 'Edit product images', admin_product_images_path(product_id: product.id)
+        end
         row :product_group do
           product_group = ProductGroup.find_by(id: product.product_group_id)
           link_to product_group.product_group_name, admin_product_group_path(product.product_group_id) unless product_group.nil?
@@ -174,6 +177,9 @@ ActiveAdmin.register Product do
         row :sell_price do
           number_to_currency(product.sell_price, precision: 0, unit: ' VND', format: '%n %u')
         end
+        row ' ' do
+          link_to 'View Product Price Logs', admin_product_price_logs_path(product_id: product.id)
+        end
         row 'Discount' do
           product.product_discount.round(1)
         end
@@ -184,6 +190,12 @@ ActiveAdmin.register Product do
           product.score_rating.round(1)
         end
         row :number_of_rates
+        row 'Comments' do
+          link_to 'Edit comments', admin_product_comments_path(product_id: product.id)
+        end
+        row 'Reviews' do
+          link_to 'View Reviews', admin_reviews_path(product_id: product.id)
+        end
         row :is_available
         row 'Show' do
           product.is_actived ? status_tag('yes') : status_tag('no')
@@ -200,9 +212,27 @@ ActiveAdmin.register Product do
         end
       end
     end
+    after_create do |product|
+      ProductPriceLog.create(
+        admin_user_id: current_admin_user.id,
+        product_id: product.id,
+        import_price: product.import_price,
+        sell_price: product.sell_price,
+        updated_by: current_admin_user.id
+      )
+    end
     before_update do |product|
       product.meta_title = product.product_name.parameterize
       product.updated_by = current_admin_user.id
+    end
+    after_update do |product|
+      ProductPriceLog.create(
+        admin_user_id: current_admin_user.id,
+        product_id: product.id,
+        import_price: product.import_price,
+        sell_price: product.sell_price,
+        updated_by: current_admin_user.id
+      )
     end
     controller do
       def create

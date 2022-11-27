@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       patch 'update-user-information', to: 'users/update_user_information'
       patch 'update-user-password', to: 'users/update_user_password'
       get 'orders-history', to: 'users/orders_history'
+      post 'update-avatar', to: 'users/update_avatar'
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

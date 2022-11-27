@@ -110,7 +110,7 @@ ActiveAdmin.register Category do
         ).update_all(
           category_id: nil
         )
-        redirect_to admin_categories_path
+        redirect_to admin_categories_path, notice: 'Category was successfully deleted.'
       end
       def edit
         @page_title = 'Hey, edit this category whose id is #' + resource.id

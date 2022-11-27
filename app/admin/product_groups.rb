@@ -110,7 +110,7 @@ ActiveAdmin.register ProductGroup do
         ).update_all(
           product_group_id: nil
         )
-        redirect_to admin_product_groups_path
+        redirect_to admin_product_groups_path, notice: 'Product group was successfully deleted.'
       end
       def edit
         @page_title = 'Hey, edit this product group whose id is #' + resource.id

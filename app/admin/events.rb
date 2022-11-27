@@ -102,7 +102,7 @@ ActiveAdmin.register Event do
         )
         redirect_to resource_path(event_inactive.id), notice: 'Event was successfully created.'
       end
-    end
+    end   
     def destroy
       Event.update(
         params[:id],
@@ -120,7 +120,7 @@ ActiveAdmin.register Event do
       ).update_all(
         event_id: nil
       )
-      redirect_to admin_events_path
+      redirect_to admin_events_path, notice: 'Event was successfully deleted.'
     end
     def edit
       @page_title = 'Hey, edit this event whose id is #' + resource.id

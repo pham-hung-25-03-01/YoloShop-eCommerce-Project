@@ -137,7 +137,7 @@ ActiveAdmin.register Supplier do
         ).update_all(
           supplier_id: nil
         )
-        redirect_to admin_suppliers_path
+        redirect_to admin_suppliers_path, notice: 'Supplier was successfully deleted.'
       end
       def edit
         @page_title = 'Hey, edit this supplier whose id is #' + resource.id

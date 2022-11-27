@@ -384,3 +384,7 @@ Custom Css
 .btn-view-order {
   color: #565e64;
 }
+.avatar-resize {
+  width: 100px;
+  height: 98.5px;
+}

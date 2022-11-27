@@ -78,3 +78,36 @@ function update_user_password(){
         });
     }
 }
+function change_avatar(){
+    $('#fileUpload').trigger('click');
+}
+function update_avatar () {
+    if ($('#fileUpload').val().length != 0) {
+        var fileUpload = $('#fileUpload').get(0);
+        var files = fileUpload.files;
+        var formData = new FormData();
+        formData.append('file', files[0]);
+        $.ajax(
+            {
+                type: 'post',
+                url: '/users/update-avatar',
+                contentType: false,
+                processData: false,
+                data: formData,
+                success: function (data) {
+                    if(data.is_signed_in){
+                        if(data.is_update_success){
+                            $('#user_avatar').attr('src', data.avatar_url);
+                            alert('Update your avatar success!');
+                        }
+                        else{
+                            alert(data.message);
+                        }
+                    }
+                    else{
+                        $('#sign-in').modal('show');
+                    }
+                }
+            });
+    }
+}
