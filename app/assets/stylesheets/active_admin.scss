@@ -38,6 +38,9 @@ select {
 form.filter_form .filter_form_field.select_and_search select{
     width: 120px;
 }
+.panel_contents table th {
+    font-size: 0.9em;
+}
 .border-img {
     border: 2px solid #ccc;
 }
@@ -49,4 +52,8 @@ form.filter_form .filter_form_field.select_and_search select{
 }
 .bg-primary {
     background-color: #0d6efd!important;
+}
+.total-payment {
+    margin-right: 4rem;
+    text-align: right;
 }

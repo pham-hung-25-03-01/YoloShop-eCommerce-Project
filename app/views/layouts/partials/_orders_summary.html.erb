@@ -24,13 +24,19 @@
             <label class="col-md-6">Ship date: <%= order.ship_date.nil? ? '' : order.ship_date.strftime('%d-%m-%Y') %></label>
         </div>
     </div>
-    <% case order.status 
+
+    <% if order.is_actived %>
+        <% case order.status 
         when 0 %>
             <span class="badge bg-warning badge-right">Pending</span>
         <% when 1 %>
             <span class="badge bg-success badge-right">Shipping</span>
         <% when 2 %>
             <span class="badge bg-primary badge-right">Completed</span>
+        <% end %>
+    <% else %>
+        <span class="badge bg-danger badge-right">Cancelled</span>
     <% end %>
+
     <hr class="text-success mb-0">
 </li>

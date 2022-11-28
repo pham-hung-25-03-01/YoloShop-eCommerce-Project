@@ -14,8 +14,6 @@ class CreateOrders < ActiveRecord::Migration[7.0]
       t.timestamps
       t.uuid :updated_by, null: false
       t.boolean :is_actived, null: false, default: true
-      t.datetime :deleted_at
-      t.uuid :deleted_by
     end
   end
 end

@@ -134,8 +134,7 @@ class UsersController < ApplicationController
     begin
       if user_signed_in?
         @orders = Order.where(
-          user_id: current_user.id,
-          is_actived: true
+          user_id: current_user.id
         ).order(created_at: :DESC)
       else
         redirect_to root_path

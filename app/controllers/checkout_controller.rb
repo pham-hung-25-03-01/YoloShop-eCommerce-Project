@@ -143,7 +143,6 @@ class CheckoutController < ApplicationController
         when ENV['VNPAY_E_WALLET_PAYMENT_ID']
           payment_url = get_payment_url(order)
         end
-        #payment_url = params[:order_info][:payment].to_s.eql?(ENV['VNPAY_E_WALLET_PAYMENT_ID'].to_s) ? get_payment_url(order) : ENV['CHECKOUT_RESULT_URL']
         render json: {
           is_signed_in: true,
           is_error: 0,
