@@ -40,7 +40,12 @@ function proceed_to_checkout(){
                     alert('Please go to the shop and add the product you want to buy to your cart');
                 }
                 else{
-                    $('#checkout-information').html(data.html);
+                    if(data.is_error){
+                        alert('Quantity is invalid');
+                    }
+                    else{
+                        $('#checkout-information').html(data.html);
+                    }
                 }
             }
             else{

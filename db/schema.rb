@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_28_043451) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_28_161320) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -160,9 +160,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_043451) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "updated_by", null: false
-    t.boolean "is_actived", default: true, null: false
-    t.datetime "deleted_at"
-    t.uuid "deleted_by"
+    t.boolean "is_actived", default: false, null: false
     t.uuid "payment_id", null: false
   end
 
@@ -177,8 +175,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_043451) do
     t.uuid "created_by", null: false
     t.uuid "updated_by", null: false
     t.boolean "is_actived", default: true, null: false
-    t.datetime "deleted_at"
-    t.uuid "deleted_by"
   end
 
   create_table "orders", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

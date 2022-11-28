@@ -7,9 +7,14 @@ class Users::PasswordsController < Devise::PasswordsController
   # end
 
   # POST /resource/password
-  # def create
-  #   super
-  # end
+  def create
+    if verify_recaptcha
+      super
+    else
+      set_flash_message!(:alert, :captcha_invalid)
+      redirect_to new_user_registration_path
+    end
+  end
 
   # GET /resource/password/edit?reset_password_token=abcdef
   # def edit

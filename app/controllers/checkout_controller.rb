@@ -19,8 +19,17 @@ class CheckoutController < ApplicationController
   def proceed_to_checkout
     begin
       if user_signed_in?
-        count_user_cart = Cart.where(user_id: current_user.id).count
-        if count_user_cart > 0
+        user_cart = Cart.where(user_id: current_user.id)
+        if user_cart.count > 0
+          user_cart.each do |cart|
+            if cart.quantity < 1 || cart.quantity > cart.inventory.quantity_of_inventory
+              return render json: {
+                is_signed_in: true,
+                is_cart_empty: false,
+                is_error: true
+              }
+            end
+          end
           @payments = Payment.where(is_actived: true)
           render json: {
             html: render_to_string(
@@ -30,7 +39,8 @@ class CheckoutController < ApplicationController
               }
             ),
             is_signed_in: true,
-            is_cart_empty: false
+            is_cart_empty: false,
+            is_error: false
           }
         else
           render json: {
@@ -169,18 +179,15 @@ class CheckoutController < ApplicationController
           user_cart = Cart.where(user_id: current_user.id)
           user_cart.each do |item|
             product = item.inventory.product
-            sell_price = product.sell_price * (1 - product.product_discount / 100)
             OrderDetail.create(
               inventory_id: item.inventory_id,
               order_id: session[:order].id,
               quantity_of_order: item.quantity,
-              sell_price: sell_price,
+              sell_price: product.sell_price,
               product_discount: product.product_discount,
               created_by: current_user.id,
               updated_by: current_user.id
             )
-            item.inventory.quantity_of_inventory -= item.quantity
-            item.inventory.save
             item.destroy
           end
           Invoice.create(
@@ -220,18 +227,15 @@ class CheckoutController < ApplicationController
             user_cart = Cart.where(user_id: current_user.id)
             user_cart.each do |item|
               product = item.inventory.product
-              sell_price = product.sell_price * (1 - product.product_discount / 100)
               OrderDetail.create(
                 inventory_id: item.inventory_id,
                 order_id: session[:order].id,
                 quantity_of_order: item.quantity,
-                sell_price: sell_price,
+                sell_price: product.sell_price,
                 product_discount: product.product_discount,
                 created_by: current_user.id,
                 updated_by: current_user.id
               )
-              item.inventory.quantity_of_inventory -= item.quantity
-              item.inventory.save
               item.destroy
             end
             Invoice.create(

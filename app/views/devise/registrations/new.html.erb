@@ -42,7 +42,10 @@
                 <label class="form-check-label" for="agree-to-term-and-conditions">
                 Agree to terms and conditions
                 </label>
-            </div>
+          </div>
+          <div class="form-floating mb-3">
+            <%= recaptcha_tags %>
+          </div>
           <div class="actions d-grid">
             <input id="btn-sign-up" class="btn btn-success btn-login fw-bold font-size-18-px disabled" type="submit" name="commit" value="Sign up" data-disable-with="Sign up">
           </div>

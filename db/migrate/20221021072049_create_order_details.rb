@@ -11,8 +11,6 @@ class CreateOrderDetails < ActiveRecord::Migration[7.0]
       t.uuid :created_by, null: false
       t.uuid :updated_by, null: false
       t.boolean :is_actived, null: false, default: true
-      t.datetime :deleted_at
-      t.uuid :deleted_by
     end
     execute 'ALTER TABLE order_details ADD PRIMARY KEY (inventory_id, order_id);'
   end

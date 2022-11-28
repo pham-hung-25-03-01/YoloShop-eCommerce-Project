@@ -388,3 +388,7 @@ Custom Css
   width: 100px;
   height: 98.5px;
 }
+.captcha-center {
+  width: 304px;
+  margin: auto;
+}

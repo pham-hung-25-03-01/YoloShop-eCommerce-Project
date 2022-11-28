@@ -16,6 +16,9 @@
                 <input autofocus="autofocus" autocomplete="email" type="email" name="user[email]" id="user_email" class="form-control" placeholder="name@example.com" required oninvalid="this.setCustomValidity('Please fill out this field.')" onchange="this.setCustomValidity('')">
                 <label for="user_email">Email <span class="text-danger">*</span></label>
             </div>
+            <div class="mb-3">
+              <%= recaptcha_tags class:'captcha-center' %>
+            </div>
             <div class="actions d-grid">
                 <input class="btn btn-success btn-login fw-bold font-size-18-px" type="submit" name="commit" value="Send me reset password instructions" data-disable-with="Send me reset password instructions">
                 <a href="/home" class="btn btn-secondary btn-login fw-bold font-size-18-px my-3"><i class="fa fa-faw fa-arrow-left"></i> Back to home</a>

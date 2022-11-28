@@ -194,6 +194,12 @@ ActiveAdmin.register Order do
                         return redirect_to edit_admin_order_path(order.id), alert: 'Order is invalid.'
                     end
                     order.status = 0
+                    order_details.update_all(is_actived: false)
+                    invoice = order.invoices.first
+                    invoice.admin_user_id = nil
+                    invoice.is_actived = false
+                    invoice.updated_by = current_admin_user.id
+                    invoice.save
                 end
                 order.ship_date = params[:order][:ship_date]
                 order.is_actived = params[:order][:is_actived]
@@ -205,6 +211,9 @@ ActiveAdmin.register Order do
                     return redirect_to edit_admin_order_path(order.id), alert: 'Order is invalid.'
                 end
             end
+        end
+        def edit
+            @page_title = 'Hey, edit this order whose id is #' + resource.id
         end
     end
 end

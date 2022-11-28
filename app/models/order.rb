@@ -5,7 +5,7 @@ class Order < ApplicationRecord
   belongs_to :coupon, optional: true
 
   validates_associated :order_details
-  #validates_associated :invoices
+  validates_associated :invoices
 
   validates :user_id, presence: true
   validates :ship_date, comparison: { greater_than_or_equal_to: Time.now }, on: [:update]

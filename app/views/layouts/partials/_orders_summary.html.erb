@@ -1,14 +1,18 @@
 <li class="order list-style-type-none" class="order list-style-type-none">
     <div class="time font-size-0-9-rem"><%= order.created_at.strftime('%d-%m-%Y %I:%M:%S %p') %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a onclick="get_order_details('<%= order.id %>')" class="btn-view-order cursor-pointer"><i class="fa fa-fw fa-eye"></i></a></div>
     <div class="order-content">
-        <% invoice =  order.invoices.where(is_actived: true).first %>
+        <% invoice =  order.invoices.first %>
         <div class="row">
             <label class="col-md-6">Order id: <%= order.id %></label>
-            <label class="col-md-6">Invoice id: <%= invoice.total_money_payment == 0 ? "You have not paid for this order (Total: #{number_to_currency(invoice.total_money - invoice.total_money_discount, precision: 0, unit: 'VND', format: '%n %u')})" : invoice.id %></label>
-        </div>       
+            <label class="col-md-6">Invoice id: <%= (invoice.total_money_payment == invoice.total_money - invoice.total_money_discount) ? invoice.is_actived ? invoice.id : "Admin hasn't approved" : "You have not paid for this order (Total: #{number_to_currency(invoice.total_money - invoice.total_money_discount - invoice.total_money_payment, precision: 0, unit: 'VND', format: '%n %u')})" %></label>
+        </div>
         <% unless invoice.nil? %>
             <div class="row">
                 <label class="col-md-6">Payments: <%= invoice.payment.payment_name %></label>
+                <label class="col-md-6">Total money: <%= number_to_currency(invoice.total_money, precision: 0, unit: 'VND', format: '%n %u') %> </label>
+            </div>
+            <div class="row">
+                <label class="col-md-6">Total money discount: <%= number_to_currency(invoice.total_money_discount, precision: 0, unit: 'VND', format: '%n %u') %></label>
                 <label class="col-md-6">Total money payment: <%= number_to_currency(invoice.total_money_payment, precision: 0, unit: 'VND', format: '%n %u') %> </label>
             </div>
         <% end %>
