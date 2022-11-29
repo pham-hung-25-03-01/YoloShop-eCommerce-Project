@@ -1,7 +1,7 @@
 <div id="favorite-item-<%= item.product_id %>" class="row px-3">
     <a class="col-md-10 row text-decoration-none" href="/products/<%= item.product.meta_title %>">
         <div class="col-md-4">
-            <img class="item-cart-img mb-2" src="<%= item.product.product_images.find_by(is_default: true).image_url %>" alt="<%= item.product.product_name %>" />
+            <img class="item-cart-img mb-2 border-img" src="<%= item.product.product_images.find_by(is_default: true).image_url %>" alt="<%= item.product.product_name %>" />
         </div>
         <div class="col-md-8 text-center my-auto">
             <span class="text-dark d-block font-size-1-1-rem"><%= item.product.product_name %></span>

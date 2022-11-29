@@ -10,6 +10,7 @@
 // Active Admin's got SASS!
 @import "active_admin/mixins";
 @import "active_admin/base";
+@import url('/assets/fontawesome.min.css');
 
 // Overriding any non-variable Sass must be done after the fact.
 // For example, to change the default status-tag color:
@@ -58,11 +59,25 @@ form.filter_form .filter_form_field.select_and_search select{
     text-align: right;
 }
 .quantity-items-summary {
-    font-size: 2em;
-}
-.summary {
-    
+    margin-left: 15%;
+    font-size: 1.5em;
+    font-weight: bolder;
 }
 .mb-0 {
     margin-bottom: 0;
+}
+.text-center {
+    text-align: center;
+}
+.text-muted {
+    color: #5E6469;
+}
+.font-size-3-em {
+    font-size: 3em;
+}
+.pt-5-percent {
+    padding-top: 5%;
+}
+.pb-2-percent {
+    padding-bottom: 2%;
 }

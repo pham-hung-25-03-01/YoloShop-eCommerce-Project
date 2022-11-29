@@ -13,29 +13,74 @@ ActiveAdmin.register_page "Dashboard" do
       columns do
         column do
           panel 'Unapproved orders' do
-            columns class: 'mb-0' do
-              column span: 2, class: 'summary' do
-                label '1 orders', class: 'quantity-items-summary'
+            columns class: 'mb-0 text-muted' do
+              column span: 2, class: 'column pt-5-percent' do
+                count = Order.where(status: 0, is_actived: true).count
+                label "#{count} orders", class: 'quantity-items-summary'
               end
               column do
-                i class: 'fa-solid fa-cart-circle-exclamation'
+                label (i class: 'fa fa-fw fa-cart-plus font-size-3-em'), class: 'quantity-items-summary'
+              end
+            end
+            div class: 'text-center' do
+              a 'See more', class: '', href: admin_orders_path do
+                i class: 'fa fa-fw fa-arrow-circle-right'
               end
             end
           end
         end
         column do
-          panel "Current month's revenue" do
-
+          panel "Current month revenue" do
+            columns class: 'mb-0 text-muted' do
+              column span: 2, class: 'column pt-5-percent' do
+                current_month_revenue = Invoice.where(is_actived: true).where("date_part('month', updated_at) = date_part('month', now())").sum(:total_money_payment)
+                label number_to_currency(current_month_revenue, precision: 0, unit: 'VND', format: '%n %u'), class: 'quantity-items-summary'
+              end
+              column do
+                label (i class: 'fa fa-fw fa-chart-bar font-size-3-em'), class: 'quantity-items-summary'
+              end
+            end
+            div class: 'text-center' do
+              a 'See more', class: '', href: admin_invoices_path do
+                i class: 'fa fa-fw fa-arrow-circle-right'
+              end
+            end
           end
         end
         column do
           panel 'Customers' do
-
+            columns class: 'mb-0 text-muted' do
+              column span: 2, class: 'column pt-5-percent' do
+                count = User.all.count
+                label "#{number_to_currency(count, precision: 0, unit: '')} users", class: 'quantity-items-summary'
+              end
+              column do
+                label (i class: 'fa fa-fw fa-user font-size-3-em'), class: 'quantity-items-summary'
+              end
+            end
+            div class: 'text-center' do
+              a 'See more', class: '', href: admin_users_path do
+                i class: 'fa fa-fw fa-arrow-circle-right'
+              end
+            end
           end
         end
         column do
           panel 'Products' do
-
+            columns class: 'mb-0 text-muted' do
+              column span: 2, class: 'column pt-5-percent' do
+                count = Product.all.count
+                label "#{number_to_currency(count, precision: 0, unit: '')} products", class: 'quantity-items-summary'
+              end
+              column do
+                label (i class: 'fa fa-fw fa-box font-size-3-em'), class: 'quantity-items-summary'
+              end
+            end
+            div class: 'text-center' do
+              a 'See more', class: '', href: admin_products_path do
+                i class: 'fa fa-fw fa-arrow-circle-right'
+              end
+            end
           end
         end
       end
@@ -44,12 +89,70 @@ ActiveAdmin.register_page "Dashboard" do
     section do
       columns do
         column do
-          panel 'Report' do
-            render 'layouts/partials/column_chart'
+          panel 'Days report' do
+            data = Invoice.where(is_actived: true).where("date_part('year', updated_at) = date_part('year', now())").group("date(updated_at)").pluck(Arel.sql("to_char(date(updated_at), 'YYYY-MM-DD') as date, sum(total_money_payment) as total"))
+            render partial: 'layouts/partials/days_revenue', locals: { data: data }
           end
         end
         column do
-          
+          panel 'Months report' do
+            data = Invoice.where(is_actived: true).where("date_part('year', updated_at) = date_part('year', now())").group("date_part('month', updated_at)").pluck(Arel.sql("date_part('month', updated_at) as month, sum(total_money_payment) as total"))
+            render partial: 'layouts/partials/months_revenue', locals: { data: data }
+          end
+        end
+      end
+      columns do
+        column do
+          panel 'Years report' do
+            data = Invoice.where(is_actived: true).group("date_part('year', updated_at)").pluck(Arel.sql("date_part('year', updated_at) as year, sum(total_money_payment) as total"))
+            render partial: 'layouts/partials/years_revenue', locals: { data: data }
+          end
+        end
+        column do
+          panel 'Product best seller' do
+            order_details = OrderDetail.where(is_actived: true).group(:inventory_id).pluck(Arel.sql("inventory_id, sum(quantity_of_order) as total"))
+            order_details.map! do |order_detail|
+              [Inventory.find(order_detail.first).product.product_name, order_detail[1]]
+            end
+            data = order_details.group_by(&:first).map do |order_detail|
+              sum = 0
+              order_detail.last.each do |order_detail_item|
+                sum += order_detail_item.last
+              end
+              [order_detail.first, sum]
+            end
+            render partial: 'layouts/partials/product_best_seller', locals: { data: data }
+          end
+        end
+      end
+      columns do
+        column do
+          panel 'Products sold of current date', class: 'pb-2-percent' do
+            #p products = OrderDetail.where(is_actived: true).where('date(updated_at) = date(now())').group(:inventory_id).pluck(Arel.sql('inventory_id, sum(quantity_of_order)'))
+            paginated_collection(OrderDetail.all.page(params[:products_page]).per(5), download_links: true, param_name: 'products_page') do
+              table_for collection do |t|
+                t.column('Product') { |order_detail| link_to order_detail.inventory.product.product_name, admin_product_path(order_detail.inventory.product_id) }
+                t.column('Size') { |order_detail| order_detail.inventory.size }
+                t.column('Color') { |order_detail| link_to(image_tag(order_detail.inventory.color_url, width: '50px', height: '50px', class: 'border-img'), order_detail.inventory.color_url, target: '_blank') }
+                t.column('Quantity') { |order_detail| order_detail.quantity_of_order }
+                t.column('Sell price') { |order_detail| number_to_currency(order_detail.sell_price * (1 - order_detail.product_discount / 100), precision: 0, unit: '', format: '%n %u') }
+              end
+            end
+          end
+        end
+        column do
+          panel 'Invoices of current date', class: 'pb-2-percent' do
+            invoices = Invoice.where('date(created_at) = date(now())')
+            paginated_collection(invoices.page(params[:invoices_page]).per(5), download_links: true, param_name: 'invoices_page') do
+              table_for collection do |t|
+                t.column('id') { |invoice| link_to invoice.id, admin_invoice_path(invoice.id) }
+                t.column('payment') { |invoice| invoice.payment.payment_name }
+                t.column('order id') { |invoice| link_to invoice.order_id, admin_order_path(invoice.order_id) }
+                t.column('total money') { |invoice| number_to_currency(invoice.total_money - invoice.total_money_discount, precision: 0, unit: '') }
+                t.column('total money payment') { |invoice| number_to_currency(invoice.total_money_payment, precision: 0, unit: '') }
+              end
+            end
+          end
         end
       end
     end

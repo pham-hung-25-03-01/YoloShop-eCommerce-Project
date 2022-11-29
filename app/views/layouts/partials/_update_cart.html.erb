@@ -24,7 +24,7 @@
                             <td class="tr-text-center" scope="row"></td>
                             <td class="tr-text-center"><%= link_to item.inventory.product.product_name, "/products/#{item.inventory.product.meta_title}", class: 'text-decoration-none text-success' %></td>
                             <td class="tr-text-center"><%= item.inventory.size %></td>
-                            <td><%= image_tag item.inventory.color_url, class: 'item-img' %></td>
+                            <td><%= image_tag item.inventory.color_url, class: 'item-img border-img' %></td>
                             <td class="tr-text-center"><%= number_to_currency(item.inventory.product.sell_price * (1 - item.inventory.product.product_discount/100), precision: 0, unit: 'VND', format: '%n %u') %></td>
                             <td class="tr-text-center"><input id="cart-quantity-<%= item.inventory_id %>" onchange="update_quantity('<%= item.inventory_id %>')" class="w-60-px border-0" type="number"  min="1" max="<%= inventories.find(item.inventory_id).quantity_of_inventory %>" value="<%= item.quantity %>"></td>
                             <td id="item-total-<%= item.inventory_id %>" class="tr-text-center"><%= number_to_currency(item.inventory.product.sell_price * (1 - item.inventory.product.product_discount/100) * item.quantity, precision: 0, unit: 'VND', format: '%n %u') %></td>

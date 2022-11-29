@@ -1,10 +1,19 @@
 $(document).on('ready turbolinks:load', function() {
     $('#page-loading').fadeOut('slow');
 });
+$(window).scroll(function() {
+    sessionStorage.scrollTop = $(this).scrollTop();
+  });
+  
+  $(document).ready(function() {
+    if (sessionStorage.scrollTop != 'undefined') {
+      $(window).scrollTop(sessionStorage.scrollTop);
+    }
+});
 function active_color_image_item(element_current, product_id){
     color_image_items = document.getElementsByName('color-image-item');
     color_image_items.forEach(item => {
-        item.classList.remove('active-item-img');
+        item.classList.remove('active-item-img'); 
     });
     element_current.classList.add('active-item-img');
     $('#color').val(element_current.getElementsByTagName('img')[0].src);

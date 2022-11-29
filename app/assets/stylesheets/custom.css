@@ -392,3 +392,9 @@ Custom Css
   width: 304px;
   margin: auto;
 }
+.border-img {
+  border: 2px solid #56ae6c!important;
+}
+.border-img-color {
+  border: 2px solid #ccc!important;
+}

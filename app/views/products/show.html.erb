@@ -29,7 +29,7 @@
                                     <% @product.product_images.where(is_default: false).limit(3).each do |product_image| %>
                                         <div class="col-4">
                                             <a href="#">
-                                                <%= image_tag product_image.image_url, class: 'card-img img-fluid', alt: @product.product_name %>
+                                                <%= image_tag product_image.image_url, class: 'card-img img-fluid border-img', alt: @product.product_name %>
                                             </a>
                                         </div>                                   
                                     <% end %>                                   
@@ -193,7 +193,7 @@
                                             <input type="hidden" name="color" id="color" value="">
                                         </li>
                                         <% @product.inventories.where('quantity_of_inventory > 0').each do |item| %>
-                                            <li class="list-inline-item"><a name="color-image-item" class="cursor-pointer d-block" onclick="active_color_image_item(this, '<%= @product.id %>')"><%= image_tag item.color_url, class: 'item-img img-fluid', alt: @product.product_name %></a></li>
+                                            <li class="list-inline-item"><a name="color-image-item" class="cursor-pointer d-block" onclick="active_color_image_item(this, '<%= @product.id %>')"><%= image_tag item.color_url, class: 'item-img img-fluid border-img-color', alt: @product.product_name %></a></li>
                                         <% end %>                                      
                                     </ul>
                                     <ul class="list-inline pb-3">

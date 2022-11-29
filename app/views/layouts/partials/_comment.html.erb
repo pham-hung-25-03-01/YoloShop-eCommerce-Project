@@ -1,7 +1,7 @@
 <div class="d-block separated-comment pb-3 mb-3">
     <div class="row pb-2">
         <div class="col-1">
-            <%= image_tag comment.user.avatar_url, class: 'rounded-circle img-fluid border avatar-comment-img' %>
+            <%= image_tag comment.user.avatar_url.nil? ? asset_path('avatar_empty.png') : comment.user.avatar_url, class: 'rounded-circle img-fluid border avatar-comment-img' %>
         </div>
         <div class="col-11">
             <div class="row pt-2">
