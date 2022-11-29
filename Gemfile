@@ -69,6 +69,7 @@ gem 'bcrypt'
 gem 'recaptcha', require: 'recaptcha/rails'
 
 gem 'activeadmin'
+gem 'cancancan'
 gem 'cloudinary'
 gem 'sass-rails'
 

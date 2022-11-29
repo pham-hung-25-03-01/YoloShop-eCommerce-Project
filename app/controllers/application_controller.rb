@@ -4,6 +4,9 @@ class ApplicationController < ActionController::Base
   before_action :refresh_header
   rescue_from ActiveRecord::RecordNotFound, with: :redirect_to_404
 
+  def access_denied(exception)
+    redirect_to '/403.html', alert: exception.message
+  end
   def redirect_to_404
     redirect_to '/404.html'
   end

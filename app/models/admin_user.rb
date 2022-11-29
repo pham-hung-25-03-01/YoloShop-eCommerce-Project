@@ -3,6 +3,7 @@ class AdminUser < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable,
          :recoverable, :rememberable, :validatable
+  enum permission: {manager: 0, admin: 1}
   validates :phone_number, presence: true, uniqueness: true, on: [:create, :update]
   validates :last_name, presence: true
   validates :permission, presence: true
