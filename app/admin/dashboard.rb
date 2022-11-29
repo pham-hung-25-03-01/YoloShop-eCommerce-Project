@@ -128,14 +128,27 @@ ActiveAdmin.register_page "Dashboard" do
       columns do
         column do
           panel 'Products sold of current date', class: 'pb-2-percent' do
-            #p products = OrderDetail.where(is_actived: true).where('date(updated_at) = date(now())').group(:inventory_id).pluck(Arel.sql('inventory_id, sum(quantity_of_order)'))
-            paginated_collection(OrderDetail.all.page(params[:products_page]).per(5), download_links: true, param_name: 'products_page') do
+            order_details = OrderDetail.where({ orders: Order.where({ invoices: Invoice.where(is_actived: true).where('date(updated_at) = date(now())') }) }).group(:inventory_id).pluck(Arel.sql('inventory_id, sum(quantity_of_order)'))
+            ids = []
+            order_details.each do |order_detail|
+              ids << order_detail.first
+            end
+            inventories = Inventory.where(id: ids)
+            paginated_collection(inventories.page(params[:products_page]).per(5), download_links: true, param_name: 'products_page') do
               table_for collection do |t|
-                t.column('Product') { |order_detail| link_to order_detail.inventory.product.product_name, admin_product_path(order_detail.inventory.product_id) }
-                t.column('Size') { |order_detail| order_detail.inventory.size }
-                t.column('Color') { |order_detail| link_to(image_tag(order_detail.inventory.color_url, width: '50px', height: '50px', class: 'border-img'), order_detail.inventory.color_url, target: '_blank') }
-                t.column('Quantity') { |order_detail| order_detail.quantity_of_order }
-                t.column('Sell price') { |order_detail| number_to_currency(order_detail.sell_price * (1 - order_detail.product_discount / 100), precision: 0, unit: '', format: '%n %u') }
+                t.column('Product') { |inventory| link_to inventory.product.product_name, admin_product_path(inventory.product_id) }
+                t.column('Size') { |inventory| inventory.size }
+                t.column('Color') { |inventory| link_to(image_tag(inventory.color_url, width: '50px', height: '50px', class: 'border-img'), inventory.color_url, target: '_blank') }
+                t.column('Quantity') do |inventory|
+                  quantity = 0
+                  order_details.each do |order_detail|
+                    if order_detail.first.eql?(inventory.id)
+                      quantity = order_detail.last
+                      break
+                    end
+                  end
+                  quantity
+                end
               end
             end
           end
