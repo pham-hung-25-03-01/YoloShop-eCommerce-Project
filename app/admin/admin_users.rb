@@ -80,7 +80,12 @@ ActiveAdmin.register AdminUser do
         end
     end
   end
-
+  before_create do |admin_user|
+    admin_user.updated_by = current_admin_user.id
+  end
+  before_update do |admin_user|
+    admin_user.updated_by = current_admin_user.id
+  end
   controller do
     def create
       unless params[:admin_user][:avatar].nil?
