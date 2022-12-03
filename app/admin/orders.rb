@@ -45,7 +45,7 @@ ActiveAdmin.register Order do
             f.input :user, input_html: { readonly: true, disabled: true, value: f.object.user.email }, as: :string
             f.input :coupon_id, input_html: { readonly: true, disabled: true }
             if f.object.is_actived
-                f.input :ship_date, as: :datepicker
+                f.input :ship_date, as: :datepicker, input_html: { value: f.object.ship_date.try(:strftime, '%Y-%m-%d') }
             else
                 f.input :ship_date, as: :datepicker, input_html: { readonly: true, disabled: true }
             end
@@ -67,8 +67,13 @@ ActiveAdmin.register Order do
                 f.li "Created at: #{f.object.created_at}"
                 f.li "Updated at: #{f.object.updated_at}"
                 f.li do
-                    admin_user = AdminUser.find(f.object.updated_by)
-                    "Updated by: #{link_to admin_user.email, admin_admin_user_path(admin_user.id)}".html_safe
+                    admin_user = AdminUser.find_by(id: f.object.updated_by)
+                    if admin_user.nil?
+                        user = User.find(f.object.updated_by)
+                        "Updated by: #{link_to user.email, admin_user_path(user.id)}".html_safe
+                    else
+                        "Updated by: #{link_to admin_user.email, admin_admin_user_path(admin_user.id)}".html_safe
+                    end                   
                 end
             end
         end
@@ -208,7 +213,7 @@ ActiveAdmin.register Order do
                 if order.valid?
                     return redirect_to resource_path(order.id), notice: 'Order was successfully updated.'
                 else
-                    return redirect_to edit_admin_order_path(order.id), alert: 'Order is invalid.'
+                    return redirect_to edit_admin_order_path(order.id), alert: "Ship date is invalid."
                 end
             end
         end

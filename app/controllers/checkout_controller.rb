@@ -1,5 +1,7 @@
 require 'securerandom'
 class CheckoutController < ApplicationController
+  include NeighborhoodBasedCollaborativeFiltering
+  DEFAULT_PER_SECTION = ENV['DEFAULT_PER_SECTION'].to_i
   def index
     begin
       if user_signed_in?
@@ -204,7 +206,9 @@ class CheckoutController < ApplicationController
             coupon_update.save
           end
           refresh_header
-          @products = Product.where(is_actived: true).limit(3)
+          nbcf_initialize
+          recommended_product_ids = get_recommended_products current_user.id
+          @products = Product.where(id: recommended_product_ids, is_actived: true).limit(DEFAULT_PER_SECTION)
           @order = session[:order]
         end
       else
@@ -257,7 +261,9 @@ class CheckoutController < ApplicationController
             refresh_header
             @pay_code = '00'
             @pay_message = 'Confirm Success'
-            @products = Product.where(is_actived: true).limit(3)
+            nbcf_initialize
+            recommended_product_ids = get_recommended_products current_user.id
+            @products = Product.where(id: recommended_product_ids, is_actived: true).limit(DEFAULT_PER_SECTION)
           else
             @pay_code = '11'
             @pay_message = 'Confirm Failed'

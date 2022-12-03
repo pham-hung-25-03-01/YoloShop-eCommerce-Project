@@ -169,6 +169,19 @@ ActiveAdmin.register_page "Dashboard" do
         end
       end
     end
+
+    # section do
+    #   panel "Date revenue" do
+    #     div do
+    #       label 'Pick a date'
+    #       input class: 'datepicker hasDatepicker', data: { datepicker_options: '{}' }, type: 'date'
+    #     end
+    #     data = Invoice.where(is_actived: true).where("date_part('year', updated_at) = date_part('year', now())").group("date(updated_at)").pluck(Arel.sql("to_char(date(updated_at), 'YYYY-MM-DD') as date, sum(total_money_payment) as total"))
+    #     render partial: 'layouts/partials/days_revenue', locals: { data: data }
+    #   end
+    # end
+
+    
     # Here is an example of a simple dashboard with columns and panels.
     #
     # columns do

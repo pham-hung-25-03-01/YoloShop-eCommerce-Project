@@ -21,5 +21,6 @@ module YoloshopEcommerce
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
 
     config.active_record.belongs_to_required_by_default = false
+    config.autoload_paths += %W(#{Rails.root}/lib/algorithms)
   end
 end
