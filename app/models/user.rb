@@ -48,9 +48,21 @@ class User < ApplicationRecord
 
     user = User.where(provider: auth.provider, uid: auth.uid).first
     if user.nil?
-      email = auth.info.email.nil? ? ' ' : auth.info.email
-      user = User.new(email: email, password: Devise.friendly_token[0, 20], first_name: ' ', last_name: auth.info.name, avatar_url: auth.info.image, provider: auth.provider, uid: auth.uid)
+      case auth.provider
+      when 'google'
+        user = User.new(email: auth.info.email, password: Devise.friendly_token[0, 20], first_name: ' ', last_name: auth.info.name, avatar_url: auth.info.image, provider: auth.provider, uid: auth.uid)
+      when 'facebook'
+        email = auth.info.email.nil? ? ' ' : auth.info.email
+        user = User.new(email: email, password: Devise.friendly_token[0, 20], first_name: auth.info.first_name, last_name: auth.info.last_name, avatar_url: auth.info.picture, provider: auth.provider, uid: auth.uid)
+        user.skip_confirmation! if auth.info.email.nil?
+      end
+      user.updated_by = ENV['ADMIN_USER_ID']
       user.save(validate: false)
+    end
+    if auth.provider.eql?('facebook') && user.email.eql?(' ') && !auth.info.email.nil?
+      user.email = auth.info.email
+      user.updated_by = user.id
+      user.save
     end
     user
   end
