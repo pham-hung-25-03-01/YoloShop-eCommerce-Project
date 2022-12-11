@@ -1,0 +1,23 @@
+<%= column_chart data, stacked: true, library: {colors: ["#D80A5B", "#21C8A9", "#F39C12", "#A4C400"]}, id: 'date-revenue-chart' %>
+
+<script>
+    $('#calendar').datepicker({showOn: 'button', dateFormat: 'yy-mm-dd'});
+    $('#calendar').datepicker('setDate', new Date());
+    $('#date').val($('#calendar').val());
+    $('#calendar').change(function () {
+        date = $('#calendar').val();
+        $.ajax({
+            url: '/admin/report/get_date_revenue',
+            type: 'get',
+            data: {
+                date: date
+            },
+            dataType: 'json',
+            success: function(data){
+                var chart = Chartkick.charts["date-revenue-chart"];
+                chart.updateData(data);
+                $('#date').val(date);
+            }
+        });
+    });
+</script>

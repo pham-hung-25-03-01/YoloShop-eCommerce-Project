@@ -109,7 +109,7 @@ ActiveAdmin.register_page "Dashboard" do
           end
         end
         column do
-          panel 'Product best seller' do
+          panel 'Most ordered products' do
             order_details = OrderDetail.where(is_actived: true).group(:inventory_id).pluck(Arel.sql("inventory_id, sum(quantity_of_order) as total"))
             order_details.map! do |order_detail|
               [Inventory.find(order_detail.first).product.product_name, order_detail[1]]
@@ -121,7 +121,7 @@ ActiveAdmin.register_page "Dashboard" do
               end
               [order_detail.first, sum]
             end
-            render partial: 'layouts/partials/product_best_seller', locals: { data: data }
+            render partial: 'layouts/partials/most_ordered_products', locals: { data: data }
           end
         end
       end
@@ -170,16 +170,32 @@ ActiveAdmin.register_page "Dashboard" do
       end
     end
 
-    # section do
-    #   panel "Date revenue" do
-    #     div do
-    #       label 'Pick a date'
-    #       input class: 'datepicker hasDatepicker', data: { datepicker_options: '{}' }, type: 'date'
-    #     end
-    #     data = Invoice.where(is_actived: true).where("date_part('year', updated_at) = date_part('year', now())").group("date(updated_at)").pluck(Arel.sql("to_char(date(updated_at), 'YYYY-MM-DD') as date, sum(total_money_payment) as total"))
-    #     render partial: 'layouts/partials/days_revenue', locals: { data: data }
-    #   end
-    # end
+    section do
+      panel "Date revenue" do
+        invoices = Invoice.where(is_actived: true).where("date(updated_at) = date(now())")
+        total = invoices.sum(:total_money_payment)
+        order_details = OrderDetail.where({orders: Order.where({invoices: invoices})}, is_actived: true).group(:inventory_id).pluck(Arel.sql("inventory_id, sum(sell_price * (1 - product_discount / 100) * quantity_of_order) as total"))
+        order_details.map! do |order_detail|
+          [Inventory.find(order_detail.first).product.product_name, order_detail[1]]
+        end
+        data = order_details.group_by(&:first).map do |order_detail|
+          sum = 0
+          order_detail.last.each do |order_detail_item|
+            sum += order_detail_item.last
+          end
+          [order_detail.first, sum]
+        end
+        div class: 'pick-date-input' do
+          label 'Pick a date:'
+          input type: 'text', id: 'date', disabled: true, readonly: true
+          input type: 'date', id: 'calendar', hidden: true
+        end
+        div class: 'pick-date-input' do
+          label "Total revenue: #{number_to_currency(total, precision: 0, unit: 'VND', format: '%n %u')}"
+        end
+        render partial: 'layouts/partials/date_revenue', locals: { total: total, data: data }
+      end
+    end
 
     
     # Here is an example of a simple dashboard with columns and panels.

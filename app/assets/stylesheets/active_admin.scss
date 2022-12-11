@@ -81,3 +81,25 @@ form.filter_form .filter_form_field.select_and_search select{
 .pb-2-percent {
     padding-bottom: 2%;
 }
+.pick-date-input {
+    margin: 20px 5px;
+}
+.pick-date-input > label {
+    color: #5E6469;
+    font-size: 0.9rem;
+    margin-right: 10px;
+}
+.pick-date-input > input {
+    padding: 8px 15px !important;
+    vertical-align: middle;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    &:focus{
+        outline: none;
+    }
+}
