@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_28_161320) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_11_143640) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -41,9 +41,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_161320) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.boolean "status", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "updated_by"
+    t.boolean "is_actived", default: true, null: false
+    t.datetime "deleted_at"
+    t.uuid "deleted_by"
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
@@ -151,6 +155,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_161320) do
   create_table "invoices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "order_id", null: false
     t.uuid "admin_user_id"
+    t.uuid "payment_id", null: false
     t.string "bank_code"
     t.string "bank_transaction_no"
     t.string "transaction_no"
@@ -161,7 +166,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_161320) do
     t.datetime "updated_at", null: false
     t.uuid "updated_by", null: false
     t.boolean "is_actived", default: false, null: false
-    t.uuid "payment_id", null: false
   end
 
   create_table "order_details", primary_key: ["inventory_id", "order_id"], force: :cascade do |t|
@@ -265,7 +269,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_161320) do
   create_table "reviews", primary_key: ["product_id", "user_id"], force: :cascade do |t|
     t.uuid "product_id", null: false
     t.uuid "user_id", null: false
-    t.integer "user_score_rating", limit: 2
+    t.integer "user_score_rating"
     t.boolean "is_favored", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -312,6 +316,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_161320) do
     t.string "provider"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.string "uid"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -321,7 +326,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_161320) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "updated_by"
-    t.string "uid"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
