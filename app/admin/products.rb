@@ -222,7 +222,7 @@ ActiveAdmin.register Product do
       )
     end
     before_update do |product|
-      product.gender = params[:product][:gender].eql?('male') ? true : false
+      product.gender = params[:product][:gender].eql?('true') ? true : false
       product.meta_title = product.product_name.parameterize
       product.updated_by = current_admin_user.id
     end
@@ -250,7 +250,7 @@ ActiveAdmin.register Product do
             meta_title: params[:product][:product_name].parameterize,
             origin: params[:product][:origin],
             description: params[:product][:description],
-            gender: params[:product][:gender].eql?('male') ? true : false,
+            gender: params[:product][:gender].eql?('true') ? true : false,
             warranty: params[:product][:warranty],
             import_price: params[:product][:import_price],
             sell_price: params[:product][:sell_price],
