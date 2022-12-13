@@ -29,7 +29,6 @@ class Product < ApplicationRecord
   validates :meta_title, presence: true, uniqueness: true
   validates :origin, length: { maximum: 300, too_long: '%{count} characters is the maximum allowed' }
   validates :description, length: { maximum: 1000, too_long: '%{count} characters is the maximum allowed' }
-  validates :gender, presence: true
   validates :warranty, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :import_price, presence: true, numericality: { greater_than_or_equal_to: 0 }, format: { with: /\d{1,9}(\.\d{0,2})?/ }
   validates :sell_price, presence: true, numericality: { greater_than_or_equal_to: 0 }, format: { with: /\d{1,9}(\.\d{0,2})?/ }

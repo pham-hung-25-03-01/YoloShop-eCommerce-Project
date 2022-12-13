@@ -99,7 +99,7 @@ class CheckoutController < ApplicationController
           discount: 0,
           total_payment: session[:total_cart],
           is_available: false
-        } if coupon.nil? || coupon.start_date.to_date > Time.now.to_date || coupon.end_date.to_date < Time.now.to_date || coupon.number_of_uses < 1
+        } if coupon.nil? || coupon.start_date.to_date > Date.today || coupon.end_date.to_date < Date.today || coupon.number_of_uses < 1
         discount = session[:total_cart] * coupon.coupon_discount / 100
         total_payment = session[:total_cart] - discount
         render json: {

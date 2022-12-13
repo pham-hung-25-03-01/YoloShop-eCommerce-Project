@@ -233,7 +233,7 @@ ActiveAdmin.register Product do
         import_price: product.import_price,
         sell_price: product.sell_price,
         updated_by: current_admin_user.id
-      )
+      ) if product.valid?
     end
     controller do
       def create
@@ -264,7 +264,7 @@ ActiveAdmin.register Product do
             updated_by: current_admin_user.id
           )
           unless product.valid?
-            return redirect_to new_admin_product_path, alert: "Product is invalid."
+            return redirect_to new_admin_product_path, alert: product.errors.full_messages[0].to_s
           end
           File.open(
             Rails.root.join(
