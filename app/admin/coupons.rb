@@ -86,6 +86,7 @@ ActiveAdmin.register Coupon do
         redirect_to collection_path, notice: "Successfully deleted #{ids.count} coupon#{ids.count > 1 ? 's' : ''}"
     end
     before_create do |coupon|
+        coupon.id = coupon.id.strip
         coupon.created_by = current_admin_user.id
         coupon.updated_by = current_admin_user.id
     end

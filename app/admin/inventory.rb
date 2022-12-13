@@ -7,7 +7,7 @@ ActiveAdmin.register Inventory do
         column :product_id
         column :size
         column 'Color' do |item|
-            link_to(image_tag(item.color_url, width: '70px', height: '70px'), item.color_url, target: '_blank') unless item.color_url.nil?
+            link_to(image_tag(item.color_url, width: '70px', height: '70px', class: 'border-img'), item.color_url, target: '_blank') unless item.color_url.nil?
         end
         column 'Quantity' do |item|
             item.quantity_of_inventory
