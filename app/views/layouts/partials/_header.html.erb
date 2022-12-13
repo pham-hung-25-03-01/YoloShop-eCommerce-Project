@@ -105,12 +105,17 @@
             <input class="w-100" id="autoComplete" type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off">
         </form>
     </div>
-        <a onclick="open_speech_recognition()" id="btnTalk" class="btn btn-success">Voice</a>
+    <div class="text-center">
+        <a onclick="open_speech_recognition()" id="btnTalk" class="btn btn-success"><i class="fa fa-fw fa-microphone-alt"></i></a>
+        <p id="notification" style="display: none;" >Please, say something!</p>
+    </div>
 </div>
 
 <script>
 
 var message = document.getElementById('autoComplete');
+var btnTalk = document.getElementById("btnTalk");
+var notification = document.getElementById("notification");
 // new speech recognition object
 var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
 var recognition = new SpeechRecognition();
@@ -123,17 +128,26 @@ recognition.onstart = function() {
 recognition.onspeechend = function() {
     // when user is done speaking
     recognition.stop();
+    btnTalk.style.display = "inline-block";
+    notification.style.display = "none";
 }
-              
+         
 // This runs when the speech recognition service returns result
 recognition.onresult = function(event) {
     var transcript = event.results[0][0].transcript;
     var confidence = event.results[0][0].confidence;
     message.value = transcript;
 };
+recognition.onerror = (event) => {
+    console.log(`Error occurred in recognition: ${event.error}`);
+    btnTalk.style.display = "inline-block";
+    notification.style.display = "none";
+}
               
 // start recognition
 function open_speech_recognition() {
-    recognition.start(); 
+    btnTalk.style.display = "none";
+    notification.style.display = "block";
+    recognition.start();
 }
 </script>
