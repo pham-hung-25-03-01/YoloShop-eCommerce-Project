@@ -3,10 +3,10 @@ $(document).on('ready turbolinks:load', function() {
 });
 $(window).scroll(function() {
     sessionStorage.scrollTop = $(this).scrollTop();
-  });
+});
   
-  $(document).ready(function() {
-    if (sessionStorage.scrollTop != 'undefined') {
+$(document).ready(function() {
+    if (sessionStorage.scrollTop != 'undefined' && (document.referrer == window.location.href || document.referrer == '')) {
       $(window).scrollTop(sessionStorage.scrollTop);
     }
 });

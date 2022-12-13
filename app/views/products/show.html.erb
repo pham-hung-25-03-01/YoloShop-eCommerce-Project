@@ -42,7 +42,7 @@
                                         <% @product.product_images.where(is_default: false).offset(offset).limit(3).each do |product_image| %>
                                             <div class="col-4">
                                                 <a href="#">
-                                                    <%= image_tag product_image.image_url, class: 'card-img img-fluid', alt: @product.product_name %>
+                                                    <%= image_tag product_image.image_url, class: 'card-img img-fluid border-img', alt: @product.product_name %>
                                                 </a>
                                             </div>                                   
                                         <% end %>

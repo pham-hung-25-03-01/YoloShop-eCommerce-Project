@@ -398,3 +398,10 @@ Custom Css
 .border-img-color {
   border: 2px solid #ccc!important;
 }
+.layout-description {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
