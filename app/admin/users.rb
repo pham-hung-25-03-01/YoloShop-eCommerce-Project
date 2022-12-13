@@ -11,7 +11,7 @@ ActiveAdmin.register User do
         link_to(image_tag(item.avatar_url, width: '70px', height: '70px'), item.avatar_url) unless item.avatar_url.nil?
       end
       column :gender do |item|
-        item.gender ? status_tag('Male', class: 'yes') : status_tag('Female', class: 'no')
+        item.gender ? status_tag('Male', class: 'yes') : status_tag('Female', class: 'no') unless item.gender.nil?
       end
       column(:birthday) { |time| time.birthday.strftime('%B %d, %Y') unless time.birthday.nil? }
       column :phone_number

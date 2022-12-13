@@ -7,7 +7,7 @@ ActiveAdmin.register ProductImage do
         selectable_column
         id_column
         column 'Image' do |item|
-            link_to(image_tag(item.image_url, width: '70px', height: '70px'), item.image_url, target: '_blank')
+            link_to(image_tag(item.image_url, width: '70px', height: '70px', class: 'border-img'), item.image_url, target: '_blank')
         end
         column :is_default
         column :created_at

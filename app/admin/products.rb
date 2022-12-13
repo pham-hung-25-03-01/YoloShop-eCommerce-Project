@@ -10,7 +10,7 @@ ActiveAdmin.register Product do
       column 'Image' do |item|
         unless item.product_images.nil?
           image_url = item.product_images.find_by(is_default: true).image_url
-          link_to(image_tag(image_url, width: '70px', height: '70px'), image_url, target: '_blank')
+          link_to(image_tag(image_url, width: '70px', height: '70px', class: 'border-img'), image_url, target: '_blank')
         end
       end
       column :supplier_id do |item|
@@ -24,7 +24,7 @@ ActiveAdmin.register Product do
       end
       column :origin
       column :gender do |item|
-        item.gender ? status_tag('Male', class: 'yes') : status_tag('Female', class: 'no')
+        item.gender ? status_tag('Male', class: 'yes') : status_tag('Female', class: 'no') unless item.gender.nil?
       end
       column :warranty
       column :sell_price do |item|
@@ -222,6 +222,7 @@ ActiveAdmin.register Product do
       )
     end
     before_update do |product|
+      product.gender = params[:product][:gender].eql?('male') ? true : false
       product.meta_title = product.product_name.parameterize
       product.updated_by = current_admin_user.id
     end
@@ -249,7 +250,7 @@ ActiveAdmin.register Product do
             meta_title: params[:product][:product_name].parameterize,
             origin: params[:product][:origin],
             description: params[:product][:description],
-            gender: params[:product][:gender],
+            gender: params[:product][:gender].eql?('male') ? true : false,
             warranty: params[:product][:warranty],
             import_price: params[:product][:import_price],
             sell_price: params[:product][:sell_price],
