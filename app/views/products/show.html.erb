@@ -192,7 +192,7 @@
                                         <li class="list-inline-item">Color:
                                             <input type="hidden" name="color" id="color" value="">
                                         </li>
-                                        <% @product.inventories.where('quantity_of_inventory > 0').distinct.pluck(:color_url).each do |item| %>
+                                        <% @product.inventories.where('quantity_of_inventory > 0').pluck(:color_url).uniq.each do |item| %>
                                             <li class="list-inline-item"><a name="color-image-item" class="cursor-pointer d-block" onclick="active_color_image_item(this, '<%= @product.id %>')"><%= image_tag item, class: 'item-img img-fluid border-img-color', alt: @product.product_name %></a></li>
                                         <% end %>                                      
                                     </ul>
@@ -200,7 +200,7 @@
                                         <li class="list-inline-item">Size:&nbsp;&nbsp;
                                             <input type="hidden" name="size" id="size" value="">
                                         </li>
-                                        <% @product.inventories.where('quantity_of_inventory > 0').order(size: :ASC).distinct.pluck(:size).each do |item| %>
+                                        <% @product.inventories.where('quantity_of_inventory > 0').order(size: :ASC).pluck(:size).uniq.each do |item| %>
                                             <li class="list-inline-item"><a name="size-item" class="btn btn-success btn-size" onclick="active_size_item(this, '<%= @product.id %>')"><span><%= item %></a></span></li>
                                         <% end %>                                      
                                     </ul>
